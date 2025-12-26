@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>後台管理</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
+
+    <!-- Summernote -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet" 
+	/>
+
+    <link rel="stylesheet" th:href="@{/css/product.css}" />
+  </head>
+  <body>
+    <!-- ========== 左側側邊欄 ========== -->
+    <nav class="sidebar">
+      <h5 class="mb-4 fs-5 fw-bold">後台管理</h5>
+
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link fs-6" href="#">會員管理</a>
+        </li>
+
+        <!-- 折疊選單 -->
+        <li class="nav-item fs-6">
+          <a
+            class="nav-link d-flex justify-content-between align-items-center "
+            data-bs-toggle="collapse"
+            href="#menu_products"
+          >商品管理<i class="bi bi-chevron-down"></i>
+          </a>
+          <div class="collapse show" id="menu_products">
+            <ul class="nav flex-column ms-3">
+              <li>
+                <a class="nav-link" href="./product_index.html">商品列表</a>
+              </li>
+              <li>
+                <a class="nav-link" href="./product_add.html">新增商品</a>
+              </li>
+              <li>
+                <a class="nav-link" href="./product_edit.html">編輯商品</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        
+
+        <li class="nav-item fs-6" ><a class="nav-link" href="#">訂單管理</a></li>
+        <!-- 活動管理 -->
+        <li class="nav-item fs-6">
+          <a
+            class="nav-link d-flex justify-content-between align-items-center "
+            data-bs-toggle="collapse"
+            href="#menu_activity"
+          >活動管理<i class="bi bi-chevron-down"></i>
+          </a>
+
+          <div class="collapse show" id="menu_activity">
+            <ul class="nav flex-column ms-3">
+              <li>
+                <a class="nav-link" href="#">優惠券管理</a>
+              </li>
+              <li>
+                <a class="nav-link" href="#">促銷管理</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item fs-6"><a class="nav-link" href="#">客服管理</a></li>
+      </ul>
+
+      <div class="mt-4 d-flex justify-content-center logout-wrapper">
+        <button class="btn btn-outline-primary w-50 fs-6 btn-logout fw-bold" ><i class="bi bi-box-arrow-right "></i> 登出</button>
+      </div>
+    </nav>
+
+    <!-- ========== 主內容區 ========== -->
+    <main>
+      <!-- 麵包屑 -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb d-flex align-items-center no-bg">
+          <li class="breadcrumb-item">
+            <a href="./product_index.html" class="fs-5 text-primary text-decoration-none fw-bold breadcrumb_index">商品管理</a>
+          </li>
+          <li class="breadcrumb-item active">新增商品</li>
+        </ol>
+      </nav>
+
+      <div class="row">
+        <!-- 左半：圖片上傳 + 預覽 + Summernote -->
+        <div class="col-md-6">
+          <!-- ========== 圖片上傳 ========== -->
+          <section class="mb-4">
+            <img
+              id="previewImg"
+              src="./images/床1.jpg"
+              class="img-preview mb-2"
+            />
+            <!-- 隱藏的 file input -->
+            <input type="file" id="uploadImg" class="d-none" />
+
+            <!-- 使用 label 當按鈕 -->
+            <label for="uploadImg" class="btn btn-primary">
+              <i class="bi bi-upload"></i> 上傳圖片
+            </label>
+          </section>
+
+          <!-- ========== Summernote 上稿器 ========== -->
+          <section>
+            <label class="form-label fw-bold">商品介紹：</label>
+            <form method="post">
+              <textarea id="summernote" name="editordata"></textarea>
+            </form>
+          </section>
+        </div>
+
+        <!-- 右半：表單欄位 -->
+        <div class="col-md-6">
+          <form>
+            <!-- 商品編號 -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">商品編號：</label>
+              <div class="col-3">
+                <input type="text" class="form-control" 
+                th:value="${prodVO.productId != null ? prodVO.productId : '系統自動編號'}" disabled/>
+              </div>
+            </div>
+
+            <!-- 商品名稱 -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">商品名稱：</label>
+              <div class="col-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="請輸入商品名稱"
+                />
+              </div>
+            </div>
+
+            <!-- 商品類型 -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">商品類型：</label><br />
+              <div class="btn-group mb-3 gap-2" role="group">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary toggle-btn active"
+                  id="btn_mattress"
+                >
+                  床墊
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary toggle-btn"
+                  id="btn_frame"
+                >
+                  床架
+                </button>
+              </div>
+              <input
+                type="hidden"
+                name="product_type"
+                id="product_type"
+                value="mattress"
+              />
+            </div>
+
+            <!-- 商品材質 -->
+            <div class="mb-3">
+  				<label class="form-label fw-bold">商品材質：</label>
+  				<div class="col-4" id="mattress_material">
+    				<select class="form-select" name="material">
+      					<option th:each="m : ${mattressMaterials}" 
+              				th:value="${m}" 
+              				th:text="${m}">材質名稱</option>
+    				</select>
+  				</div>
+  
+			  	<div class="col-4 d-none" id="frame_material">
+				    <select class="form-select" name="material" >
+				      <option th:each="f : ${frameMaterials}" 
+				              th:value="${f}" 
+				              th:text="${f}">材質名稱</option>
+				    </select>
+				  </div>
+			</div>
+
+			<div class="mb-3">
+			  <label class="form-label fw-bold">商品功能：</label><br />
+			  <label class="form-label fw-bold">床墊功能：</label>
+			  <div th:each="feat : ${featListData}" th:if="${feat.featureId >= 1 && feat.featureId <= 5}" class="form-check form-check-inline mattress_functions">
+			    <input class="form-check-input" type="checkbox" name="featureId" 
+			           th:id="'f' + ${feat.featureId}" th:value="${feat.featureId}" />
+			    <label class="form-check-label" th:for="'f' + ${feat.featureId}" th:text="${feat.featureName}">功能名稱</label>
+			  </div>
+							  				  
+			  <br />
+							  		
+			  <label class="form-label fw-bold">床架功能：</label>
+			  <div th:each="feat : ${featListData}" th:if="${feat.featureId >= 6 && feat.featureId <= 10}" class="form-check form-check-inline frame_functions">
+			    <input class="form-check-input" type="checkbox" name="featureId" 
+			           th:id="'f' + ${feat.featureId}" th:value="${feat.featureId}" disabled />
+			    <label class="form-check-label" th:for="'f' + ${feat.featureId}" th:text="${feat.featureName}">功能名稱</label>
+			  </div>
+			</div>
+
+            <!-- 商品尺寸選擇 -->
+			<input type="hidden" id="allSizesData" th:value="${allSizesJson}" />
+			
+			<div class="mb-3">
+			    <label class="form-label fw-bold">商品尺寸（寬度）：</label>
+			    <div class="col-5">
+			        <select class="form-select" id="width_selector">
+			            <option value="">請選擇寬度</option>
+			            <option th:each="width : ${distinctWidths}" th:value="${width}">
+			                <span th:switch="${width}">
+			                    <span th:case="90">單人床 寬 90cm</span>
+			                    <span th:case="105">單人床加大 寬 105cm</span>
+			                    <span th:case="120">單人床加大(歐規) 寬 120cm</span>
+			                    <span th:case="150">雙人床 寬 150cm</span>
+			                    <span th:case="180">雙人床加大 寬 180cm</span>
+			                    <span th:case="*">[[${width}]]cm</span>
+			                </span>
+			            </option>
+			        </select>
+			    </div>
+			</div>
+			
+			<div class="mb-3">
+			    <label class="form-label fw-bold">規格明細：</label>
+			
+			    <div class="row g-2 align-items-center mb-2 size_row" data-length="188">
+			        <div class="col-auto">標準 188cm</div>
+			        <input type="hidden" name="sizeId" class="size-id-input" />
+			        <div class="col-2"><input type="number" name="stock" class="form-control" placeholder="數量"></div>
+			        <div class="col-3"><input type="number" name="price" class="form-control" placeholder="價格"></div>
+             		<div class="col-2"><button class="btn btn-outline-secondary btn-nosize" type="button">無庫存</button></div>
+			    </div>
+
+			
+			    <div class="row g-2 align-items-center mb-2 size_row" data-length="200">
+			        <div class="col-auto">歐規 200cm</div>
+			        <input type="hidden" name="sizeId" class="size-id-input" />
+			        <div class="col-2"><input type="number" name="stock" class="form-control" placeholder="數量"></div>
+			        <div class="col-3"><input type="number" name="price" class="form-control" placeholder="價格"></div>
+          			<div class="col-2"><button class="btn btn-outline-secondary btn-nosize" type="button">無庫存</button></div>
+			    </div>
+
+			
+			    <div class="row g-2 align-items-center mb-2 size_row" data-length="210">
+			        <div class="col-auto">加長 210cm</div>
+			        <input type="hidden" name="sizeId" class="size-id-input" />
+			        <div class="col-2"><input type="number" name="stock" class="form-control" placeholder="數量"></div>
+			        <div class="col-3"><input type="number" name="price" class="form-control" placeholder="價格"></div>
+       			    <div class="col-2"><button class="btn btn-outline-secondary btn-nosize" type="button">無庫存</button></div>
+			    </div>
+
+			</div>
+
+            <!-- 上架日期與時間 -->
+            <div class="mb-3 d-flex flex-column gap-1">
+              <label class="form-label fw-bold">設定上架日期：</label>
+
+              <div class="d-flex gap-2">
+                <div class="col-auto">
+					<input type="datetime-local" class="form-control" name="onDate" />                </div>
+              </div>
+            </div>
+
+            <!-- 下架日期與時間 -->
+            <div class="mb-3 d-flex flex-column gap-1">
+              <label class="form-label fw-bold">設定下架日期：</label>
+
+              <div class="d-flex gap-2">
+                <div class="col-auto">
+                  <input type="datetime-local" class="form-control" name="offDate" />
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">商品狀態：</label><br />
+              <div class="btn-group">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary toggle-btn"
+                  id="btn_on"
+                >
+                  上架
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary toggle-btn active"
+                  id="btn_off"
+                >
+                  下架
+                </button>
+              </div>
+              <input
+                type="hidden"
+                id="product_status"
+                name="product_status"
+                value="on"
+              />
+            </div>
+            <!-- 儲存/取消 -->
+            <div class="mt-4">
+              <button type="submit" class="btn btn-primary me-3">儲存</button>
+              <button type="button" class="btn btn-outline-secondary">
+                取消
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <!-- JS 套件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- include libraries(jQuery, bootstrap) -->
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+    <script th:src="@{/js/product.js}"></script>
+  </body>
+</html>
