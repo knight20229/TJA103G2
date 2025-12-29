@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Robin - Furniture eCommerce</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link th:href="@{/img/favicon.ico}" rel="icon">
+
+    <!-- Vendor CSS -->
+    <link th:href="@{/css/vendors.css}" rel="stylesheet">
+    <!-- Main CSS -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+  <style>
+   body {
+  margin: 0;
+  font-family: "Source Sans Pro", "Microsoft JhengHei", sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.page-content-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 20px;
+}
+
+.member-form {
+  width: 100%;
+  max-width: 80%; /* 固定最大寬度，置中效果更穩定 */
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.member-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: #111;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; /* 小螢幕時自動換行 */
+}
+
+.form-row .form-group {
+  flex: 1;
+  min-width: 240px; /* 避免欄位太窄 */
+  margin-bottom: 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+input {
+  width: 100%;
+  height: 42px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.12);
+  outline: none;
+}
+
+input[readonly] {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.theme-button {
+  padding: 6px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  width: auto;
+  flex: 0 0 auto;
+}
+
+.theme-button.save {
+  background: linear-gradient(135deg, #007bff, #00c6ff);
+  color: #fff;
+}
+
+.theme-button.register {
+  background: #e0e0e0;
+  color: #333;
+}
+
+/* ✅ RWD：小螢幕下改為單欄式 */
+@media (max-width: 575.98px) {
+  .form-row {
+    flex-direction: column;
+  }
+}
+
+  </style>
+</head>
+
+   
+<body>
+
+  <!--==================== header area ====================-->
+  <div class="header-area header-area--default header-area--default--white header-sticky">
+    <div class="header-navigation-area header-navigation-area--white header-navigation-area--extra-space d-none d-lg-block">
+      <div class="container wide">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="header-info-wrapper header-info-wrapper--alt-style">
+
+              <div class="header-logo">
+                <a href="首頁.html">
+                  <img src="logo.png" class="img-fluid" alt="">
+                </a>
+              </div>
+
+              <div class="header-navigation-wrapper">
+                <nav>
+                  <ul>
+                    <li class="has-children"><a href="商品介面.html">商品瀏覽</a></li>
+                    <li class="has-children"><a href="首頁1.html">商品比較</a></li>
+                    <li class="has-children"><a href="首頁1.html">客製化商品</a></li>
+                    <li class="has-children"><a href="首頁1.html">好眠知識</a></li>
+                  </ul>
+                </nav>
+              </div>
+
+              <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <form class="d-flex">
+                      <input class="form-control me-2" type="search" placeholder="搜尋商品" aria-label="Search">
+                      <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                  </div>
+                </div>
+              </nav>
+
+              <div class="header-icon-area">
+                <div class="header-icon d-flex align-items-center">
+                  <ul class="header-icon__list">
+                    <li><a href="javascript:void(0)" id="fa-solid fa-message"><i class="fa-solid fa-message" style="color: #B197FC;"></i></a></li>
+                    <li><a href="javascript:void(0)" id="fa-solid fa-user"><i class="fa-solid fa-user" style="color: #B197FC;"></i></a></li>
+                    <li><a href="javascript:void(0)" id="fa-solid fa-bell"><i class="fa-solid fa-bell" style="color: #B197FC"></i></a></li>
+                    <li>
+                      <a href="cart.html"><i class="fa-solid fa-cart-shopping" style="color: #B197FC;"></i></a>
+                      <div class="minicart-wrapper">
+                        <p class="minicart-wrapper__title">購物車</p>
+                        <div class="minicart-wrapper__items ps-scroll">
+                          <div class="minicart-wrapper__items__single">
+                            <a href="javascript:void(0)" class="close-icon"><i class="pe-7s-close"></i></a>
+                            <div class="image">
+                              <a href="商品瀏覽.html">
+                                <img src="assets/img/products/product-2-90x100.jpg" class="img-fluid" alt="">
+                              </a>
+                            </div>
+                            <div class="content">
+                              <p class="product-title"><a href="商品瀏覽.html">Jane Lauren Rebel Sofa</a></p>
+                              <p class="product-calculation"><span class="count">1</span> x <span class="price">$900</span></p>
+                            </div>
+                          </div>
+                        </div>
+                        <p class="minicart-wrapper__subtotal">總計: <span>$1800</span></p>
+                        <div class="minicart-wrapper__buttons">
+                          <a href="cart.html" class="theme-button theme-button--minicart-button">查看購物車</a>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--======= mobile navigation area =======-->
+    <div class="header-mobile-navigation d-block d-lg-none">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-6 col-md-6">
+            <div class="header-logo">
+              <a href="index.html">
+                <img src="assets/img/logo.png" class="img-fluid" alt="">
+              </a>
+            </div>
+          </div>
+          <div class="col-6 col-md-6">
+            <div class="mobile-navigation text-end">
+              <ul class="header-icon__list">
+                <li><a href="wishlist.html"><i class="fa fa-heart-o"></i><span class="item-count">1</span></a></li>
+                <li><a href="cart.html"><i class="fa fa-shopping-basket"></i><span class="item-count">3</span></a></li>
+                <li><a href="javascript:void(0)" class="mobile-menu-icon" id="mobile-menu-trigger"><i class="fa fa-bars"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--======= End of mobile navigation area =======-->
+  </div>
+  <!--==================== End of header area ====================-->
+ <!--==================== 會員基本資料 ====================-->
+  <div class="page-content-wrapper">
+    <form class="member-form" th:action="@{/mem/update}" method="post" th:object="${memberVO}">
+      <div class="member-title">會員基本資料</div>
+
+      	<div class="form-group">
+		  <label for="memberName">姓名</label>
+		  <input id="memberName" type="text" th:field="*{name}" required readonly>
+		  <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+		</div>
+		
+		<div class="form-row">
+		  <div class="form-group">
+		    <label for="memberMobile">手機號碼</label>
+		    <input id="memberMobile" type="tel" th:field="*{phone}" required readonly>
+		    <small class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></small>
+		  </div>
+		  <div class="form-group">
+		    <label for="memberBirth">生日</label>
+		    <input id="memberBirth" type="date" th:field="*{birthday}" required readonly>
+		    <small class="text-danger" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></small>
+		  </div>
+		</div>
+		
+		<div class="form-group">
+		  <label for="memberEmail">E-mail</label>
+		  <input id="memberEmail" type="email" th:field="*{email}" readonly>
+		</div>
+		
+		<div class="form-group">
+		  <label for="memberAddress">住址</label>
+		  <input id="memberAddress" type="text" th:field="*{address}" readonly>
+		  <small class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></small>
+		</div>
+		
+		<div class="button-group">
+		    <button type="button" class="theme-button edit" onclick="enableEdit()">編輯</button>
+		    <button type="submit" class="theme-button save" style="display:none;">儲存</button>
+		    <a href="#" class="theme-button register" onclick="cancelEdit()" style="display:none;">取消</a>
+		 </div>
+
+</form>
+</div>
+<!-- JS files -->
+<script th:src="@{/js/vendors.js}"></script>
+<script th:src="@{/js/active.js}"></script>
+<script>
+  let originalValues = {};
+
+  window.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".member-form input").forEach(input => {
+      originalValues[input.id] = input.value;
+    });
+  });
+
+  function enableEdit() {
+    document.querySelectorAll(".member-form input").forEach(input => {
+      if (input.id !== "memberEmail") input.removeAttribute("readonly");
+    });
+    document.querySelector(".edit").style.display = "none";
+    document.querySelector(".save").style.display = "inline-block";
+    document.querySelector(".register").style.display = "inline-block";
+  }
+
+  function cancelEdit() {
+    document.querySelectorAll(".member-form input").forEach(input => {
+      input.value = originalValues[input.id];
+      input.setAttribute("readonly", true);
+    });
+    document.querySelector(".edit").style.display = "inline-block";
+    document.querySelector(".save").style.display = "none";
+    document.querySelector(".register").style.display = "none";
+  }
+</script>
+
+</body>
+</html>
