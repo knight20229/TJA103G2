@@ -1,7 +1,7 @@
 package com.dreamhouse.prod.model;
 
 import jakarta.persistence.*;
-import com.size.model.SizeVO;
+import com.dreamhouse.size.model.SizeVO;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Min;
 

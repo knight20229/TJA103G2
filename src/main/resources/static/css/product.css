@@ -53,6 +53,7 @@ main {
   width: 100%;
   border-radius: 10px;
   object-fit: cover;
+  max-height: 400px;
 }
 
 .btn-rounded-space {
@@ -77,8 +78,8 @@ main {
 
 /* hover 時：字保持白色（避免變黑） */
 .toggle-btn:hover {
-  color: white !important;
-  background-color: #0d6efd !important;
+  background-color: lightblue !important;
+  color: black !important;
   border-color: #0d6efd !important;
 }
 
@@ -116,4 +117,96 @@ main {
   background-color: #eef1f7;
   outline-color: #eef1f7;
   margin: 10px;
+}
+
+#searchInput::placeholder {
+    font-weight: 400;
+    opacity: 0.5;
+}
+
+.btn-reverse:hover {
+    background-color: white !important;
+    color: #0d6efd !important; /* Bootstrap primary 藍 */
+    border: 1px solid #0d6efd !important;
+}
+
+.btn-reverse-success:hover {
+    background-color: white !important;
+    color: #198754 !important; /* Bootstrap success 綠 */
+    border: 1px solid #198754 !important;
+}
+
+.btn {
+    transition: all 0.3s ease;
+}
+
+/* 以下是圖片燈箱 */
+/* 圖片容器 */
+.product-img-container {
+    cursor: pointer;
+}
+
+/* 遮罩層預設狀態 */
+.product-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* 半透明黑 */
+    opacity: 0; /* 平時隱藏 */
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+/* 圖片縮放效果 */
+.product-img-container img {
+    transition: transform 0.5s ease;
+}
+
+/* 滑鼠移入效果 */
+.product-img-container:hover .product-overlay {
+    opacity: 1; /* 顯示遮罩 */
+}
+
+.product-img-container:hover img {
+    transform: scale(1.08); /* 圖片輕微放大 */
+}
+
+/* 燈箱內的按鈕樣式 */
+.product-overlay .btn-light {
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.product-img-container:hover .btn-light {
+    transform: translateY(0); /* 按鈕從下方浮上來 */
+}
+
+
+.img-preview-container {
+    width: 100%;
+    max-height: 400px; 
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.img-preview-container img {
+    max-width: 100%;
+    max-height: 400px; 
+    width: auto;       
+    height: auto;      
+    object-fit: contain; 
+}
+
+.default-img {
+    object-fit: contain !important;
+    padding: 40px;
+    opacity: 0.5;
 }
