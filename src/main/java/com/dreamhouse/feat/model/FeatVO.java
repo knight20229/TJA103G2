@@ -32,7 +32,7 @@ public class FeatVO implements java.io.Serializable {
     }
 
     @Column(name = "FEATURE_NAME")
-    @NotEmpty(message="功能名稱: 請勿空白") 
+    @NotEmpty(message="商品功能: 請勿空白") 
     public String getFeatureName() {
         return this.featureName;
     }
@@ -57,5 +57,18 @@ public class FeatVO implements java.io.Serializable {
 
     public void setProds(Set<ProdVO> prods) {
         this.prods = prods;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FeatVO featVO = (FeatVO) o;
+        return Objects.equals(featureId, featVO.featureId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(featureId);
     }
 }

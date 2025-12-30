@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>後台管理 - 商品查詢</title>
+    <title>後台管理 - 尺寸管理</title>
 
     <!-- Bootstrap CSS -->
     <link
@@ -43,7 +43,7 @@
                 <a class="nav-link" th:href="@{/prod/listAllProd}">商品列表</a>
               </li>
               <li>
-                <a class="nav-link" th:href="@{/prod/addProd}">新增商品</a>
+                <a class="nav-link" href="#">新增商品</a>
               </li>
             </ul>
           </div>
@@ -87,11 +87,12 @@
           <li class="breadcrumb-item">
             <a th:href="@{/prod/listAllProd}" class="fs-5 text-primary text-decoration-none fw-bold breadcrumb_index">商品管理</a>
           </li>
-          <li class="breadcrumb-item active">商品查詢</li>
+          <li class="breadcrumb-item active">庫存管理</li>
         </ol>
       </nav>
-      
       <section>
+	      <form th:action="@{/prod/updateSize}" method="post">
+	      	<input type="hidden" name="productId" th:value="${prodVO.productId}" />
 	      	<div class="row">
 	        <!-- 左半：圖片 + 描述 + 尺寸 -->
 		        <div class="col-md-6">
@@ -113,7 +114,7 @@
             <!-- 商品編號 -->
 			<div class="mb-3 d-flex align-items-center">
 		        <label class="form-label fw-bold mb-0">商品編號：</label>
-		        <span class="text-secondary ms-2" th:text="${prodVO.productId}"></span>
+		        <span class="text-secondary fw-bold ms-2" th:text="${prodVO.productId}"></span>
 		    </div>
 
             <!-- 商品名稱 -->
@@ -124,14 +125,18 @@
 		    </div>
 
             <!-- 商品類型 -->
-            <div class="mb-3">
-			  <label class="form-label fw-bold">商品類型：
-			    <span th:text="${prodVO.productType} ? '床架' : '床墊'" 
-			          class="badge bg-secondary fs-6">
-			    </span>
-			  </label>
-			  <input type="hidden" name="productType" th:value="${prodVO.productType}" />
-		    </div>
+			<div class="mb-3">
+			    <label class="form-label fw-bold">商品類型：
+   			        <span th:if="${prodVO.productType == false or prodVO.productType == 0}" 
+			              class="badge bg-warning text-dark fs-6 fw-bold px-2 py-1">床墊
+			        </span>
+			        
+			        <span th:if="${prodVO.productType == true or prodVO.productType == 1}" 
+			              class="badge bg-info fs-6 fw-bold px-2 py-1">床架
+			        </span>
+			    </label>
+			    <input type="hidden" name="productType" th:value="${prodVO.productType}" />
+			</div>
 		    
             <!-- 商品材質 -->
 		    <div class="mb-3">
@@ -179,53 +184,47 @@
 			         class="size_group" 
 			         style="display: none;">
 			        
-			        <div class="row g-2 align-items-center mb-2 size_row">
-			            <div class="col-auto fw-bold" style="width: 100px;">標準 188cm</div>
+			        <div class="row g-3 align-items-center mb-2 size_row">
+			            <div class="col-auto fw-bold" style="width: 120px;">標準 188cm</div>
 			            <th:block th:each="size : ${allSizes}" th:if="${size.width == width && size.length == 188}">
 			                <input type="hidden" name="sizeId" th:value="${size.sizeId}" />
-			                <div class="col-2">
-			                    <span class="fw-bold" 
-                  					th:text="${configMap != null && configMap[size.sizeId] != null ? '庫存:' + configMap[size.sizeId].stock : '庫存:0'}">
-            					</span>
-			                </div>
 			                <div class="col-3">
-			                    <span class="text-primary fw-bold" 
-				                    th:text="${configMap != null && configMap[size.sizeId] != null ? '$' + configMap[size.sizeId].price : '未定價'}">
-					            </span>
+			                    <input type="number" name="stock" class="form-control" placeholder="庫存"
+			                           th:value="${configMap != null && configMap[size.sizeId] != null ? configMap[size.sizeId].stock : ''}">
+			                </div>
+			                <div class="col-4">
+			                    <input type="number" name="price" class="form-control" placeholder="價格"
+			                           th:value="${configMap != null && configMap[size.sizeId] != null ? configMap[size.sizeId].price : ''}">
 			                </div>
 			            </th:block>
 			        </div>
 			
-			        <div class="row g-2 align-items-center mb-2 size_row">
-			            <div class="col-auto fw-bold" style="width: 100px;">歐規 200cm</div>
+			        <div class="row g-3 align-items-center mb-2 size_row">
+			            <div class="col-auto fw-bold" style="width: 120px;">歐規 200cm</div>
 			            <th:block th:each="size : ${allSizes}" th:if="${size.width == width && size.length == 200}">
 			                <input type="hidden" name="sizeId" th:value="${size.sizeId}" />
-			                <div class="col-2">
-			                    <span class="fw-bold" 
-                  					th:text="${configMap != null && configMap[size.sizeId] != null ? '庫存:' + configMap[size.sizeId].stock : '庫存:0'}">
-            					</span>
-			                </div>
 			                <div class="col-3">
-			                    <span class="text-primary fw-bold" 
-				                    th:text="${configMap != null && configMap[size.sizeId] != null ? '$' + configMap[size.sizeId].price : '未定價'}">
-					            </span>
+			                    <input type="number" name="stock" class="form-control" placeholder="庫存"
+			                           th:value="${configMap != null && configMap[size.sizeId] != null ? configMap[size.sizeId].stock : ''}">
+			                </div>
+			                <div class="col-4">
+			                    <input type="number" name="price" class="form-control" placeholder="價格"
+			                           th:value="${configMap != null && configMap[size.sizeId] != null ? configMap[size.sizeId].price : ''}">
 			                </div>
 			            </th:block>
 			        </div>
 			
-			        <div class="row g-2 align-items-center mb-2 size_row">
-			            <div class="col-auto fw-bold" style="width: 100px;">加長 210cm</div>
+			        <div class="row g-3 align-items-center mb-2 size_row">
+			            <div class="col-auto fw-bold" style="width: 120px;">加長 210cm</div>
 			            <th:block th:each="size : ${allSizes}" th:if="${size.width == width && size.length == 210}">
 			                <input type="hidden" name="sizeId" th:value="${size.sizeId}" />
-			                <div class="col-2">
-			                    <span class="fw-bold" 
-                  					th:text="${configMap != null && configMap[size.sizeId] != null ? '庫存:' + configMap[size.sizeId].stock : '庫存:0'}">
-            					</span>
-			                </div>
 			                <div class="col-3">
-			                    <span class="text-primary fw-bold" 
-				                    th:text="${configMap != null && configMap[size.sizeId] != null ? '$' + configMap[size.sizeId].price : '未定價'}">
-					            </span>
+			                    <input type="number" name="stock" class="form-control" placeholder="庫存"
+			                           th:value="${configMap != null && configMap[size.sizeId] != null ? configMap[size.sizeId].stock : ''}">
+			                </div>
+			                <div class="col-4">
+			                    <input type="number" name="price" class="form-control" placeholder="價格"
+			                           th:value="${configMap != null && configMap[size.sizeId] != null ? configMap[size.sizeId].price : ''}">
 			                </div>
 			            </th:block>
 			        </div>
@@ -234,26 +233,14 @@
 			    <div id="no_width_msg" class="text-muted small py-3">請先選擇上方寬度以設定規格內容</div>
 			</div>
 
-				<div class="mt-5 d-flex gap-3">
-				    <form th:action="@{/prod/getOne_For_Update}" method="post">
-				        <input type="hidden" name="productId" th:value="${prodVO.productId}">
-				        <button type="submit" class="btn btn-primary btn-reverse px-4 fw-bold">
-				            <i class="bi bi-pencil-square me-1"></i>修改商品
-				        </button>
-				    </form>
-				
-				    <form th:action="@{/prod/setSizes}" method="get">
-				        <input type="hidden" name="productId" th:value="${prodVO.productId}">
-				        <button type="submit" class="btn btn-success btn-reverse-success px-4 fw-bold">
-				            <i class="bi bi-box-seam me-1"></i>修改庫存
-				        </button>
-				    </form>
-				
-				    <a th:href="@{/prod/listAllProd}" class="btn btn-outline-secondary px-4 fw-bold">
-				        <i class="bi bi-arrow-left me-1"></i>返回列表
-				    </a>
-				</div>
- 			</div>
+            <!-- 儲存/取消 -->
+            <div class="mt-4">
+              <button type="submit" class="btn btn-success btn-reverse-success me-3">儲存規格</button>
+			  <a th:href="@{/prod/listAllProd}" class="btn btn-outline-secondary">取消</a>
+            </div>
+        </div>
+      				</div>
+      			</form>
     	</section>
       
     </main>

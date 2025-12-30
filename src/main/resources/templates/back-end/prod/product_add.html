@@ -44,13 +44,10 @@
           <div class="collapse show" id="menu_products">
             <ul class="nav flex-column ms-3">
               <li>
-                <a class="nav-link" href="./product_index.html">商品列表</a>
+                <a class="nav-link" th:href="@{/prod/listAllProd}">商品列表</a>
               </li>
               <li>
-                <a class="nav-link" href="./product_add.html">新增商品</a>
-              </li>
-              <li>
-                <a class="nav-link" href="./product_edit.html">編輯商品</a>
+                <a class="nav-link" th:href="@{/prod/AddProd}">新增商品</a>
               </li>
             </ul>
           </div>
@@ -87,30 +84,31 @@
     </nav>
 
     <!-- ========== 主內容區 ========== -->
-    <main>
+    <main th:inline="none">
       <!-- 麵包屑 -->
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb d-flex align-items-center no-bg">
           <li class="breadcrumb-item">
-            <a href="./product_index.html" class="fs-5 text-primary text-decoration-none fw-bold breadcrumb_index">商品管理</a>
+            <a th:href="@{/prod/listAllProd}" class="fs-5 text-primary text-decoration-none fw-bold breadcrumb_index">商品管理</a>
           </li>
           <li class="breadcrumb-item active">新增商品</li>
         </ol>
       </nav>
-
+      <form th:action="@{insert}" method="post" th:object="${prodVO}" enctype="multipart/form-data">
       <div class="row">
         <!-- 左半：圖片上傳 + 預覽 + Summernote -->
         <div class="col-md-6">
           <!-- ========== 圖片上傳 ========== -->
           <section class="mb-4">
-            <img
-              id="previewImg"
-              src="./images/床1.jpg"
-              class="img-preview mb-2"
-            />
+			<img
+			  id="previewImg"
+			  th:src="${prodVO.base64Image != null} ? ${prodVO.base64Image} : (${prodVO.productId != null} ? @{'/prod/DBImgReader?productId=' + ${prodVO.productId}} : '')"
+			  th:style="${prodVO.base64Image != null || prodVO.productId != null} ? 'display:block' : 'display:none'"
+			  class="img-preview mb-2"
+			/>
             <!-- 隱藏的 file input -->
-            <input type="file" id="uploadImg" class="d-none" />
-
+            <input type="file" id="uploadImg" name = "images" accept= "image/*" class="d-none" />
+            
             <!-- 使用 label 當按鈕 -->
             <label for="uploadImg" class="btn btn-primary">
               <i class="bi bi-upload"></i> 上傳圖片
@@ -120,15 +118,20 @@
           <!-- ========== Summernote 上稿器 ========== -->
           <section>
             <label class="form-label fw-bold">商品介紹：</label>
-            <form method="post">
-              <textarea id="summernote" name="editordata"></textarea>
-            </form>
+              <textarea id="summernote" th:field="*{description}"></textarea>
+          <!-- ========== 錯誤訊息 ========== -->
+	          <div class="mt-2">
+			    <ul class="list-unstyled mt-2" th:if="${#fields.hasAnyErrors()}">
+			        <li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger small"></li>
+			    </ul>
+			  </div>
           </section>
+		  
+          
         </div>
 
         <!-- 右半：表單欄位 -->
         <div class="col-md-6">
-          <form>
             <!-- 商品編號 -->
             <div class="mb-3">
               <label class="form-label fw-bold">商品編號：</label>
@@ -141,12 +144,8 @@
             <!-- 商品名稱 -->
             <div class="mb-3">
               <label class="form-label fw-bold">商品名稱：</label>
-              <div class="col-4">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="請輸入商品名稱"
-                />
+              <div class="col-5">
+                <input type="text" th:field="*{productName}" class="form-control" placeholder="請輸入商品名稱"/>
               </div>
             </div>
 
@@ -157,116 +156,68 @@
                 <button
                   type="button"
                   class="btn btn-outline-primary toggle-btn active"
-                  id="btn_mattress"
-                >
-                  床墊
+                  id="btn_mattress">床墊
                 </button>
                 <button
                   type="button"
                   class="btn btn-outline-primary toggle-btn"
-                  id="btn_frame"
-                >
-                  床架
+                  id="btn_frame">床架
                 </button>
               </div>
-              <input
-                type="hidden"
-                name="product_type"
-                id="product_type"
-                value="mattress"
-              />
+				<input
+				    type="hidden"
+				    name="productType"
+				    id="product_type"
+				    th:value="${prodVO.productType != null} ? ${prodVO.productType} : 'false'"
+				/>
             </div>
 
             <!-- 商品材質 -->
             <div class="mb-3">
   				<label class="form-label fw-bold">商品材質：</label>
-  				<div class="col-4" id="mattress_material">
-    				<select class="form-select" name="material">
+  				<div class="col-4" id="mattress_material" th:classappend="*{productType} ? 'd-none' : ''">
+    				<select class="form-select" name="material" >
       					<option th:each="m : ${mattressMaterials}" 
               				th:value="${m}" 
-              				th:text="${m}">材質名稱</option>
+              				th:text="${m}"
+              				th:selected="${m == prodVO.material}"
+              				>材質名稱</option>
     				</select>
   				</div>
   
-			  	<div class="col-4 d-none" id="frame_material">
+			  	<div class="col-4 d-none" id="frame_material" th:classappend="!*{productType} ? 'd-none' : ''">
 				    <select class="form-select" name="material" >
 				      <option th:each="f : ${frameMaterials}" 
 				              th:value="${f}" 
-				              th:text="${f}">材質名稱</option>
+				              th:text="${f}"
+				              th:selected="${f == prodVO.material}"
+				              >材質名稱</option>
 				    </select>
 				  </div>
 			</div>
 
 			<div class="mb-3">
-			  <label class="form-label fw-bold">商品功能：</label><br />
-			  <label class="form-label fw-bold">床墊功能：</label>
-			  <div th:each="feat : ${featListData}" th:if="${feat.featureId >= 1 && feat.featureId <= 5}" class="form-check form-check-inline mattress_functions">
-			    <input class="form-check-input" type="checkbox" name="featureId" 
-			           th:id="'f' + ${feat.featureId}" th:value="${feat.featureId}" />
-			    <label class="form-check-label" th:for="'f' + ${feat.featureId}" th:text="${feat.featureName}">功能名稱</label>
-			  </div>
-							  				  
-			  <br />
-							  		
-			  <label class="form-label fw-bold">床架功能：</label>
-			  <div th:each="feat : ${featListData}" th:if="${feat.featureId >= 6 && feat.featureId <= 10}" class="form-check form-check-inline frame_functions">
-			    <input class="form-check-input" type="checkbox" name="featureId" 
-			           th:id="'f' + ${feat.featureId}" th:value="${feat.featureId}" disabled />
-			    <label class="form-check-label" th:for="'f' + ${feat.featureId}" th:text="${feat.featureName}">功能名稱</label>
-			  </div>
-			</div>
-
-            <!-- 商品尺寸選擇 -->
-			<input type="hidden" id="allSizesData" th:value="${allSizesJson}" />
+			    <label class="form-label fw-bold text-primary">商品功能：</label><br />
 			
-			<div class="mb-3">
-			    <label class="form-label fw-bold">商品尺寸（寬度）：</label>
-			    <div class="col-5">
-			        <select class="form-select" id="width_selector">
-			            <option value="">請選擇寬度</option>
-			            <option th:each="width : ${distinctWidths}" th:value="${width}">
-			                <span th:switch="${width}">
-			                    <span th:case="90">單人床 寬 90cm</span>
-			                    <span th:case="105">單人床加大 寬 105cm</span>
-			                    <span th:case="120">單人床加大(歐規) 寬 120cm</span>
-			                    <span th:case="150">雙人床 寬 150cm</span>
-			                    <span th:case="180">雙人床加大 寬 180cm</span>
-			                    <span th:case="*">[[${width}]]cm</span>
-			                </span>
-			            </option>
-			        </select>
+			    <div id="mattress_func_group">
+			        <label class="form-label fw-bold text-primary">床墊功能：</label><br/>
+			        <div th:each="feat : ${featListData}" th:if="${feat.featureId >= 1 && feat.featureId <= 5}" 
+			             class="form-check form-check-inline mattress_functions">
+			            <input class="form-check-input" type="checkbox" th:field="*{features}" 
+			                   th:id="'f' + ${feat.featureId}" th:value="${feat.featureId}" />
+			            <label class="form-check-label" th:for="'f' + ${feat.featureId}" th:text="${feat.featureName}">功能名稱</label>
+			        </div>
 			    </div>
-			</div>
 			
-			<div class="mb-3">
-			    <label class="form-label fw-bold">規格明細：</label>
-			
-			    <div class="row g-2 align-items-center mb-2 size_row" data-length="188">
-			        <div class="col-auto">標準 188cm</div>
-			        <input type="hidden" name="sizeId" class="size-id-input" />
-			        <div class="col-2"><input type="number" name="stock" class="form-control" placeholder="數量"></div>
-			        <div class="col-3"><input type="number" name="price" class="form-control" placeholder="價格"></div>
-             		<div class="col-2"><button class="btn btn-outline-secondary btn-nosize" type="button">無庫存</button></div>
+			    <div id="frame_func_group" class="mt-2">
+			        <label class="form-label fw-bold text-primary">床架功能：</label><br/>
+			        <div th:each="feat : ${featListData}" th:if="${feat.featureId >= 6 && feat.featureId <= 10}" 
+			             class="form-check form-check-inline frame_functions">
+			            <input class="form-check-input" type="checkbox" th:field="*{features}" 
+			                   th:id="'f' + ${feat.featureId}" th:value="${feat.featureId}" disabled />
+			            <label class="form-check-label" th:for="'f' + ${feat.featureId}" th:text="${feat.featureName}">功能名稱</label>
+			        </div>
 			    </div>
-
-			
-			    <div class="row g-2 align-items-center mb-2 size_row" data-length="200">
-			        <div class="col-auto">歐規 200cm</div>
-			        <input type="hidden" name="sizeId" class="size-id-input" />
-			        <div class="col-2"><input type="number" name="stock" class="form-control" placeholder="數量"></div>
-			        <div class="col-3"><input type="number" name="price" class="form-control" placeholder="價格"></div>
-          			<div class="col-2"><button class="btn btn-outline-secondary btn-nosize" type="button">無庫存</button></div>
-			    </div>
-
-			
-			    <div class="row g-2 align-items-center mb-2 size_row" data-length="210">
-			        <div class="col-auto">加長 210cm</div>
-			        <input type="hidden" name="sizeId" class="size-id-input" />
-			        <div class="col-2"><input type="number" name="stock" class="form-control" placeholder="數量"></div>
-			        <div class="col-3"><input type="number" name="price" class="form-control" placeholder="價格"></div>
-       			    <div class="col-2"><button class="btn btn-outline-secondary btn-nosize" type="button">無庫存</button></div>
-			    </div>
-
 			</div>
 
             <!-- 上架日期與時間 -->
@@ -275,7 +226,7 @@
 
               <div class="d-flex gap-2">
                 <div class="col-auto">
-					<input type="datetime-local" class="form-control" name="onDate" />                </div>
+					<input type="datetime-local" class="form-control" th:field="*{onDate}" />                </div>
               </div>
             </div>
 
@@ -285,7 +236,7 @@
 
               <div class="d-flex gap-2">
                 <div class="col-auto">
-                  <input type="datetime-local" class="form-control" name="offDate" />
+                  <input type="datetime-local" class="form-control" th:field="*{offDate}" />
                 </div>
               </div>
             </div>
@@ -311,27 +262,23 @@
               <input
                 type="hidden"
                 id="product_status"
-                name="product_status"
-                value="on"
-              />
+                name="status"
+				th:value="${prodVO.status != null} ? ${prodVO.status} : 'false'"              />
             </div>
             <!-- 儲存/取消 -->
             <div class="mt-4">
-              <button type="submit" class="btn btn-primary me-3">儲存</button>
-              <button type="button" class="btn btn-outline-secondary">
-                取消
-              </button>
+              <button type="submit" class="btn btn-primary me-3">儲存並設置庫存</button>
+			  <a th:href="@{/prod/listAllProd}" class="btn btn-outline-secondary">取消</a>
             </div>
-          </form>
         </div>
       </div>
+      </form>
     </main>
 
     <!-- JS 套件 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- include libraries(jQuery, bootstrap) -->
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
-    <script th:src="@{/js/product.js}"></script>
+    <script th:src="@{/js/product_save.js}"></script>
   </body>
 </html>
