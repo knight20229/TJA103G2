@@ -3,6 +3,8 @@ package com.dreamhouse.prod.model;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,10 +18,11 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-import com.feat.model.FeatVO;
+import com.dreamhouse.feat.model.FeatVO;
 
 @Entity
 @Table(name = "PRODUCT") 
@@ -39,12 +42,14 @@ public class ProdVO implements java.io.Serializable {
     private LocalDateTime updateTime;
     private List<ProdSizeConnectVO> prodSizeConnects = new ArrayList<>();
     private List<FeatVO> features = new ArrayList<>();
+    private String base64Image;
+
     
     public ProdVO() {} // 無參數建構子
     
-    @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @Id
     @Column(name = "PRODUCT_ID") 
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     public Integer getProductId() {
         return productId;
     }
@@ -113,7 +118,7 @@ public class ProdVO implements java.io.Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "ON_DATE") 
     @NotNull(message="上架日期: 請勿空白") 
     public LocalDateTime getOnDate() {
@@ -162,10 +167,11 @@ public class ProdVO implements java.io.Serializable {
     
     @ManyToMany
     @JoinTable(
-        name = "PRODUCT_FEATURE_MAP", 
+        name = "PRODUCT_FEATURE_CONNECT", 
         joinColumns = @JoinColumn(name = "PRODUCT_ID"),
         inverseJoinColumns = @JoinColumn(name = "FEATURE_ID")
     )
+    @NotEmpty(message="商品功能: 請至少勾選一項")
     public List<FeatVO> getFeatures() {
         return features;
     }
@@ -173,4 +179,14 @@ public class ProdVO implements java.io.Serializable {
     public void setFeatures(List<FeatVO> features) {
         this.features = features;
     }
+    
+    @Transient // 標註不需要持久化到資料庫
+    public String getBase64Image() {
+        return base64Image;
+    }
+    public void setBase64Image(String base64Image) {
+        this.base64Image = base64Image;
+    }
+    
+
 }
