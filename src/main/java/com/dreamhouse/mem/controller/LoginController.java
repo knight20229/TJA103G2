@@ -1,8 +1,8 @@
 package com.dreamhouse.mem.controller;
 
-import com.member.model.MemVO;
-import com.member.dto.LoginForm;
-import com.member.model.MemService;
+import com.dreamhouse.mem.model.MemVO;
+import com.dreamhouse.mem.dto.LoginForm;
+import com.dreamhouse.mem.model.MemService;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

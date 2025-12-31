@@ -1,7 +1,7 @@
 package com.dreamhouse.mem.controller;
 
-import com.member.model.MemVO;
-import com.member.model.MemService;
+import com.dreamhouse.mem.model.MemVO;
+import com.dreamhouse.mem.model.MemService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
