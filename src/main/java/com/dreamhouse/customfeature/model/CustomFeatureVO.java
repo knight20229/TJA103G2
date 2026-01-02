@@ -1,10 +1,6 @@
 package com.dreamhouse.customfeature.model;
 
 import java.io.*;
-import java.util.*;
-
-import com.dreamhouse.customprod.model.*;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 

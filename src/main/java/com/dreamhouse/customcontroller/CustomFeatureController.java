@@ -51,7 +51,7 @@ public class CustomFeatureController {
 		List<CustomFeatureVO> list = featureSvc.getAll();
 		model.addAttribute("featureListData", list);
 		model.addAttribute("success", "- (刪除成功)");
-		return "back-custom/custom/listFeature";
+		return "back-custom/custom/listAllFeature";
 	}
 
 }

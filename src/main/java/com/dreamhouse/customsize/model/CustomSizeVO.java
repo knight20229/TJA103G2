@@ -15,15 +15,15 @@ public class CustomSizeVO implements Serializable{
 	private Integer customSizeId;
 	
 	@Column(name ="CUSTOM_WIDTH")
-	@NotNull(message = "客製寬度:請勿空白")
-	@Min(value = 100, message = "客製寬度:不能小於{value}")
-	@Max(value = 1000, message = "客製寬度:不能大於{value}")
+	@NotNull(message = "寬度:請勿空白")
+	@Min(value = 100, message = "寬度:不能小於{value}")
+	@Max(value = 1000, message = "寬度:不能大於{value}")
 	private Integer customWidth;
 	
 	@Column(name ="CUSTOM_LENGTH")
-	@NotNull(message = "客製長度:請勿空白")
-	@Min(value = 100, message = "客製長度:不能小於{value}")
-	@Max(value = 1000, message = "客製長度:不能大於{value}")
+	@NotNull(message = "長度:請勿空白")
+	@Min(value = 100, message = "長度:不能小於{value}")
+	@Max(value = 1000, message = "長度:不能大於{value}")
 	private Integer customLength;
 	
 	@Column(name ="CUSTOM_SIZE_PRICE")

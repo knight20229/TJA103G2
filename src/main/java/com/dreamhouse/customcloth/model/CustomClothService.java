@@ -16,7 +16,8 @@ public class CustomClothService {
 	}
 	
 	public void deleteCloth(Integer cloth) {
-		
+		if(repository.existsById(cloth))
+			repository.deleteById(cloth);
 	}
 	
 	public List<CustomClothVO> getAll(){
