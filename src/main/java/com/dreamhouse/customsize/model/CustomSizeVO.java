@@ -1,16 +1,12 @@
 package com.dreamhouse.customsize.model;
 
 import java.io.Serializable;
-import java.util.*;
-
-import com.dreamhouse.customprod.model.*;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name ="CUSTOM_SIZE")
-public class SizeVO implements Serializable{
+public class CustomSizeVO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -21,33 +17,29 @@ public class SizeVO implements Serializable{
 	@Column(name ="CUSTOM_WIDTH")
 	@NotNull(message = "客製寬度:請勿空白")
 	@Min(value = 100, message = "客製寬度:不能小於{value}")
-	@Min(value = 1000, message = "客製寬度:不能大於{value}")
+	@Max(value = 1000, message = "客製寬度:不能大於{value}")
 	private Integer customWidth;
 	
 	@Column(name ="CUSTOM_LENGTH")
 	@NotNull(message = "客製長度:請勿空白")
 	@Min(value = 100, message = "客製長度:不能小於{value}")
-	@Min(value = 1000, message = "客製長度:不能大於{value}")
+	@Max(value = 1000, message = "客製長度:不能大於{value}")
 	private Integer customLength;
 	
-	@Column(name ="SIZE_PRICE")
+	@Column(name ="CUSTOM_SIZE_PRICE")
 	@NotNull(message ="尺寸價格:請勿空白")
 	@Min(value = 1000, message = "尺寸價格:不能小於{value}")
-	@Min(value = 10000, message = "尺寸價格:不能大於{value}")
-	private Integer sizePrice;
+	@Max(value = 10000, message = "尺寸價格:不能大於{value}")
+	private Integer customSizePrice;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="sizeVo")
-	@OrderBy("customSizeId")
-	private Set<CustomProductVO> sizeproducts = new HashSet<CustomProductVO>();
-	
-	public SizeVO() {}	//無參數建構子
+	public CustomSizeVO() {}	//無參數建構子
 
-	public Integer getCustomId() {
+	public Integer getCustomSizeId() {
 		return customSizeId;
 	}
 
-	public void setCustomId(Integer customId) {
-		this.customSizeId = customId;
+	public void setCustomSizeId(Integer customSizeId) {
+		this.customSizeId = customSizeId;
 	}
 
 	public Integer getCustomWidth() {
@@ -62,23 +54,16 @@ public class SizeVO implements Serializable{
 		return customLength;
 	}
 
-	public Integer getSizePrice() {
-		return sizePrice;
-	}
-
-	public void setSizePrice(Integer sizePrice) {
-		this.sizePrice = sizePrice;
-	}
-
 	public void setCustomLength(Integer customLength) {
 		this.customLength = customLength;
 	}
 
-	public Set<CustomProductVO> getProducts() {
-		return sizeproducts;
+	public Integer getCustomSizePrice() {
+		return customSizePrice;
 	}
 
-	public void setProducts(Set<CustomProductVO> products) {
-		this.sizeproducts = products;
+	public void setCustomSizePrice(Integer customSizePrice) {
+		this.customSizePrice = customSizePrice;
 	}
+
 }

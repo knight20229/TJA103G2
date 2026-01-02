@@ -3,12 +3,12 @@ package com.dreamhouse.customprod.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import jakarta.persistence.*;
+import com.dreamhouse.customcloth.model.CustomClothVO;
+import com.dreamhouse.customfeature.model.CustomFeatureVO;
+import com.dreamhouse.custommaterial.model.CustomMaterialVO;
+import com.dreamhouse.customsize.model.CustomSizeVO;
 
-import com.dreamhouse.customcloth.model.ClothVO;
-import com.dreamhouse.customfeature.model.FeatureVO;
-import com.dreamhouse.custommaterial.model.MaterialVO;
-import com.dreamhouse.customsize.model.SizeVO;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name ="CUSTOM_PRODUCT")
@@ -22,22 +22,22 @@ public class CustomProductVO implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name ="CUSTOM_CLOTH_ID")
-	private ClothVO clothVo;
+	private CustomClothVO customClothVo;
 	
 	@Column(name ="HAS_BED_FRAME")
 	private Boolean hasBedFrame;
 	
 	@ManyToOne
 	@JoinColumn(name ="CUSTOM_MATERIAL_ID")
-	private MaterialVO materialVo;
+	private CustomMaterialVO customMaterialVo;
 	
 	@ManyToOne
 	@JoinColumn(name ="CUSTOM_FEATURE_ID")
-	private FeatureVO featureVo;
+	private CustomFeatureVO customFeatureVo;
 	
 	@ManyToOne
 	@JoinColumn(name ="CUSTOM_SIZE_ID")
-	private SizeVO customSizeVo;
+	private CustomSizeVO customSizeVo;
 	
 	@Column(name ="CUSTOM_PRICE")
 	private Integer customPrice;

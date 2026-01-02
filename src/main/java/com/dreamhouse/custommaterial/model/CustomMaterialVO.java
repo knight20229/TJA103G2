@@ -10,7 +10,7 @@ import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name ="CUSTOM_MATERIAL")
-public class MaterialVO implements Serializable{
+public class CustomMaterialVO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -26,14 +26,14 @@ public class MaterialVO implements Serializable{
 	@Column(name ="MATERIAL_PRICE")
 	@NotNull(message="材質價格:請勿空白")
 	@Min(value = 1000, message = "材質價格:不能小於{value}")
-	@Min(value = 10000, message = "材質價格:不能大於{value}")
+	@Max(value = 10000, message = "材質價格:不能大於{value}")
 	private Integer price;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="materialVo")
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="customMaterialVo")
 	@OrderBy("customMaterialId")
-	private Set<CustomProductVO> materialproducts = new HashSet<CustomProductVO>();
+	private Set<CustomProductVO> materialproducts = new HashSet<>();
 	
-	public MaterialVO() {}	//無參數建構子
+	public CustomMaterialVO() {}	//無參數建構子
 
 	public Integer getMaterialId() {
 		return materialId;
