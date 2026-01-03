@@ -1,6 +1,9 @@
 package com.dreamhouse.customcloth.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -24,6 +27,9 @@ public class CustomClothVO implements Serializable{
 	@Min(value = 1000, message = "布料價格:不能小於{value}")
 	@Max(value = 10000, message = "布料價格:不能大於{value}")
 	private Integer customClothPrice;
+	
+	@OneToMany(mappedBy="clothVO")
+	private Set<CustomClothVO> cloths = new HashSet<CustomClothVO>();
 	
 	public CustomClothVO() {}	//無參數建構子
 
@@ -49,6 +55,14 @@ public class CustomClothVO implements Serializable{
 
 	public void setCustomClothPrice(Integer customClothPrice) {
 		this.customClothPrice = customClothPrice;
+	}
+
+	public Set<CustomClothVO> getCloths() {
+		return cloths;
+	}
+
+	public void setCloths(Set<CustomClothVO> cloths) {
+		this.cloths = cloths;
 	}
 
 }

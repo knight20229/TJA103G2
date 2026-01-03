@@ -1,6 +1,11 @@
 package com.dreamhouse.customfeature.model;
 
 import java.io.*;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.dreamhouse.customprod.model.CustomProductVO;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -25,6 +30,8 @@ public class CustomFeatureVO implements Serializable{
 	@Max(value = 10000, message = "功能價格:不能大於{value}")
 	private Integer customFeaturePrice;
 	
+	@OneToMany(mappedBy="featureVO")
+	private Set<CustomProductVO> features = new HashSet<CustomProductVO>();
 	
 	public CustomFeatureVO() {}	//無參數建構子
 
@@ -50,6 +57,14 @@ public class CustomFeatureVO implements Serializable{
 
 	public void setCustomFeaturePrice(Integer customFeaturePrice) {
 		this.customFeaturePrice = customFeaturePrice;
+	}
+
+	public Set<CustomProductVO> getFeatures() {
+		return features;
+	}
+
+	public void setFeatures(Set<CustomProductVO> features) {
+		this.features = features;
 	}
 
 }

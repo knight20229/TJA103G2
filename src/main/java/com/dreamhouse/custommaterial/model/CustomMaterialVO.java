@@ -1,8 +1,21 @@
 package com.dreamhouse.custommaterial.model;
 
-import java.io.*;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name ="CUSTOM_MATERIAL")
@@ -24,6 +37,9 @@ public class CustomMaterialVO implements Serializable{
 	@Min(value = 1000, message = "材質價格:不能小於{value}")
 	@Max(value = 10000, message = "材質價格:不能大於{value}")
 	private Integer customMaterialPrice;
+	
+	@OneToMany(mappedBy="materialVO")
+	private Set<CustomMaterialVO> materials =new HashSet<CustomMaterialVO>();
 	
 	public CustomMaterialVO() {}	//無參數建構子
 
@@ -49,6 +65,14 @@ public class CustomMaterialVO implements Serializable{
 
 	public void setCustomMaterialPrice(Integer customMaterialPrice) {
 		this.customMaterialPrice = customMaterialPrice;
+	}
+
+	public Set<CustomMaterialVO> getMaterials() {
+		return materials;
+	}
+
+	public void setMaterials(Set<CustomMaterialVO> materials) {
+		this.materials = materials;
 	}
 
 }

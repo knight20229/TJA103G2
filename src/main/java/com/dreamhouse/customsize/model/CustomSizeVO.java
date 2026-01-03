@@ -1,6 +1,9 @@
 package com.dreamhouse.customsize.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -31,6 +34,9 @@ public class CustomSizeVO implements Serializable{
 	@Min(value = 1000, message = "尺寸價格:不能小於{value}")
 	@Max(value = 10000, message = "尺寸價格:不能大於{value}")
 	private Integer customSizePrice;
+	
+	@OneToMany(mappedBy="sizeVO")
+	private Set<CustomSizeVO> sizes = new HashSet<CustomSizeVO>();
 	
 	public CustomSizeVO() {}	//無參數建構子
 
@@ -64,6 +70,14 @@ public class CustomSizeVO implements Serializable{
 
 	public void setCustomSizePrice(Integer customSizePrice) {
 		this.customSizePrice = customSizePrice;
+	}
+
+	public Set<CustomSizeVO> getSizes() {
+		return sizes;
+	}
+
+	public void setSizes(Set<CustomSizeVO> sizes) {
+		this.sizes = sizes;
 	}
 
 }
