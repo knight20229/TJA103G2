@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.dreamhouse.customprod.model.CustomProductVO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +31,7 @@ public class CustomMaterialVO implements Serializable{
 	
 	@Column(name ="CUSTOM_MATERIAL_NAME")
 	@NotEmpty(message="材質名稱:請勿空白")
-	@Pattern(regexp = "^[(\u4e00-\\u9fa5)]{2,5}$", message = "材質名稱只能是中文,長度需在2到5")
+	@Pattern(regexp = "^[\u4e00-\\u9fa5]{2,5}$", message = "材質名稱只能是中文,長度需在2到5")
 	private String customMaterialName;
 	
 	@Column(name ="MATERIAL_PRICE")
@@ -39,7 +41,7 @@ public class CustomMaterialVO implements Serializable{
 	private Integer customMaterialPrice;
 	
 	@OneToMany(mappedBy="materialVO")
-	private Set<CustomMaterialVO> materials =new HashSet<CustomMaterialVO>();
+	private Set<CustomProductVO> materialProducts =new HashSet<>();
 	
 	public CustomMaterialVO() {}	//無參數建構子
 
@@ -67,12 +69,12 @@ public class CustomMaterialVO implements Serializable{
 		this.customMaterialPrice = customMaterialPrice;
 	}
 
-	public Set<CustomMaterialVO> getMaterials() {
-		return materials;
+	public Set<CustomProductVO> getMaterialProducts() {
+		return materialProducts;
 	}
 
-	public void setMaterials(Set<CustomMaterialVO> materials) {
-		this.materials = materials;
+	public void setMaterialProducts(Set<CustomProductVO> materialProducts) {
+		this.materialProducts = materialProducts;
 	}
 
 }

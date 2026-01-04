@@ -20,32 +20,93 @@ public class CustomProductVO implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	//Primary Key 值由identity 自動產生
 	private Integer customProductId;
 	
-	@ManyToOne
-	@JoinColumn(name ="CUSTOM_CLOTH_ID")
-	private CustomClothVO customClothVo;
-	
 	@Column(name ="HAS_BED_FRAME")
 	private Boolean hasBedFrame;
 	
+	@Column(name ="CUSTOM_PRICE")
+	private Integer customPrice;
+		
+	@Column(name ="CREATE_TIME")
+	private LocalDateTime createTime;
+	
+	@ManyToOne
+	@JoinColumn(name ="CUSTOM_CLOTH_ID")
+	private CustomClothVO clothVO;
+	
 	@ManyToOne
 	@JoinColumn(name ="CUSTOM_MATERIAL_ID")
-	private CustomMaterialVO customMaterialVo;
+	private CustomMaterialVO materialVO;
 	
 	@ManyToOne
 	@JoinColumn(name ="CUSTOM_FEATURE_ID")
-	private CustomFeatureVO customFeatureVo;
+	private CustomFeatureVO featureVO;
 	
 	@ManyToOne
 	@JoinColumn(name ="CUSTOM_SIZE_ID")
-	private CustomSizeVO customSizeVo;
-	
-	@Column(name ="CUSTOM_PRICE")
-	private Integer customPrice;
-	
-//	@ManyToOne
-//	private MemVo memberId;
-	
-	@Column(name ="CREATE_TIME")
-	private LocalDateTime createTime;
+	private CustomSizeVO sizeVO;
+
+	public Integer getCustomProductId() {
+		return customProductId;
+	}
+
+	public void setCustomProductId(Integer customProductId) {
+		this.customProductId = customProductId;
+	}
+
+	public Boolean getHasBedFrame() {
+		return hasBedFrame;
+	}
+
+	public void setHasBedFrame(Boolean hasBedFrame) {
+		this.hasBedFrame = hasBedFrame;
+	}
+
+	public Integer getCustomPrice() {
+		return customPrice;
+	}
+
+	public void setCustomPrice(Integer customPrice) {
+		this.customPrice = customPrice;
+	}
+
+	public LocalDateTime getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(LocalDateTime createTime) {
+		this.createTime = createTime;
+	}
+
+	public CustomClothVO getClothVO() {
+		return clothVO;
+	}
+
+	public void setClothVO(CustomClothVO clothVO) {
+		this.clothVO = clothVO;
+	}
+
+	public CustomMaterialVO getMaterialVO() {
+		return materialVO;
+	}
+
+	public void setMaterialVO(CustomMaterialVO materialVO) {
+		this.materialVO = materialVO;
+	}
+
+	public CustomFeatureVO getFeatureVO() {
+		return featureVO;
+	}
+
+	public void setFeatureVO(CustomFeatureVO featureVO) {
+		this.featureVO = featureVO;
+	}
+
+	public CustomSizeVO getSizeVO() {
+		return sizeVO;
+	}
+
+	public void setSizeVO(CustomSizeVO sizeVO) {
+		this.sizeVO = sizeVO;
+	}
 	
 }

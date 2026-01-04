@@ -4,8 +4,18 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import com.dreamhouse.customprod.model.CustomProductVO;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name ="CUSTOM_SIZE")
@@ -36,7 +46,7 @@ public class CustomSizeVO implements Serializable{
 	private Integer customSizePrice;
 	
 	@OneToMany(mappedBy="sizeVO")
-	private Set<CustomSizeVO> sizes = new HashSet<CustomSizeVO>();
+	private Set<CustomProductVO> sizeProducts = new HashSet<>();
 	
 	public CustomSizeVO() {}	//無參數建構子
 
@@ -72,12 +82,12 @@ public class CustomSizeVO implements Serializable{
 		this.customSizePrice = customSizePrice;
 	}
 
-	public Set<CustomSizeVO> getSizes() {
-		return sizes;
+	public Set<CustomProductVO> getSizeProducts() {
+		return sizeProducts;
 	}
 
-	public void setSizes(Set<CustomSizeVO> sizes) {
-		this.sizes = sizes;
+	public void setSizeProducts(Set<CustomProductVO> sizeProducts) {
+		this.sizeProducts = sizeProducts;
 	}
 
 }
