@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>後台管理</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"/>
+    <!-- Summernote -->
+ 
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="stylesheet" href="/css/admin.css">
+  </head>
+  <body>
+    <!-- ========== 左側側邊欄 ========== -->
+    <nav class="sidebar position-fixed top-0 start-0 vh-100 bg-light p-4" style="width: 250px;">
+      <h5 class="mb-4 fs-2">後台管理</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link fs-3" href="#">會員管理</a></li>
+        <li class="nav-item fs-3">
+          <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#menu_products">
+            商品管理<i class="bi bi-chevron-down"></i>
+          </a>
+          <div class="collapse" id="menu_products">
+            <ul class="nav flex-column ms-3">
+              <li><a class="nav-link fs-4" href="./product_index.html">商品列表</a></li>
+              <li><a class="nav-link fs-4" href="./product_add.html">新增商品</a></li>
+              <li><a class="nav-link fs-4" href="./product_edit.html">編輯商品</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item fs-3"><a class="nav-link" href="#">訂單管理</a></li>
+        <li class="nav-item fs-3">
+          <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#menu_activity">
+            活動管理<i class="bi bi-chevron-down"></i>
+          </a>
+          <div class="collapse" id="menu_activity">
+            <ul class="nav flex-column ms-3">
+              <li><a class="nav-link fs-4" href="#">優惠券管理</a></li>
+              <li><a class="nav-link fs-4" href="#">促銷管理</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item fs-3"><a class="nav-link" href="#">客服管理</a></li>
+      </ul>
+      <div class="mt-4 d-flex justify-content-center logout-wrapper">
+        <button class="btn btn-outline-primary w-50 fs-3 btn-logout">
+          <i class="bi bi-box-arrow-right"></i> 登出
+        </button>
+      </div>
+    </nav>
+
+	<!-- ========== 主內容區 ========== -->
+	<main class="p-4" style="margin-left: 250px;">
+	  <h2 class="mb-4">會員管理</h2>
+	  <table class="table table-bordered align-middle text-center">
+	    <thead class="table-light">
+	      <tr>
+	        <th>會員編號</th>
+	        <th>姓名</th>
+	        <th>電子信箱</th>
+	        <th>電話</th>
+	        <th>註冊日期</th>
+	        <th>狀態</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <!-- 使用 Thymeleaf th:each 渲染會員列表 -->
+	      <tr th:each="mem : ${members}">
+	        <td th:text="${mem.memberId}"></td>
+	        <td th:text="${mem.name}"></td>
+	        <td th:text="${mem.email}"></td>
+	        <td th:text="${mem.phone.substring(0,4) + '-' + mem.phone.substring(4,7) + '-' + mem.phone.substring(7)}"></td>
+	        <!-- 用 createTime (Timestamp) 顯示註冊日期 -->
+	        <td th:text="${#dates.format(mem.createTime, 'yyyy/MM/dd HH:mm')}"></td>
+	        <td>
+			  <button class="btn btn-outline-primary btn-sm view-member-btn"
+			        th:attr="data-id=${mem.memberId}"
+			        data-bs-toggle="modal" data-bs-target="#viewModal">
+			  <i class="bi bi-eye-fill"></i>
+			  </button>
+              <button class="btn btn-sm toggle-status-btn"
+                      th:classappend="${mem.status == 0} ? 'btn-outline-danger' : 'btn-outline-success'"
+                      th:attr="data-id=${mem.memberId}, data-name=${mem.name}, data-status=${mem.status}"
+                      data-bs-toggle="modal" data-bs-target="#statusModal">
+                <i th:class="${mem.status == 0} ? 'bi bi-slash-circle-fill text-danger' : 'bi bi-check-circle-fill text-success'"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+	<!-- 分頁按鈕區 -->
+	<div id="pagination" class="d-flex justify-content-center mt-3"></div>
+
+    <!-- 狀態確認 Modal -->
+    <div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="statusModalLabel">狀態切換確認</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="statusModalBody"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-danger" id="confirmStatusBtn">確認</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="viewModalLabel">查看會員資料</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+	      </div>
+	      <div class="modal-body" id="viewModalBody">
+	        <!-- AJAX 載入的會員資料會放這裡 -->
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+    <!-- JS 套件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <!-- 狀態切換 JS -->
+    <script>
+    let currentMemberId = null;
+    let currentStatus = null;
+
+    // 當點擊狀態按鈕時，顯示確認視窗
+    document.addEventListener('click', function (e) {
+      const btn = e.target.closest('.toggle-status-btn');
+      if (btn) {
+        currentMemberId = btn.getAttribute('data-id');
+        currentStatus = parseInt(btn.getAttribute('data-status'));
+        const name = btn.getAttribute('data-name');
+        const nextStatusText = currentStatus === 0 ? '啟用' : '停用';
+
+        // 把 debug 移到這裡，才會顯示正確的值
+        console.log("抓到的ID:", currentMemberId, "狀態:", currentStatus);
+
+        document.getElementById('statusModalBody').innerText =
+          `是否要${nextStatusText}會員「${name}」？`;
+      }
+    });
+
+    // 當點擊「確認」按鈕時，才呼叫後端 API
+    document.getElementById('confirmStatusBtn').addEventListener('click', function () {
+      const nextStatus = currentStatus === 0 ? 1 : 0;
+
+      fetch(`/admin/mem/${currentMemberId}/status?status=${nextStatus}`, {
+        method: 'POST'
+      })
+      .then(response => {
+        if (response.ok) {
+          location.reload(); // 更新頁面顯示最新狀態
+        } else {
+          alert("更新失敗");
+        }
+      })
+      .catch(err => alert("錯誤：" + err));
+    });
+
+    document.addEventListener('click', function (e) {
+    	  const btn = e.target.closest('.view-member-btn');
+    	  if (btn) {
+    	    const memberId = btn.getAttribute('data-id');
+
+    	    // 呼叫後端 API 取得會員詳細資料
+    	    fetch(`/admin/mem/${memberId}`)
+    	    .then(response => response.json())
+    	    .then(data => {
+    	      // 註冊日期
+    	      const createDate = new Date(data.createTime);
+    	      const createDateStr = createDate.getFullYear() + '/' +
+    	                            String(createDate.getMonth() + 1).padStart(2, '0') + '/' +
+    	                            String(createDate.getDate()).padStart(2, '0');
+
+    	      // 最後登入時間：如果為 null 就顯示「尚未登入」
+    	      let lastLoginStr = "尚未登入";
+    	      if (data.lastLogin) {
+    	        const lastLoginDate = new Date(data.lastLogin);
+    	        lastLoginStr = lastLoginDate.getFullYear() + '/' +
+    	                       String(lastLoginDate.getMonth() + 1).padStart(2, '0') + '/' +
+    	                       String(lastLoginDate.getDate()).padStart(2, '0') + ' ' +
+    	                       String(lastLoginDate.getHours()).padStart(2, '0') + ':' +
+    	                       String(lastLoginDate.getMinutes()).padStart(2, '0');
+    	      }
+
+    	      // 將資料塞進 Modal
+    	      const html = `
+    	        <p><strong>會員編號：</strong> ${data.memberId}</p>
+    	        <p><strong>用戶姓名：</strong> ${data.name}</p>
+    	        <p><strong>電子信箱：</strong> ${data.email}</p>
+    	        <p><strong>手機號碼：</strong> ${data.phone}</p>
+    	        <p><strong>最後登入時間：</strong> ${lastLoginStr}</p>
+    	        <p><strong>註冊日期：</strong> ${createDateStr}</p>
+    	        <p><strong>地址：</strong> ${data.address}</p>
+    	      `;
+    	      document.getElementById('viewModalBody').innerHTML = html;
+    	    })
+    	    .catch(err => {
+    	      document.getElementById('viewModalBody').innerHTML = `<p class="text-danger">載入失敗：${err}</p>`;
+    	    });
+    	  }
+    	});
+		
+    document.addEventListener("DOMContentLoaded", function () {
+    	  const rows = document.querySelectorAll("tbody tr"); // 抓所有會員列
+    	  const rowsPerPage = 10;
+    	  const totalPages = Math.ceil(rows.length / rowsPerPage);
+    	  const pagination = document.getElementById("pagination");
+
+    	  let currentPage = 1;
+
+    	  function showPage(page) {
+    	    currentPage = page;
+    	    const start = (page - 1) * rowsPerPage;
+    	    const end = start + rowsPerPage;
+
+    	    rows.forEach((row, index) => {
+    	      row.style.display = (index >= start && index < end) ? "" : "none";
+    	    });
+
+    	    renderPagination();
+    	  }
+
+    	  function renderPagination() {
+    	    pagination.innerHTML = "";
+    	    const ul = document.createElement("ul");
+    	    ul.className = "pagination";
+
+    	    // 上一頁
+    	    const prevLi = document.createElement("li");
+    	    prevLi.className = "page-item" + (currentPage === 1 ? " disabled" : "");
+    	    const prevA = document.createElement("a");
+    	    prevA.className = "page-link";
+    	    prevA.textContent = "上一頁";
+    	    prevA.href = "#";
+    	    prevA.addEventListener("click", function (e) {
+    	      e.preventDefault();
+    	      if (currentPage > 1) showPage(currentPage - 1);
+    	    });
+    	    prevLi.appendChild(prevA);
+    	    ul.appendChild(prevLi);
+
+    	    // 頁碼（即使只有一頁也要顯示）
+    	    for (let i = 1; i <= totalPages; i++) {
+    	      const li = document.createElement("li");
+    	      li.className = "page-item" + (i === currentPage ? " active" : "");
+    	      const a = document.createElement("a");
+    	      a.className = "page-link";
+    	      a.textContent = i;
+    	      a.href = "#";
+    	      a.addEventListener("click", function (e) {
+    	        e.preventDefault();
+    	        showPage(i);
+    	      });
+    	      li.appendChild(a);
+    	      ul.appendChild(li);
+    	    }
+
+    	    // 下一頁
+    	    const nextLi = document.createElement("li");
+    	    nextLi.className = "page-item" + (currentPage === totalPages ? " disabled" : "");
+    	    const nextA = document.createElement("a");
+    	    nextA.className = "page-link";
+    	    nextA.textContent = "下一頁";
+    	    nextA.href = "#";
+    	    nextA.addEventListener("click", function (e) {
+    	      e.preventDefault();
+    	      if (currentPage < totalPages) showPage(currentPage + 1);
+    	    });
+    	    nextLi.appendChild(nextA);
+    	    ul.appendChild(nextLi);
+
+    	    pagination.appendChild(ul);
+    	  }
+
+    	  // 初始化顯示第一頁
+    	  showPage(1);
+    	});
+
+
+    </script>
+
+   
+
+  </body>
+</html>
+      

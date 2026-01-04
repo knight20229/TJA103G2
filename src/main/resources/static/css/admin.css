@@ -1,0 +1,234 @@
+body {
+  background: #eef1f7;
+}
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  padding: 20px 10px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 讓 sidebar 填滿整個高度 */
+}
+
+/* 讓上面的選單可捲動 */
+.sidebar .nav {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.sidebar .logout-wrapper {
+  padding: 16px;
+  border-top: 1px solid #ddd;
+  background: #fff;
+}
+
+main {
+  margin-left: 260px;
+  padding: 20px;
+}
+
+.sidebar .nav-link {
+  color: #0d6efd;     /* 套用 Bootstrap 藍 */
+  font-weight: 600;   /* 設定為粗體 */
+}
+
+.sidebar .nav-link i {
+  color: #0d6efd;
+}
+
+.sidebar .nav-link.active {
+  background: #e8f0ff;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.img-preview {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  max-height: 400px;
+}
+
+.btn-rounded-space {
+  border-radius: 0.5rem !important; /* 讓兩邊都變成柔和圓角 */
+  margin-right: 5px; /* 增加按鈕之間的距離 */
+}
+
+/* 所有 toggle 按鈕統一圓角 */
+.toggle-btn {
+  border-radius: 10px !important; /* 完全圓角 */
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 10px;
+}
+
+/* active 狀態：藍底白字 */
+.toggle-btn.active {
+  background-color: #0d6efd !important;
+  color: white !important;
+  border-color: #0d6efd !important;
+}
+
+/* hover 時：字保持白色（避免變黑） */
+.toggle-btn:hover {
+  background-color: lightblue !important;
+  color: black !important;
+  border-color: #0d6efd !important;
+}
+
+.size_group.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.no-bg {
+  background-color: transparent !important;
+}
+
+.btn-logout {
+  background-color: #0d6efd !important;
+  color: white !important;
+}
+
+.btn-logout:hover {
+  background-color: lightblue !important;
+  color: black !important;
+}
+
+.breadcrumb_index:hover {
+  text-decoration: none;
+  color: white !important;
+  background-color: #b3c9eb;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: -10px;
+}
+.logout-wrapper {
+  position: sticky;
+}
+
+.product_bg {
+  background-color: #eef1f7;
+  outline-color: #eef1f7;
+  margin: 10px;
+}
+
+#searchInput::placeholder {
+    font-weight: 400;
+    opacity: 0.5;
+}
+
+.btn-reverse:hover {
+    background-color: white !important;
+    color: #0d6efd !important; /* Bootstrap primary 藍 */
+    border: 1px solid #0d6efd !important;
+}
+
+.btn-reverse-success:hover {
+    background-color: white !important;
+    color: #198754 !important; /* Bootstrap success 綠 */
+    border: 1px solid #198754 !important;
+}
+
+.btn {
+    transition: all 0.3s ease;
+}
+
+/* 以下是圖片燈箱 */
+/* 圖片容器 */
+.product-img-container {
+    cursor: pointer;
+}
+
+/* 遮罩層預設狀態 */
+.product-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* 半透明黑 */
+    opacity: 0; /* 平時隱藏 */
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+/* 圖片縮放效果 */
+.product-img-container img {
+    transition: transform 0.5s ease;
+}
+
+/* 滑鼠移入效果 */
+.product-img-container:hover .product-overlay {
+    opacity: 1; /* 顯示遮罩 */
+}
+
+.product-img-container:hover img {
+    transform: scale(1.08); /* 圖片輕微放大 */
+}
+
+/* 燈箱內的按鈕樣式 */
+.product-overlay .btn-light {
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.product-img-container:hover .btn-light {
+    transform: translateY(0); /* 按鈕從下方浮上來 */
+}
+
+
+.img-preview-container {
+    width: 100%;
+    max-height: 400px; 
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.img-preview-container img {
+    max-width: 100%;
+    max-height: 400px; 
+    width: auto;       
+    height: auto;      
+    object-fit: contain; 
+}
+
+.default-img {
+    object-fit: contain !important;
+    padding: 40px;
+    opacity: 0.5;
+}
+.btn-sm i {
+  font-size: 2rem;
+  vertical-align: middle;
+}
+
+.btn[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  background: #333;
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 1rem;
+  white-space: nowrap;
+  transform: translateY(-150%);
+  opacity: 0.9;
+}
+html {
+  font-size: 12px;
+}
+
+
