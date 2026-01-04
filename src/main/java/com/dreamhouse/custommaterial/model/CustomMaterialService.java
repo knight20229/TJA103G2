@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class CustomMaterialService {
 
 	@Autowired
-	CustomMaterialRepoistory repository;
+	CustomMaterialRepository repository;
 	
 	public void addMaterial(CustomMaterialVO materialVO) {
 		repository.save(materialVO);
