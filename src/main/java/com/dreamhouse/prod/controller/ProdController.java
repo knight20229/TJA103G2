@@ -229,23 +229,30 @@ public class ProdController {
 			return "back-end/prod/product_edit";
 		}
 		/*************************** 2.開始修改資料 *****************************************/
+		ProdVO currentProd = prodSvc.getOneProd(prodVO.getProductId());
+		
+		currentProd.setProductName(prodVO.getProductName());
+		currentProd.setProductType(prodVO.getProductType());
+		currentProd.setStatus(prodVO.getStatus());
+		currentProd.setMaterial(prodVO.getMaterial());
+		currentProd.setDescription(prodVO.getDescription());
+		currentProd.setOnDate(prodVO.getOnDate());
+		currentProd.setOffDate(prodVO.getOffDate());
+		currentProd.setOnDate(prodVO.getOnDate());
+
 		if (parts[0].isEmpty()) { 
-	        if (prodVO.getProductId() != null) {
-	            byte[] imageData = prodSvc.getOneProd(prodVO.getProductId()).getImageData();
-	            prodVO.setImageData(imageData);
-	        }
-	    } else {
-	        prodVO.setImageData(parts[0].getBytes());
-	    }
+		} else {
+			currentProd.setImageData(parts[0].getBytes());
+		}
 			
 		// EmpService empSvc = new EmpService();
-		prodSvc.updateProd(prodVO);
+		prodSvc.updateProd(currentProd);
 
 		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
 		model.addAttribute("success", "- (修改成功)");
-		prodVO = prodSvc.getOneProd(Integer.valueOf(prodVO.getProductId()));
-		model.addAttribute("prodVO", prodVO);
-		return "back-end/prod/product_listAll"; // 修改成功後轉交listOneEmp.html
+		ProdVO latestProd = prodSvc.getOneProd(prodVO.getProductId());
+	    model.addAttribute("prodVO", latestProd);
+	    return "redirect:/prod/listAllProd"; // 修改成功後轉交product_listAll.html
 	}
 	
 	// 去除BindingResult中某個欄位的FieldError紀錄
