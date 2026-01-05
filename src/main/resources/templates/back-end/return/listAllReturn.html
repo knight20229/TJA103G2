@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>退貨處理</title>
+
+<!-- Bootstrap -->
+<link
+	th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css}"
+	rel="stylesheet" />
+<link
+	th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css}"
+	rel="stylesheet" />
+
+<!-- Font Awesome -->
+<link
+	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css}"
+	rel="stylesheet" />
+
+<!-- 專案樣式 -->
+<link th:href="@{/css/base.css}" rel="stylesheet" />
+<link th:href="@{/css/orders.css}" rel="stylesheet" />
+</head>
+
+<body>
+
+	<!-- ================= Sidebar ================= -->
+	<nav class="sidebar">
+		<a class="mb-4 fs-4 text-decoration-none fw-bold" th:href="@{/back-end}">後台管理</a>
+
+		<ul class="nav flex-column">
+			<li class="nav-item"><a class="nav-link fs-6"
+				th:href="@{/admin/mem/list}">會員管理</a></li>
+
+			<!-- 商品管理 -->
+			<li class="nav-item fs-6"><a
+				class="nav-link d-flex justify-content-between align-items-center"
+				data-bs-toggle="collapse" th:href="@{#menu_products}"> 商品管理 <i
+					class="bi bi-chevron-down"></i>
+			</a>
+				<div class="collapse" id="menu_products">
+					<ul class="nav flex-column ms-3">
+						<li><a class="nav-link fs-6" th:href="@{/prod/listAllProd}">商品列表</a></li>
+						<li><a class="nav-link fs-6" th:href="@{/prod/addProd}">新增商品</a></li>
+					</ul>
+				</div></li>
+
+			<!-- 訂單管理 -->
+			<li class="nav-item fs-6"><a
+				class="nav-link d-flex justify-content-between align-items-center"
+				data-bs-toggle="collapse" th:href="@{#menu_orders}"> 訂單管理 <i
+					class="bi bi-chevron-down"></i>
+			</a>
+				<div class="collapse show" id="menu_orders">
+					<ul class="nav flex-column ms-3">
+						<li><a class="nav-link fs-6 active" th:href="@{/orders/list}">
+								訂單記錄 </a></li>
+						<li><a class="nav-link fs-6" th:href="@{/returns/list}">
+								退貨處理 </a></li>
+					</ul>
+				</div></li>
+
+			<li class="nav-item fs-6"><a
+				class="nav-link d-flex justify-content-between align-items-center"
+				data-bs-toggle="collapse" th:href="@{#menu_activity}"> 活動管理 <i
+					class="bibi-chevron-down"> </i></a>
+				<div class="collapse show" id="menu_activity">
+					<ul class="nav flex-column ms-3">
+						<li><a class="nav-link fs-6"
+							th:href="@{/coupon/getAllCoupon}"> 優惠券管理</a></li>
+						<li><a class="nav-link fs-6"
+							th:href="@{/promotions/getAllPromotions}"> 促銷管理</a></li>
+					</ul>
+				</div></li>
+			<li class="nav-item fs-6"><a class="nav-link"
+				href="../chat/chat.html">客服管理</a></li>
+			<div class="mt-4 d-flex justify-content-center logout-wrapper">
+				<button class="btn btn-primary fs-6 btn-logout">
+					<i class=" bi bi-box-arrow-right"></i> 登出
+				</button>
+			</div>
+	</nav>
+
+	<!-- ================= Main ================= -->
+	<main class="p-4">
+		<h2 class="mb-3">退貨處理</h2>
+		<hr class="border border-primary border-2" />
+
+		<div class="container-fluid">
+
+			<!-- ================= 退貨表格 ================= -->
+			<table class="table table-hover align-middle">
+				<thead class="order-thead text-center">
+					<tr>
+						<th>退貨編號</th>
+						<th>訂單編號</th>
+						<th>會員編號</th>
+						<th>退貨原因</th>
+						<th>退貨說明</th>
+						<th>退貨狀態</th>
+						<th>退貨拒絕原因</th>
+						<th>退貨建立時間</th>
+						<th>審核建立時間</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<!-- Thymeleaf 迴圈：訂單列表 -->
+					<th:block th:each="orderData : ${orderListWithDetails}">
+						<tr class="text-center">
+
+							<td th:text="${orderData.order.orderId}"></td>
+							<td th:text="${orderData.order.orderId}"></td>
+							<td th:text="${orderData.order.memberId}"></td>
+							<td th:text="${orderData.order.returnReason}"></td>
+							<td th:text="${orderData.order.returnText}"></td>
+							<td th:text="${orderData.order.returnStatus}"></td>
+							<td th:text="${orderData.order.refusalReason}"></td>
+							<td th:text="${orderData.order.returnCreateTime}"></td>
+							<td th:text="${orderData.order.returnApproveTime}"></td>
+
+							<!-- 操作 -->
+							<td>
+								<button type="button"
+										class="btn btn-sm btn-primary"
+										data-bs-toggle="collapse"
+										th:data-bs-target="'#orderDetail-' + ${orderData.order.orderId}">
+									<i class="bi bi-eye"></i> 查看
+								</button>
+							</td>
+
+						</tr>
+
+						<!-- 展開區域：訂單明細（伺服器端渲染，初始隱藏） -->
+						<tr class="collapse-row">
+							<td colspan="12" class="p-0">
+								<div th:id="'orderDetail-' + ${orderData.order.orderId}" class="collapse">
+									<div class="p-3 bg-light">
+										<!-- 判斷是否有明細 -->
+										<div th:if="${#lists.isEmpty(orderData.details)}" class="text-center text-muted py-3">
+											此訂單無商品明細資料
+										</div>
+										<!-- 訂單明細表格 -->
+										<table th:unless="${#lists.isEmpty(orderData.details)}"
+											   class="table table-sm table-bordered mb-0 align-middle">
+											<thead class="table-light text-center">
+												<tr>
+													<th style="width: 100px;">商品圖片</th>
+													<th>商品名稱</th>
+													<th style="width: 120px;">尺寸</th>
+													<th style="width: 80px;">數量</th>
+													<th style="width: 100px;">單價</th>
+													<th style="width: 100px;">小計</th>
+													<th style="width: 100px;">類型</th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- Thymeleaf 迴圈：訂單明細 -->
+												<tr th:each="detail : ${orderData.details}">
+													<!-- 商品圖片 -->
+													<td class="text-center">
+														<img th:if="${detail.productImageBase64 != null and detail.isCustom == false}"
+															 th:src="${detail.productImageBase64}"
+															 alt="商品圖片"
+															 style="width: 80px; height: 80px; object-fit: cover;"
+															 onerror="this.src='/images/no-image.png';">
+														<i th:if="${detail.isCustom == true}"
+														   class="bi bi-palette fs-1 text-info"></i>
+														<img th:if="${detail.productImageBase64 == null and detail.isCustom == false}"
+															 src="/images/no-image.png"
+															 alt="無圖片"
+															 style="width: 80px; height: 80px; object-fit: cover;">
+													</td>
+
+													<!-- 商品名稱 -->
+													<td th:text="${detail.productName}"></td>
+
+													<!-- 尺寸 -->
+													<td class="text-center">
+														<span th:if="${detail.width != null and detail.length != null}"
+															  th:text="${detail.width + ' x ' + detail.length + ' cm'}"></span>
+														<span th:if="${detail.width == null or detail.length == null}">-</span>
+													</td>
+
+													<!-- 數量 -->
+													<td class="text-center" th:text="${detail.quantity}"></td>
+
+													<!-- 單價 -->
+													<td class="text-end">
+														<span th:text="'$' + ${#numbers.formatDecimal(detail.price, 1, 2)}"></span>
+													</td>
+
+													<!-- 小計 -->
+													<td class="text-end fw-bold">
+														<span th:text="'$' + ${#numbers.formatDecimal(detail.price * detail.quantity, 1, 2)}"></span>
+													</td>
+
+													<!-- 類型 -->
+													<td class="text-center">
+														<span th:if="${detail.isCustom == false}" class="badge bg-primary">一般商品</span>
+														<span th:if="${detail.isCustom == true}" class="badge bg-success">客製化</span>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+	</main>
+
+	<script
+		th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>
