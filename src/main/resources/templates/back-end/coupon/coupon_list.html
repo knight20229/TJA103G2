@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>優惠券列表</title>
+
+<!-- Bootstrap CSS -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet" />
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+
+<!-- Summernote -->
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link
+	href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css"
+	rel="stylesheet" />
+<!-- Font Awesome Free 6 -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+<link rel="stylesheet" th:href="@{/css/coupon/coupon_list.css}" />
+</head>
+
+<body>
+	<!-- ========== 左側側邊欄 ========== -->
+	<nav class="sidebar">
+		<h5 class="mb-4 fs-2">後台管理</h5>
+
+		<ul class="nav flex-column">
+			<li class="nav-item"><a class="nav-link fs-3" href=" #">會員管理</a>
+			</li>
+
+			<!-- 折疊選單 -->
+			<li class="nav-item fs-3"><a
+				class="nav-link d-flex justify-content-between align-items-center "
+				data-bs-toggle="collapse" href="#menu_products">商品管理<i
+					class="bi bi-chevron-down"></i>
+			</a>
+				<div class="collapse" id="menu_products">
+					<ul class="nav flex-column ms-3">
+						<li><a class="nav-link fs-4" href="./product_index.html">商品列表</a>
+						</li>
+						<li><a class="nav-link fs-4" href="./product_add.html">新增商品</a>
+						</li>
+						<li><a class="nav-link fs-4" href="./product_edit.html">編輯商品</a>
+						</li>
+					</ul>
+				</div></li>
+
+
+			<li class="nav-item fs-3"><a class="nav-link" href="#">訂單管理</a></li>
+			<!-- 活動管理 -->
+			<li class="nav-item fs-3"><a
+				class="nav-link d-flex justify-content-between align-items-center "
+				data-bs-toggle="collapse" href="#menu_activity">活動管理<i
+					class="bi bi-chevron-down"></i>
+			</a>
+
+				<div class="collapse" id="menu_activity">
+					<ul class="nav flex-column ms-3">
+						<li><a class="nav-link fs-4"
+							th:href="@{/coupon/getAllCoupon}">優惠券管理</a></li>
+						<li><a class="nav-link fs-4"
+							th:href="@{/promotions/getAllPromotions}">促銷管理</a></li>
+					</ul>
+				</div></li>
+			<li class="nav-item fs-3"><a class="nav-link"
+				href="../chat/chat.html">客服管理</a></li>
+		</ul>
+
+		<div class="mt-4 d-flex justify-content-center logout-wrapper">
+			<button class="btn btn-outline-primary w-50 fs-3 btn-logout">
+				<i class=" bi bi-box-arrow-right"></i> 登出
+			</button>
+		</div>
+	</nav>
+
+	<!-- ========== 主內容區 ========== -->
+	<main>
+		<!-- 麵包屑 -->
+		<div class="d-flex align-items-center mb-3 div1">
+			<ol class="breadcrumb mb-0 me-3 no-bg">
+				<li class="breadcrumb-item fs-2 ">優惠券管理</li>
+			</ol>
+
+			<a th:href="@{/coupon/addCoupon}" class="btn btn-primary"> <i
+				class="fa-solid fa-plus"></i> 新增優惠券
+			</a>
+		</div>
+		<hr class="border border-primary border-2" />
+
+		<div class="card-body p-0">
+			<table class="table table-striped projects">
+				<thead>
+					<tr>
+						<th style="width: 9%" class="text-center">優惠券<br>編號
+						</th>
+						<th style="width: 15%" class="text-center">名稱</th>
+						<th style="width: 10%" class="text-center">折扣金額/<br>折扣率
+						</th>
+						<th style="width: 10%" class="text-center">使用門檻</th>
+						<th style="width: 15%" class="text-center">有效日期</th>
+						<th style="width: 10%" class="text-center">啟用狀態<br>(啟用/停用)
+						</th>
+						<th style="width: 9%" class="text-center">員工編號</th>
+						<th style="width: 23%"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="couponVO : ${couponList}">
+						<tr>
+							<td th:text="${couponVO.couponId}"></td>
+							<td th:text="${couponVO.name}"></td>
+							<td th:text="${couponVO.couponValue}"></td>
+							<td th:text="${couponVO.standard}"></td>
+							<td><span th:text="${couponVO.startDt}"> </span> <span>~</span>
+								<span th:text="${couponVO.endDt}"></span></td>
+							<td th:text="${couponVO.state}"></td>
+							<td th:text="${couponVO.employeeId}"></td>
+							<td class="project-actions text-right">
+								<a class="btn btn-primary btn-sm" th:href="@{/coupon/viewCoupon(couponId=${couponVO.couponId})}">
+									<i class="fas fa-folder"> </i> View </a>
+								<a class="btn btn-info btn-sm" th:href="@{/coupon/getOneForUpdate(couponId=${couponVO.couponId})}">
+										<i class="fas fa-pencil-alt"> </i> Edit</a>
+								<a class="btn btn-danger btn-sm" id="delete" th:href="@{/coupon/deleteCoupon(couponId=${couponVO.couponId})}">
+									<i class="fas fa-trash"> </i> Delete</a>
+							</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+
+	</main>
+
+	<!-- JS 套件 -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- include libraries(jQuery, bootstrap) -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<!-- include summernote css/js -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
+	<!-- run summernote css/js -->
+	
+	<script th:src="@{/js/coupon/coupon_list.js}"></script>
+</body>
+
+</html>
