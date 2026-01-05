@@ -144,6 +144,9 @@ main {
 /* 圖片容器 */
 .product-img-container {
     cursor: pointer;
+    height: 250px;
+    width: 100%;
+    background-color: #eef1f7; /* 預設底色，避免載入中發白 */
 }
 
 /* 遮罩層預設狀態 */
@@ -153,6 +156,7 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
+    min-height: 250px;
     background-color: rgba(0, 0, 0, 0.4); /* 半透明黑 */
     opacity: 0; /* 平時隱藏 */
     transition: opacity 0.3s ease;
@@ -162,6 +166,9 @@ main {
 /* 圖片縮放效果 */
 .product-img-container img {
     transition: transform 0.5s ease;
+    height: 100% !important;
+    width: 100%;
+    object-fit: cover; /* 確保圖片不變形 */
 }
 
 /* 滑鼠移入效果 */
