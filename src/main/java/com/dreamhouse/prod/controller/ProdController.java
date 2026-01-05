@@ -36,7 +36,7 @@ public class ProdController {
 	
 	@ModelAttribute("prodListData")
     protected List<ProdVO> referenceListData() {
-        return prodSvc.getAll(); // 每次進入此 Controller 的頁面時，自動撈取最新清單
+        return prodSvc.getAll(); 
     }
 	
 	// --- 商品清單頁面  ---
@@ -74,13 +74,12 @@ public class ProdController {
 	                .collect(Collectors.toList());
 	    }
 
-	    // 6. 封裝資料傳給頁面
 	    model.addAttribute("prodVO", prodVO);
 	    model.addAttribute("configMap", configMap);
 	    model.addAttribute("allSizes", allSizes);
 	    model.addAttribute("distinctWidths", distinctWidths);
 	    
-	    return "back-end/prod/product_listOne"; // 指向你的查詢頁面
+	    return "back-end/prod/product_listOne"; 
 	}
 	
 
@@ -106,7 +105,6 @@ public class ProdController {
 		if (result.hasErrors()) {
 		    if (parts != null && parts.length > 0 && !parts[0].isEmpty()) {
 		        byte[] bytes = parts[0].getBytes();
-		        // 轉成 Base64 字串
 		        String base64 = java.util.Base64.getEncoder().encodeToString(bytes);
 		        prodVO.setBase64Image("data:image/png;base64," + base64);
 		    }
@@ -114,14 +112,25 @@ public class ProdController {
 	        populateCommonData(model);
 	        return "back-end/prod/product_add";
 	    }
-		/*************************** 2.開始新增資料 *****************************************/
-		// ProdService prodSvc = new ProdService();
+		/*************************** 2.開始新增資料 *****************************************/		
+		byte[] imageBytes = null;
+		if (parts != null && parts.length > 0 && !parts[0].isEmpty()) {
+	        imageBytes = parts[0].getBytes();
+	    } else if (prodVO.getBase64Image() != null && !prodVO.getBase64Image().isEmpty()) {
+	        String base64Data = prodVO.getBase64Image().split(",")[1];
+	        imageBytes = java.util.Base64.getDecoder().decode(base64Data);
+	    }
+		if (imageBytes != null) {
+			prodVO.setImageData(imageBytes); 
+		}
+		
 		ProdVO savedVO = prodSvc.addProd(prodVO);
 		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
 		List<ProdVO> list = prodSvc.getAll();
 		model.addAttribute("prodListData", list); // for listAllProd.html 第156行用
 		model.addAttribute("success", "- (新增成功)");
-		return "redirect:/prod/setSizes?productId=" + savedVO.getProductId();	}
+		return "redirect:/prod/setSizes?productId=" + savedVO.getProductId();	
+		}
 	// 新增商品後跳轉到庫存管理
 	// 庫存管理入口
 	@GetMapping("/setSizes")
@@ -175,11 +184,10 @@ public class ProdController {
 	            }
 	        }
 
-	        // 2. 重新查詢資料庫，計算該商品目前「總共」有幾筆規格
-	        // 假設你的 Service 有 findByProductId 方法
+	        // 計算該商品目前「總共」有幾筆規格
 	        long totalActiveSizes = prodSizeConnectSvc.findByProductId(productId).size();
 
-	        // 3. 顯示你想要的訊息格式
+	        // 顯示訊息
 	        if (totalActiveSizes > 0) {
 	            redirectAttributes.addFlashAttribute("successMessage", 
 	                "儲存成功！商品編號 " + productId + " 目前共有 " + totalActiveSizes + " 筆規格資料。");
@@ -220,8 +228,8 @@ public class ProdController {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		System.out.println("DEBUG: 修改中的商品 ID = " + prodVO.getProductId());
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(prodVO, result, "upFiles");
+		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第256行
+		result = removeFieldError(prodVO, result, "images");
 
 
 		if (result.hasErrors()) {

@@ -35,7 +35,7 @@ public class ProdService {
 
     public ProdVO getOneProd(Integer productId) {
         Optional<ProdVO> optional = repository.findById(productId);
-        return optional.orElse(null); // 如果沒找到就回傳 null
+        return optional.orElse(null); 
     }
 
     public List<ProdVO> getAll() {
@@ -51,7 +51,7 @@ public class ProdService {
     @Autowired
     private ServletContext servletContext;
     
-    @Scheduled(cron = "0 */30 * * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     @Transactional
     public void autoUpdateProductStatus() {
     	LocalDateTime now = LocalDateTime.now();
