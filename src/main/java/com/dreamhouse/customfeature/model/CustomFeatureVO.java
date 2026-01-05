@@ -21,7 +21,7 @@ public class CustomFeatureVO implements Serializable{
 	
 	@Column(name ="CUSTOM_FEATURE_NAME")
 	@NotEmpty(message="功能名稱:請勿空白")
-	@Pattern(regexp = "^[(\u4e00-\\u9fa5)]{2,5}$", message = "功能名稱只能是中文,長度需在2到5")
+	@Pattern(regexp = "^[\u4e00-\\u9fa5]{2,5}$", message = "功能名稱只能是中文,長度需在2到5")
 	private String customFeatureName;
 	
 	@Column(name ="CUSTOM_FEATURE_PRICE")
@@ -31,7 +31,7 @@ public class CustomFeatureVO implements Serializable{
 	private Integer customFeaturePrice;
 	
 	@OneToMany(mappedBy="featureVO")
-	private Set<CustomProductVO> features = new HashSet<CustomProductVO>();
+	private Set<CustomProductVO> featureProducts = new HashSet<>();
 	
 	public CustomFeatureVO() {}	//無參數建構子
 
@@ -59,12 +59,12 @@ public class CustomFeatureVO implements Serializable{
 		this.customFeaturePrice = customFeaturePrice;
 	}
 
-	public Set<CustomProductVO> getFeatures() {
-		return features;
+	public Set<CustomProductVO> getFeatureProducts() {
+		return featureProducts;
 	}
 
-	public void setFeatures(Set<CustomProductVO> features) {
-		this.features = features;
+	public void setFeatureProducts(Set<CustomProductVO> featureProducts) {
+		this.featureProducts = featureProducts;
 	}
 
 }

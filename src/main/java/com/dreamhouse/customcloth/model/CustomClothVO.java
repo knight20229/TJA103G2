@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.dreamhouse.customprod.model.CustomProductVO;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -19,7 +21,7 @@ public class CustomClothVO implements Serializable{
 	
 	@Column(name ="CUSTOM_CLOTH_NAME")
 	@NotEmpty(message="布料名稱:請勿空白")
-	@Pattern(regexp = "^[(\u4e00-\\u9fa5)]{2,5}$", message = "布料名稱只能是中文,長度需在2到5")
+	@Pattern(regexp = "^[\u4e00-\\u9fa5]{2,5}$", message = "布料名稱只能是中文,長度需在2到5")
 	private String customClothName;
 	
 	@Column(name ="CUSTOM_CLOTH_PRICE")
@@ -29,7 +31,7 @@ public class CustomClothVO implements Serializable{
 	private Integer customClothPrice;
 	
 	@OneToMany(mappedBy="clothVO")
-	private Set<CustomClothVO> cloths = new HashSet<CustomClothVO>();
+	private Set<CustomProductVO> clothProducts = new HashSet<>();
 	
 	public CustomClothVO() {}	//無參數建構子
 
@@ -57,12 +59,12 @@ public class CustomClothVO implements Serializable{
 		this.customClothPrice = customClothPrice;
 	}
 
-	public Set<CustomClothVO> getCloths() {
-		return cloths;
+	public Set<CustomProductVO> getClothProducts() {
+		return clothProducts;
 	}
 
-	public void setCloths(Set<CustomClothVO> cloths) {
-		this.cloths = cloths;
+	public void setClothProducts(Set<CustomProductVO> clothProducts) {
+		this.clothProducts = clothProducts;
 	}
 
 }
