@@ -96,6 +96,12 @@
       </nav>
       <form th:action="@{update}" method="post" th:object="${prodVO}" enctype="multipart/form-data">
       <div class="row">
+             <!-- ========== 錯誤訊息 ========== -->
+        <div class="mt-2">
+    		<ul class="list-unstyled mt-2" th:if="${#fields.hasAnyErrors()}">
+        		<li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger small"></li>
+    		</ul>
+  		</div>
         <!-- 左半：圖片上傳 + 預覽 + Summernote -->
         <div class="col-md-6">
           <!-- ========== 圖片上傳 ========== -->
@@ -121,12 +127,6 @@
           <section>
             <label class="form-label fw-bold">商品介紹：</label>
               <textarea id="summernote" th:field="*{description}"></textarea>
-          <!-- ========== 錯誤訊息 ========== -->
-	          <div class="mt-2">
-			    <ul class="list-unstyled mt-2" th:if="${#fields.hasAnyErrors()}">
-			        <li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger small"></li>
-			    </ul>
-			  </div>
           </section>
 		  
           

@@ -218,7 +218,8 @@ public class ProdController {
 	        }
 	    }
 	    
-	    model.addAttribute("currentFeatureIds", currentFeatureIds); 	    
+	    model.addAttribute("currentFeatureIds", currentFeatureIds); 
+	    
 	    return "back-end/prod/product_edit";
 	}
 	
@@ -226,13 +227,25 @@ public class ProdController {
 	public String update(@Valid ProdVO prodVO, BindingResult result, ModelMap model,
 			@RequestParam("images") MultipartFile[] parts) throws IOException {
 
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/		
+		// 修正：針對上稿器產生的隱形 HTML 標籤進行清理檢查
+		if (prodVO.getDescription() != null) {
+		    String cleanDesc = prodVO.getDescription().replaceAll("<[^>]*>", "").replaceAll("&nbsp;", "").trim();
+		    if (cleanDesc.isEmpty()) {
+		        prodVO.setDescription("");
+		    }
+		}
+		
 		System.out.println("DEBUG: 修改中的商品 ID = " + prodVO.getProductId());
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第256行
+		// 去除BindingResult中images欄位的FieldError紀錄 --> 見第256行
 		result = removeFieldError(prodVO, result, "images");
 
 
 		if (result.hasErrors()) {
+			ProdVO dbProd = prodSvc.getOneProd(prodVO.getProductId());
+	        prodVO.setCreateTime(dbProd.getCreateTime());
+	        prodVO.setUpdateTime(dbProd.getUpdateTime());
+			
 			populateCommonData(model);
 			return "back-end/prod/product_edit";
 		}

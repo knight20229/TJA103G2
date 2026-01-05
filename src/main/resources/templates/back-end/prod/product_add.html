@@ -98,9 +98,9 @@
       <div class="row">
               <!-- ========== 錯誤訊息 ========== -->
          <div class="mt-2">
-	    <ul class="list-unstyled mt-2" th:if="${#fields.hasAnyErrors()}">
-	        <li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger small"></li>
-	    </ul>
+	    	<ul class="list-unstyled mt-2" th:if="${#fields.hasAnyErrors()}">
+	        	<li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger small"></li>
+	    	</ul>	
 	  	</div>
         <!-- 左半：圖片上傳 + 預覽 + Summernote -->
         <div class="col-md-6">
