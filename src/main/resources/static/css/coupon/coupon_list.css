@@ -1,0 +1,111 @@
+body {
+  background: #eef1f7;
+}
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  padding: 20px 10px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 讓 sidebar 填滿整個高度 */
+}
+
+/* 讓上面的選單可捲動 */
+.sidebar .nav {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.sidebar .logout-wrapper {
+  padding: 16px;
+  border-top: 1px solid #ddd;
+  background: #fff;
+}
+
+main {
+  margin-left: 260px;
+  padding: 20px;
+}
+.sidebar .nav-link.active {
+  background: #e8f0ff;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.img-preview {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.form-select-lg {
+  font-size: 1.2rem;
+  height: auto; /* 調整高度跟文字匹配 */
+}
+
+.btn-rounded-space {
+  border-radius: 0.5rem !important; /* 讓兩邊都變成柔和圓角 */
+  margin-right: 5px; /* 增加按鈕之間的距離 */
+}
+
+/* 所有 toggle 按鈕統一圓角 */
+.toggle-btn {
+  border-radius: 10px !important; /* 完全圓角 */
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 10px;
+}
+
+/* active 狀態：藍底白字 */
+.toggle-btn.active {
+  background-color: #0d6efd !important;
+  color: white !important;
+  border-color: #0d6efd !important;
+}
+
+/* hover 時：字保持白色（避免變黑） */
+.toggle-btn:hover {
+  color: white !important;
+  background-color: #0d6efd !important;
+  border-color: #0d6efd !important;
+}
+
+.size_group.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.no-bg {
+  background-color: transparent !important;
+}
+
+.btn-logout {
+  background-color: #0d6efd !important;
+  color: white !important;
+}
+
+.btn-logout:hover {
+  background-color: lightblue !important;
+  color: black !important;
+}
+
+.breadcrumb_index:hover {
+  text-decoration: none;
+  color: white;
+  background-color: #b3c9eb;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: -10px;
+}
+.logout-wrapper {
+  position: sticky;
+}
+
+div.div1 {
+  gap: 78%;
+}
