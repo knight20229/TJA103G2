@@ -26,11 +26,11 @@
   <body>
     <!-- ========== 左側側邊欄 ========== -->
     <nav class="sidebar">
-      <h5 class="mb-4 fs-5 fw-bold">後台管理</h5>
+      <a class="mb-4 fs-4 text-decoration-none fw-bold" th:href="@{/back-end}">後台管理</a>
 
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link fs-6" href="#">會員管理</a>
+          <a class="nav-link fs-6" th:href="@{/admin/mem/list}">會員管理</a>
         </li>
 
         <!-- 折疊選單 -->

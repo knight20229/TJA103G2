@@ -1,0 +1,25 @@
+        .admin-card {
+            transition: all 0.3s;
+            border: none;
+            border-radius: 15px;
+        }
+        .admin-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+        .text-decoration-none:hover {
+            text-decoration: none;
+        }
+        /* 針對尚未開放的功能做點視覺區分 */
+        .feature-pending {
+            opacity: 0.7;
+            filter: grayscale(0.5);
+        }
