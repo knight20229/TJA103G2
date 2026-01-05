@@ -17,7 +17,7 @@ public class EmpService {
     public EmpVO addEmployee(EmpVO employee) {
         Timestamp now = Timestamp.from(Instant.now());
         employee.setCreateTime(now);
-        employee.setUpdatedTime(now);
+        employee.setUpdateTime(now);
         return repository.save(employee);
     }
 
@@ -28,7 +28,7 @@ public class EmpService {
             // 保留原本的 createTime
             employee.setCreateTime(existing.getCreateTime());
         }
-        employee.setUpdatedTime(Timestamp.from(Instant.now()));
+        employee.setUpdateTime(Timestamp.from(Instant.now()));
         return repository.save(employee);
     }
 

@@ -30,7 +30,7 @@ public class EmpVO implements Serializable {
     private String email;
     private Byte status;
     private Timestamp createTime;
-    private Timestamp updatedTime;
+    private Timestamp updateTime;
 
     public EmpVO() {}
 
@@ -102,11 +102,11 @@ public class EmpVO implements Serializable {
         this.createTime = createTime;
     }
 
-    @Column(name = "updated_time", nullable = false, insertable = false)
-    public Timestamp getUpdatedTime() {
-        return updatedTime;
+    @Column(name = "update_time", nullable = false, insertable = false)
+    public Timestamp getUpdateTime() {
+        return updateTime;
     }
-    public void setUpdatedTime(Timestamp updatedTime) {
-        this.updatedTime = updatedTime;
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
     }
 }
