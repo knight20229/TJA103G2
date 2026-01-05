@@ -10,18 +10,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 	//  圖片預覽
-	  const uploadImg = document.getElementById("uploadImg");
-	  const previewImg = document.getElementById("previewImg");
+	const uploadImg = document.getElementById("uploadImg");
+	const previewImg = document.getElementById("previewImg");
+	const base64Input = document.getElementById("base64Image"); 
 
-	  if (uploadImg && previewImg) {
+	if (uploadImg && previewImg) {
 	    uploadImg.addEventListener("change", function () {
-	      const file = this.files[0];
-	      if (file) {
-	        previewImg.src = URL.createObjectURL(file);
-	        previewImg.style.display = "block"; 
-	      }
+	        const file = this.files[0];
+	        if (file) {
+	            const reader = new FileReader();
+	            
+	            reader.onload = function (e) {
+	                const base64String = e.target.result;
+	                
+	                previewImg.src = base64String;
+	                previewImg.style.display = "block";
+	                
+	                if (base64Input) {
+	                    base64Input.value = base64String;
+	                }
+	            };
+	            
+	            reader.readAsDataURL(file); 
+	        }
 	    });
-	  }
+	}
 	  
 	  // --- 初始化圖片顯示狀態 ---
 	  if (previewImg) {
