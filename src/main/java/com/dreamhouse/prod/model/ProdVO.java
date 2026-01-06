@@ -128,7 +128,7 @@ public class ProdVO implements java.io.Serializable {
     public void setOnDate(LocalDateTime onDate) {
         this.onDate = onDate;
     }
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "OFF_DATE") 
     public LocalDateTime getOffDate() {
         return offDate;
