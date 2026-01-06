@@ -1,0 +1,21 @@
+body {
+	background: #eef1f7;
+}
+
+.sidebar {
+	width: 240px;
+	height: 100vh;
+	position: fixed;
+	left: 0;
+	top: 0;
+	background: #fff;
+	border-right: 1px solid #ddd;
+	padding: 20px 10px;
+	display: flex;
+	flex-direction: column;
+}
+
+main {
+	margin-left: 260px;
+	padding: 20px;
+}
