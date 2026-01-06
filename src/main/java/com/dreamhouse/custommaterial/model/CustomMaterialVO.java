@@ -34,7 +34,7 @@ public class CustomMaterialVO implements Serializable{
 	@Pattern(regexp = "^[\u4e00-\\u9fa5]{2,5}$", message = "材質名稱只能是中文,長度需在2到5")
 	private String customMaterialName;
 	
-	@Column(name ="MATERIAL_PRICE")
+	@Column(name ="CUSTOM_MATERIAL_PRICE")
 	@NotNull(message="材質價格:請勿空白")
 	@Min(value = 1000, message = "材質價格:不能小於{value}")
 	@Max(value = 10000, message = "材質價格:不能大於{value}")

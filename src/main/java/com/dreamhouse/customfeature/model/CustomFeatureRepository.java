@@ -1,12 +1,17 @@
 package com.dreamhouse.customfeature.model;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface CustomFeatureRepository extends JpaRepository<CustomFeatureVO, Integer> {
-		
+	
+	@Query(value =" select f from CustomFeatureVO f")
+	List <CustomFeatureVO> findAllFeature();
+	
 	//新增功能
 	@Transactional
 	@Modifying
