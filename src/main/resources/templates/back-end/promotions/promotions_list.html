@@ -19,6 +19,9 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
+<link rel="stylesheet" th:href="@{/css/back-end-index.css}" />
+
+
 <link rel="stylesheet" th:href="@{/css/promotions/promotions_list.css}" />
 </head>
 
@@ -40,7 +43,7 @@
             href="#menu_products"
           >商品管理<i class="bi bi-chevron-down"></i>
           </a>
-          <div class="collapse show" id="menu_products">
+          <div class="collapse" id="menu_products">
             <ul class="nav flex-column ms-3">
               <li>
                 <a class="nav-link" th:href="@{/prod/listAllProd}">商品列表</a>
