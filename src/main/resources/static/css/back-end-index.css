@@ -1,25 +1,100 @@
-        .admin-card {
-            transition: all 0.3s;
-            border: none;
-            border-radius: 15px;
-        }
-        .admin-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
-        }
-        .icon-box {
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-        }
-        .text-decoration-none:hover {
-            text-decoration: none;
-        }
-        /* 針對尚未開放的功能做點視覺區分 */
-        .feature-pending {
-            opacity: 0.7;
-            filter: grayscale(0.5);
-        }
+body {
+  background: #eef1f7;
+}
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  padding: 20px 10px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 讓 sidebar 填滿整個高度 */
+}
+
+/* 讓上面的選單可捲動 */
+.sidebar .nav {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.sidebar .logout-wrapper {
+  padding: 16px;
+  border-top: 1px solid #ddd;
+  background: #fff;
+}
+
+main {
+  margin-left: 260px;
+  padding: 20px;
+}
+
+.sidebar .nav-link {
+  color: #0d6efd;     /* 套用 Bootstrap 藍 */
+  font-weight: 600;   /* 設定為粗體 */
+}
+
+.sidebar .nav-link i {
+  color: #0d6efd;
+}
+
+.sidebar .nav-link.active {
+  background: #e8f0ff;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+
+
+.admin-card {
+	transition: all 0.3s ease;
+	border: none;
+	border-radius: 15px;
+	height: 100%; /* 確保高度一致 */
+}
+
+.admin-card:hover {
+	transform: translateY(-10px);
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.icon-box {
+	width: 60px;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 12px;
+	flex-shrink: 0; /* 防止圖示被壓縮 */
+}
+
+/* 子按鈕樣式 */
+.sub-management-btn {
+	transition: all 0.3s ease;
+	border: none;
+	color: #543d00 !important;
+	background-color: #ffc107; /* 預設填滿黃色 */
+}
+
+.sub-management-btn:hover {
+	/* 這裡稍微減輕位移，避免跟外層卡片的 translateY(-10px) 衝突 */
+	transform: scale(1.02);
+	filter: brightness(0.9);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* 讓客服管理的整張連結不會有藍色底線 */
+.admin-link {
+	text-decoration: none !important;
+}
+
+.feature-pending {
+	opacity: 0.7;
+	filter: grayscale(0.5);
+}

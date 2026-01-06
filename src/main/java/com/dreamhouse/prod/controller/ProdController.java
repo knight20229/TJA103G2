@@ -45,7 +45,7 @@ public class ProdController {
 	    return "back-end/prod/product_listAll"; 
 	}
 
-	@GetMapping("/getOne_For_Display")
+	@GetMapping("getOne_For_Display")
 	public String getOneForDisplay(@RequestParam("productId") Integer productId, ModelMap model) {
 	    
 	    ProdVO prodVO = prodSvc.getOneProd(productId);
@@ -133,7 +133,7 @@ public class ProdController {
 		}
 	// 新增商品後跳轉到庫存管理
 	// 庫存管理入口
-	@GetMapping("/setSizes")
+	@GetMapping("setSizes")
 	public String setSizes(@RequestParam("productId") Integer productId, ModelMap model) {
 	    ProdVO prodVO = prodSvc.getOneProd(productId);
 	    model.addAttribute("prodVO", prodVO);
@@ -163,7 +163,7 @@ public class ProdController {
 	    return "back-end/prod/product_size";
 	}
 	
-	@PostMapping("/updateSize")
+	@PostMapping("updateSize")
 	public String updateSize(
 	        @RequestParam("productId") Integer productId,
 	        @RequestParam("sizeId") Integer[] sizeIds,
