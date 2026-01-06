@@ -1,16 +1,14 @@
 package com.dreamhouse.memcoupon.model;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dreamhouse.coupon.model.CouponRepository;
+import com.dreamhouse.coupon.model.CouponService;
 import com.dreamhouse.coupon.model.CouponVO;
-import com.dreamhouse.mem.model.MemRepository;
+import com.dreamhouse.mem.model.MemService;
 import com.dreamhouse.mem.model.MemVO;
 
 @Service("memCouponMappingService")
@@ -20,22 +18,23 @@ public class MemCouponService {
 	MemCouponRepository memCoupRepo;
 
 	@Autowired
-	CouponRepository coupRepo;
+	CouponService coupSer;
 
 	@Autowired
-	MemRepository memRepo;
+	MemService memSer;
 
 	@Transactional
-	public void addMemCoupon(List<CouponVO> activeCoupList, Integer memId) {
-		// ●取得所有memberId
-		Optional<MemVO> optional = memRepo.findById(memId);
-		MemVO mem = optional.orElse(null);
+	public void addMemCoupon(List<CouponVO> activeCoupList, List<MemVO> memList) {
+		MemCouponCompositeKey key = new MemCouponCompositeKey();
+		// ●取得所有會員狀態=1的memberId
+		memList = memSer.findActiveMem();
+		for (MemVO memVO : memList) {
+			key.setMemberId(memVO.getMemberId());
+		}
 
+		
 		// ●取得coupon state==1 && startDt==now()，並新增會員優惠券
 		for (CouponVO couponVO : activeCoupList) {
-
-			MemCouponCompositeKey key = new MemCouponCompositeKey();
-			key.setMemberId(mem.getMemberId());
 			MemCouponVO memCoup = new MemCouponVO();
 			memCoup.setCouponId(couponVO);
 			memCoup.setMemCouponKey(key);
@@ -44,4 +43,8 @@ public class MemCouponService {
 		}
 	}
 
+	
+	public List<MemCouponVO> getAll(){
+		return memCoupRepo.findAll();
+	}
 }

@@ -74,6 +74,8 @@ public class MemService {
         }
     }
 
-
+    public List<MemVO> findActiveMem(){
+    	return repository.findActiveMem(1);
+    }
 
 }

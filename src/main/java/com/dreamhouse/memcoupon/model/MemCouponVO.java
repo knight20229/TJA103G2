@@ -26,6 +26,8 @@ public class MemCouponVO {
 	private LocalDateTime couponUpdateTime;
 	private CouponVO couponId;
 	private MemVO memberId;
+	private CouponVO couponVO;
+	private MemVO memVO;
 	
 	@EmbeddedId
 	public MemCouponCompositeKey getMemCouponKey() {
@@ -66,15 +68,17 @@ public class MemCouponVO {
 		this.couponId = couponId;
 	}
 
-//	@ManyToOne
-//	@JoinColumn(name = "member_id")
-//	@MapsId("memberId") // 對應複合主鍵中的 memberId
-//	public MemVO getMemberId() {
-//		return memberId;
-//	}
-//
-//	public void setMemberId(MemVO memberId) {
-//		this.memberId = memberId;
-//	}
-//	
+	@ManyToOne
+	@JoinColumn(name = "member_id", referencedColumnName = "member_id")
+	@MapsId("memberId") // 對應複合主鍵中的 memberId
+	public MemVO getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(MemVO memberId) {
+		this.memberId = memberId;
+	}
+	
+	
+	
 }

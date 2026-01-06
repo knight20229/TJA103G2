@@ -105,7 +105,7 @@
             </div>
             <div class="col-12">
                 <label for="inputPromotionsName" class="form-label">促銷活動名稱</label>
-                <input type="text" class="form-control" id="inputPromotionsName" th:value="${promotionsVO.name}" readonly>
+                <input type="text" class="form-control" id="inputPromotionsName" th:value="${promotionsVO.name}" disabled readonly>
             </div>
             <div class="col-md-6">
                 <label for="inputType" class="form-label">折扣方式</label>
@@ -116,19 +116,19 @@
             </div>
             <div class="col-md-6">
                 <label for="inputPromotionsValue" class="form-label">折扣金額/折扣率</label>
-                <input type="text" class="form-control" id="inputPromotionsValue" th:value="${promotionsVO.promotionsValue}" readonly>
+                <input type="text" class="form-control" id="inputPromotionsValue" th:value="${promotionsVO.promotionsValue}" disabled readonly>
             </div>
             <div class="col-12">
                 <label for="inputNarrate" class="form-label">活動說明</label>
-                <input type="text" class="form-control" id="inputNarrate" th:value="${promotionsVO.narrate}" readonly>
+                <input type="text" class="form-control" id="inputNarrate" th:value="${promotionsVO.narrate}" disabled readonly>
             </div>
             <div class="col-md-4">
                 <label for="inputDate" class="form-label">開始日期</label>
-                <input type="date" class="form-control" id="inputDate" th:value="${promotionsVO.startDt}" readonly>
+                <input type="date" class="form-control" id="inputDate" th:value="${promotionsVO.startDt}" disabled readonly>
             </div>
             <div class="col-md-4">
                 <label for="inputEndDate" class="form-label">結束日期</label>
-                <input type="date" class="form-control" id="inputEndDate" th:value="${promotionsVO.endDt}" readonly>
+                <input type="date" class="form-control" id="inputEndDate" th:value="${promotionsVO.endDt}" disabled readonly>
             </div>
             <div class="col-md-6">
                 <div>
@@ -149,15 +149,15 @@
             </div>
             <div>
 	            <span>員工編號</span>
-	            <input type="text" th:value="${promotionsVO.employeeId}" class="form-control" id="inputEmployeeId" readonly>
+	            <input type="text" th:value="${promotionsVO.empVO.employeeId}" class="form-control" id="inputEmployeeId" disabled readonly>
             </div>
             <div class="col-md-4">
 	            <span>建立時間</span>
-	            <input type="text" th:value="${#temporals.format(promotionsVO.createTime,'yyyy-MM-dd HH:mm:ss')}" class="form-control" id="inputCreateTime" readonly>
+	            <input type="text" th:value="${#temporals.format(promotionsVO.createTime,'yyyy-MM-dd HH:mm:ss')}" class="form-control" id="inputCreateTime" disabled readonly>
             </div>
             <div class="col-md-4">
 	            <span>更新時間</span>
-	            <input type="text" th:value="${#temporals.format(promotionsVO.updateTime,'yyyy-MM-dd HH:mm:ss')}" class="form-control" id="inputUpdateTime" readonly>
+	            <input type="text" th:value="${#temporals.format(promotionsVO.updateTime,'yyyy-MM-dd HH:mm:ss')}" class="form-control" id="inputUpdateTime" disabled readonly>
             </div>
             <div class="col-12 gap-4 d-md-flex justify-content-md-end">
                 <a th:href="@{/promotions/getAllPromotions}" class="btn btn-primary">返回列表</a>

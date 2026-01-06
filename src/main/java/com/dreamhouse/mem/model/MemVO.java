@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.dreamhouse.memcoupon.model.MemCouponVO;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -22,6 +25,7 @@ public class MemVO implements Serializable {
     private String email;
     private String address;
     private String phone;
+    private Set<MemCouponVO> memCoup;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
@@ -148,6 +152,15 @@ public class MemVO implements Serializable {
 				+ ", email=" + email + ", address=" + address + ", phone=" + phone + ", birthday=" + birthday
 				+ ", status=" + status + ", createTime=" + createTime + ", updatedTime=" + updatedTime + ", lastlogin="
 				+ lastlogin + "]";
+	}
+
+	@OneToMany(mappedBy = "memberId")
+	public Set<MemCouponVO> getMemCoup() {
+		return memCoup;
+	}
+
+	public void setMemCoup(Set<MemCouponVO> memCoup) {
+		this.memCoup = memCoup;
 	}
     
     

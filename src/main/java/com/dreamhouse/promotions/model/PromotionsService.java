@@ -26,11 +26,6 @@ public class PromotionsService {
 		
 	}
 	
-	public void deletePromotions(Integer promotionsId) {
-		if(repository.existsById(promotionsId)) {
-			repository.deleteById(promotionsId);
-		}
-	}
 	
 	public PromotionsVO getOneById(Integer promotionsId) {
 		Optional<PromotionsVO> optional = repository.findById(promotionsId);

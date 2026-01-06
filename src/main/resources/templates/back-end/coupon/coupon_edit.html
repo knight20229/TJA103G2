@@ -158,8 +158,8 @@
             </div>
             <div>
 	            <span>員工編號</span>
-	            <input type="text" th:field="*{employeeId}" class="form-control" id="inputEmployeeId" readonly>
-            	<span th:if="${#fields.hasErrors('employeeId')}" th:errors="*{employeeId}" class="text-danger"></span>
+	            <input type="text" th:field="*{empVO.employeeId}" class="form-control" id="inputEmployeeId" readonly>
+            	<span th:if="${#fields.hasErrors('empVO.employeeId')}" th:errors="*{empVO.employeeId}" class="text-danger"></span>
             </div>
             <div class="col-md-4">
 	            <span>建立時間</span>
