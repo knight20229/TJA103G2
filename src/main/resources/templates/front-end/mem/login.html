@@ -1,358 +1,393 @@
 <!DOCTYPE html>
 <html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Robin - Furniture eCommerce</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Robin - Furniture eCommerce</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Favicon -->
-    <link th:href="@{/img/favicon.ico}" rel="icon">
+<!-- Favicon -->
+<link th:href="@{/img/favicon.ico}" rel="icon">
 
-    <!-- Vendor CSS -->
-    <link th:href="@{/css/vendors.css}" rel="stylesheet">
-    <!-- Main CSS -->
-    <link th:href="@{/css/style.css}" rel="stylesheet">
+<!-- Vendor CSS -->
+<link th:href="@{/css/vendors.css}" rel="stylesheet">
+<!-- Main CSS -->
+<link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 
 <body>
-    <!--====================  header area ====================-->
+	<!--====================  header area ====================-->
 
-    <div class="header-area header-area--default header-area--default--white header-sticky">
+	<div
+		class="header-area header-area--default header-area--default--white header-sticky">
 
-        <!--=======  header navigation top  =======-->
+		<!--=======  header navigation top  =======-->
 
-        <!--=======  End of header navigation top  =======-->
+		<!--=======  End of header navigation top  =======-->
 
-        <!--=======  header navigation wrapper  =======-->
+		<!--=======  header navigation wrapper  =======-->
 
-        <div class="header-navigation-area header-navigation-area--white header-navigation-area--extra-space d-none d-lg-block">
-            <div class="container wide">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="header-info-wrapper header-info-wrapper--alt-style">
+		<div
+			class="header-navigation-area header-navigation-area--white header-navigation-area--extra-space d-none d-lg-block">
+			<div class="container wide">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="header-info-wrapper header-info-wrapper--alt-style">
 
-                            <div class="header-logo">
-                                <a href="首頁.html">
-                                    <img src="logo.png" class="img-fluid" alt="">
-                                </a>
-                            </div>
+							<div class="header-logo">
+								<a href="首頁.html"> <img src="logo.png" class="img-fluid"
+									alt="">
+								</a>
+							</div>
 
-                            <div class="header-navigation-wrapper">
-                                <nav>
-                                    <ul>
+							<div class="header-navigation-wrapper">
+								<nav>
+									<ul>
 
-                                        <li class="has-children">
-                                            <a href="商品介面.html">商品瀏覽</a>
-                                        </li>
-                                        <li class="has-children">
-                                            <a href="首頁1.html">商品比較</a>
-                                        </li>    
-                                        <li class="has-children">
-                                            <a href="首頁1.html">客製化商品</a>
-                                        </li>                                       
-                                        <li class="has-children">
-                                            <a href="首頁1.html">好眠知識</a>
-                                        </li>                                     
-                                    </ul>
-                                </nav>
-                            </div>
-                            
-                            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+										<li class="has-children"><a href="商品介面.html">商品瀏覽</a></li>
+										<li class="has-children"><a href="首頁1.html">商品比較</a></li>
+										<li class="has-children"><a href="首頁1.html">客製化商品</a></li>
+										<li class="has-children"><a href="首頁1.html">好眠知識</a></li>
+									</ul>
+								</nav>
+							</div>
 
-                            <div class="container-fluid">
-                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <form class="d-flex">
-                                    <input class="form-control me-2" type="search" placeholder="搜尋商品" aria-label="Search">
-                                    <button class="btn btn-outline-success" type="submit">Search</button>
-                                </form>
-                                </div>
-                            </div>
-                            </nav>
+							<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-                            <div class="header-icon-area">
+								<div class="container-fluid">
+									<div class="collapse navbar-collapse"
+										id="navbarSupportedContent">
+										<form class="d-flex">
+											<input class="form-control me-2" type="search"
+												placeholder="搜尋商品" aria-label="Search">
+											<button class="btn btn-outline-success" type="submit">Search</button>
+										</form>
+									</div>
+								</div>
+							</nav>
 
-                                <div class="header-icon d-flex align-items-center">
-                                    <ul class="header-icon__list">
-                                        <li><a href="javascript:void(0)" id="fa-solid fa-message"><i class="fa-solid fa-message" style="color: #B197FC;"></i></a></li>
-                                        <li><a href="javascript:void(0)" id="fa-solid fa-user"><i class="fa-solid fa-user" style="color: #B197FC;"></i></a></li>
-                                        <li><a href="javascript:void(0)" id="fa-solid fa-bell"><i class="fa-solid fa-bell" style="color: #B197FC"></i></a></li>
-                                        
-                                        <li>
-                                            <a href="cart.html"><i class="fa-solid fa-cart-shopping" style="color: #B197FC;"></i></a>
-                                            <div class="minicart-wrapper">
-                                                <p class="minicart-wrapper__title">購物車</p>
+							<div class="header-icon-area">
 
-                                                <div class="minicart-wrapper__items ps-scroll">
-                                                    <div class="minicart-wrapper__items__single">
-                                                        <a href="javascript:void(0)" class="close-icon"><i class="pe-7s-close"></i></a>
-                                                        <div class="image">
-                                                            <a href="商品瀏覽.html">
-                                                                <img src="assets/img/products/product-2-90x100.jpg" class="img-fluid" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <div class="content">
-                                                            <p class="product-title"><a href="商品瀏覽.html">Jane Lauren Rebel Sofa</a></p>
-                                                            <p class="product-calculation"><span class="count">1</span> x <span class="price">$900</span></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
+								<div class="header-icon d-flex align-items-center">
+									<ul class="header-icon__list">
+										<li><a href="javascript:void(0)" id="fa-solid fa-message"><i
+												class="fa-solid fa-message" style="color: #B197FC;"></i></a></li>
+										<li><a href="javascript:void(0)" id="fa-solid fa-user"><i
+												class="fa-solid fa-user" style="color: #B197FC;"></i></a></li>
+										<li><a href="javascript:void(0)" id="fa-solid fa-bell"><i
+												class="fa-solid fa-bell" style="color: #B197FC"></i></a></li>
 
-                                                <p class="minicart-wrapper__subtotal">總計: <span>$1800</span></p>
+										<li><a href="cart.html"><i
+												class="fa-solid fa-cart-shopping" style="color: #B197FC;"></i></a>
+											<div class="minicart-wrapper">
+												<p class="minicart-wrapper__title">購物車</p>
 
-                                                <div class="minicart-wrapper__buttons">
-                                                    <a href="cart.html" class="theme-button theme-button--minicart-button">查看購物車</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+												<div class="minicart-wrapper__items ps-scroll">
+													<div class="minicart-wrapper__items__single">
+														<a href="javascript:void(0)" class="close-icon"><i
+															class="pe-7s-close"></i></a>
+														<div class="image">
+															<a href="商品瀏覽.html"> <img
+																src="assets/img/products/product-2-90x100.jpg"
+																class="img-fluid" alt="">
+															</a>
+														</div>
+														<div class="content">
+															<p class="product-title">
+																<a href="商品瀏覽.html">Jane Lauren Rebel Sofa</a>
+															</p>
+															<p class="product-calculation">
+																<span class="count">1</span> x <span class="price">$900</span>
+															</p>
+														</div>
+													</div>
+												</div>
 
-        <!--=======  End of header navigation wrapper  =======-->
+												<p class="minicart-wrapper__subtotal">
+													總計: <span>$1800</span>
+												</p>
 
-        <!--=======  mobile navigation area  =======-->
-
-        <div class="header-mobile-navigation d-block d-lg-none">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-6 col-md-6">
-                        <div class="header-logo">
-                            <a href="index.html">
-                                <img src="assets/img/logo2.png" class="img-fluid" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-6">
-                        <div class="mobile-navigation text-end">
-                            <ul class="header-icon__list header-icon__list">
-                                <li>
-                                    <a href="wishlist.html"><i class="fa fa-heart-o"></i><span class="item-count">1</span></a>
-                                </li>
-                                <li>
-                                    <a href="cart.html"><i class="fa fa-shopping-basket"></i><span class="item-count">3</span></a>
-                                </li>
-                                <li><a href="javascript:void(0)" class="mobile-menu-icon" id="mobile-menu-trigger"><i class="fa fa-bars"></i></a></li>
-                            </ul>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--=======  End of mobile navigation area  =======-->
-    </div>
-
-    <!--====================  End of header area  ====================-->
-
-
- <div class="page-content-wrapper">
-  <div class="myaccount-wrapper">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-6 col-md-8 col-sm-12">
-          <!-- Spring Boot 表單綁定 -->
-          <form id="login-form" th:action="@{/mem/login}" method="post" th:object="${loginForm}">
-            <div class="login-form">
-              <h4 class="login-title">登入</h4>
-
-              <!-- 帳號 -->
-			<label for="account">帳號</label>
-			<input type="text" id="account" th:field="*{account}" placeholder="帳號" required />
-			<span th:if="${#fields.hasErrors('account')}" th:errors="*{account}" class="error-hint"></span>
-			
-			<!-- 密碼 -->
-			<label for="password">密碼</label>
-			<input type="password" id="password" th:field="*{password}" placeholder="密碼" required />
-			<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-hint"></span>
-			
-			<!-- 驗證碼 -->
-			<div class="captcha-wrapper">
-			  <label for="captcha">驗證碼</label>
-			  <input type="text" id="captcha" name="captcha" required />
-			  <img th:src="@{/captcha}" alt="驗證碼"
-			       onclick="this.src='/captcha?'+Math.random()" />
+												<div class="minicart-wrapper__buttons">
+													<a href="cart.html"
+														class="theme-button theme-button--minicart-button">查看購物車</a>
+												</div>
+											</div></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			
-			<!-- 全域錯誤訊息 -->
-			<small th:if="${errorMsg}" class="error-hint" th:text="${errorMsg}"></small>
-			
-			<!-- 忘記密碼 -->
-			<a th:href="@{/forgot-password}" class="forget-pass-link">忘記密碼</a>
+		</div>
+
+		<!--=======  End of header navigation wrapper  =======-->
+
+		<!--=======  mobile navigation area  =======-->
+
+		<div class="header-mobile-navigation d-block d-lg-none">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-6 col-md-6">
+						<div class="header-logo">
+							<a href="index.html"> <img src="assets/img/logo2.png"
+								class="img-fluid" alt="">
+							</a>
+						</div>
+					</div>
+					<div class="col-6 col-md-6">
+						<div class="mobile-navigation text-end">
+							<ul class="header-icon__list header-icon__list">
+								<li><a href="wishlist.html"><i class="fa fa-heart-o"></i><span
+										class="item-count">1</span></a></li>
+								<li><a href="cart.html"><i
+										class="fa fa-shopping-basket"></i><span class="item-count">3</span></a>
+								</li>
+								<li><a href="javascript:void(0)" class="mobile-menu-icon"
+									id="mobile-menu-trigger"><i class="fa fa-bars"></i></a></li>
+							</ul>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--=======  End of mobile navigation area  =======-->
+	</div>
+
+	<!--====================  End of header area  ====================-->
+
+
+	<div class="page-content-wrapper">
+		<div class="myaccount-wrapper">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-6 col-md-8 col-sm-12">
+						<!-- Spring Boot 表單綁定 -->
+						<form id="login-form" th:action="@{/mem/login}" method="post"
+							th:object="${loginForm}">
+							<div class="login-form">
+								<h4 class="login-title">登入</h4>
+
+								<!-- 帳號 -->
+								<label for="account">帳號</label> <input type="text" id="account"
+									th:field="*{account}" placeholder="帳號" required /> <span
+									th:if="${#fields.hasErrors('account')}" th:errors="*{account}"
+									class="error-hint"></span>
+
+								<!-- 密碼 -->
+								<label for="password">密碼</label> <input type="password"
+									id="password" th:field="*{password}" placeholder="密碼" required />
+								<span th:if="${#fields.hasErrors('password')}"
+									th:errors="*{password}" class="error-hint"></span>
+
+								<!-- 驗證碼 -->
+								<div class="captcha-wrapper">
+									<label for="captcha">驗證碼</label> <input type="text"
+										id="captcha" name="captcha" required /> <img
+										th:src="@{/captcha}" alt="驗證碼"
+										onclick="this.src='/captcha?'+Math.random()" />
+								</div>
+
+								<!-- 全域錯誤訊息 -->
+								<small th:if="${errorMsg}" class="error-hint"
+									th:text="${errorMsg}"></small>
+
+								<!-- 忘記密碼 -->
+								<a th:href="@{/forgot-password}" class="forget-pass-link">忘記密碼</a>
 
 
 
 
-              <!-- 按鈕區 -->
-              <div class="button-group">
-                <button type="submit" class="theme-button login">登入</button>
-                <a th:href="@{/mem/register}" class="theme-button register">註冊</a>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+								<!-- 按鈕區 -->
+								<div class="button-group">
+									<button type="submit" class="theme-button login">登入</button>
+									<a th:href="@{/mem/register}" class="theme-button register">註冊</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-    <!--====================  End of page content wrapper  ====================-->
+	<!--====================  End of page content wrapper  ====================-->
 
 
-     <!--=======  offcanvas mobile menu  =======-->
-<div class="offcanvas-mobile-menu" id="offcanvas-mobile-menu">
-    <a href="javascript:void(0)" class="offcanvas-menu-close" id="offcanvas-menu-close-trigger">
-        <i class="pe-7s-close"></i>
-    </a>
-    <div class="offcanvas-wrapper">
-        <div class="offcanvas-inner-content">
-            <!-- 搜尋區 -->
-            <div class="offcanvas-mobile-search-area">
-                <form th:action="@{/search}" method="get">
-                    <input type="search" name="q" placeholder="Search ...">
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                </form>
-            </div>
+	<!--=======  offcanvas mobile menu  =======-->
+	<div class="offcanvas-mobile-menu" id="offcanvas-mobile-menu">
+		<a href="javascript:void(0)" class="offcanvas-menu-close"
+			id="offcanvas-menu-close-trigger"> <i class="pe-7s-close"></i>
+		</a>
+		<div class="offcanvas-wrapper">
+			<div class="offcanvas-inner-content">
+				<!-- 搜尋區 -->
+				<div class="offcanvas-mobile-search-area">
+					<form th:action="@{/search}" method="get">
+						<input type="search" name="q" placeholder="Search ...">
+						<button type="submit">
+							<i class="fa fa-search"></i>
+						</button>
+					</form>
+				</div>
 
-            <!-- 側邊選單 -->
-            <nav class="offcanvas-naviagtion">
-                <ul>
-                    <li class="menu-item-has-children"><a href="#">Elements</a>
-                        <ul class="sub-menu">
-                            <li class="menu-item-has-children"><a href="#">Shop/Products</a>
-                                <ul class="sub-menu">
-                                    <li><a th:href="@{/element/product-category}">Product Categories</a></li>
-                                    <li><a th:href="@{/element/product-carousel}">Products Carousel</a></li>
-                                    <li><a th:href="@{/element/product-widget}">Product Widget</a></li>
-                                    <li><a th:href="@{/element/recent-product}">Recent Products</a></li>
-                                    <li><a th:href="@{/element/sale-product}">Sale Products</a></li>
-                                    <li><a th:href="@{/element/featured-product}">Featured Product</a></li>
-                                    <li><a th:href="@{/element/top-rated-product}">Top Rated Products</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><a href="#">Theming</a>
-                                <ul class="sub-menu">
-                                    <li><a th:href="@{/element/blog-post}">Blog Posts</a></li>
-                                    <li><a th:href="@{/element/mailchimp-form}">MailChimp Form</a></li>
-                                    <li><a th:href="@{/element/accordion}">Accordion/Toggles</a></li>
-                                    <li><a th:href="@{/element/progress-bar}">Progress Bars</a></li>
-                                    <li><a th:href="@{/element/countdown}">Countdown Timer</a></li>
-                                    <li><a th:href="@{/element/button}">Buttons</a></li>
-                                    <li><a th:href="@{/element/testimonial}">Testimonials</a></li>
-                                    <li><a th:href="@{/element/google-map}">Google Maps</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+				<!-- 側邊選單 -->
+				<nav class="offcanvas-naviagtion">
+					<ul>
+						<li class="menu-item-has-children"><a href="#">Elements</a>
+							<ul class="sub-menu">
+								<li class="menu-item-has-children"><a href="#">Shop/Products</a>
+									<ul class="sub-menu">
+										<li><a th:href="@{/element/product-category}">Product
+												Categories</a></li>
+										<li><a th:href="@{/element/product-carousel}">Products
+												Carousel</a></li>
+										<li><a th:href="@{/element/product-widget}">Product
+												Widget</a></li>
+										<li><a th:href="@{/element/recent-product}">Recent
+												Products</a></li>
+										<li><a th:href="@{/element/sale-product}">Sale
+												Products</a></li>
+										<li><a th:href="@{/element/featured-product}">Featured
+												Product</a></li>
+										<li><a th:href="@{/element/top-rated-product}">Top
+												Rated Products</a></li>
+									</ul></li>
+								<li class="menu-item-has-children"><a href="#">Theming</a>
+									<ul class="sub-menu">
+										<li><a th:href="@{/element/blog-post}">Blog Posts</a></li>
+										<li><a th:href="@{/element/mailchimp-form}">MailChimp
+												Form</a></li>
+										<li><a th:href="@{/element/accordion}">Accordion/Toggles</a></li>
+										<li><a th:href="@{/element/progress-bar}">Progress
+												Bars</a></li>
+										<li><a th:href="@{/element/countdown}">Countdown
+												Timer</a></li>
+										<li><a th:href="@{/element/button}">Buttons</a></li>
+										<li><a th:href="@{/element/testimonial}">Testimonials</a></li>
+										<li><a th:href="@{/element/google-map}">Google Maps</a></li>
+									</ul></li>
+							</ul></li>
 
-                    <li class="menu-item-has-children"><a href="#">Blog</a>
-                        <ul class="sub-menu">
-                            <li class="menu-item-has-children"><a href="#">Blog post list</a>
-                                <ul class="sub-menu">
-                                    <li><a th:href="@{/blog/one-column}">Blog one column</a></li>
-                                    <li><a th:href="@{/blog/two-column}">Blog two column</a></li>
-                                    <li><a th:href="@{/blog/left-sidebar}">Blog left sidebar</a></li>
-                                    <li><a th:href="@{/blog/right-sidebar}">Blog right sidebar</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><a href="#">Blog post details</a>
-                                <ul class="sub-menu">
-                                    <li><a th:href="@{/blog/post-image}">Blog post format image</a></li>
-                                    <li><a th:href="@{/blog/post-gallery}">Blog post format gallery</a></li>
-                                    <li><a th:href="@{/blog/post-audio}">Blog post format audio</a></li>
-                                    <li><a th:href="@{/blog/post-video}">Blog post format video</a></li>
-                                    <li><a th:href="@{/blog/post-left-sidebar}">Blog post left sidebar</a></li>
-                                    <li><a th:href="@{/blog/post-right-sidebar}">Blog post right sidebar</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+						<li class="menu-item-has-children"><a href="#">Blog</a>
+							<ul class="sub-menu">
+								<li class="menu-item-has-children"><a href="#">Blog
+										post list</a>
+									<ul class="sub-menu">
+										<li><a th:href="@{/blog/one-column}">Blog one column</a></li>
+										<li><a th:href="@{/blog/two-column}">Blog two column</a></li>
+										<li><a th:href="@{/blog/left-sidebar}">Blog left
+												sidebar</a></li>
+										<li><a th:href="@{/blog/right-sidebar}">Blog right
+												sidebar</a></li>
+									</ul></li>
+								<li class="menu-item-has-children"><a href="#">Blog
+										post details</a>
+									<ul class="sub-menu">
+										<li><a th:href="@{/blog/post-image}">Blog post format
+												image</a></li>
+										<li><a th:href="@{/blog/post-gallery}">Blog post
+												format gallery</a></li>
+										<li><a th:href="@{/blog/post-audio}">Blog post format
+												audio</a></li>
+										<li><a th:href="@{/blog/post-video}">Blog post format
+												video</a></li>
+										<li><a th:href="@{/blog/post-left-sidebar}">Blog post
+												left sidebar</a></li>
+										<li><a th:href="@{/blog/post-right-sidebar}">Blog
+												post right sidebar</a></li>
+									</ul></li>
+							</ul></li>
 
-                    <li class="menu-item-has-children"><a href="#">Shop</a>
-                        <ul class="sub-menu">
-                            <li class="menu-item-has-children"><a href="#">Shop Pages</a>
-                                <ul class="sub-menu">
-                                    <li><a th:href="@{/shop/fullwidth}">Shop Fullwidth</a></li>
-                                    <li><a th:href="@{/shop/list}">Shop List Layout</a></li>
-                                    <li><a th:href="@{/shop/no-sidebar}">Shop No Sidebar</a></li>
-                                    <li><a th:href="@{/shop/left-sidebar}">Shop With Left Sidebar</a></li>
-                                    <li><a th:href="@{/shop/right-sidebar}">Shop With Right Sidebar</a></li>
-                                    <li><a th:href="@{/shop/brand}">Shop By Brand</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><a href="#">Shop Pages(Details)</a>
-                                <ul class="sub-menu">
-                                    <li><a th:href="@{/product/basic}">Basic</a></li>
-                                    <li><a th:href="@{/product/fullwidth}">Fullwidth</a></li>
-                                    <li><a th:href="@{/product/sticky}">Sticky Details</a></li>
-                                    <li><a th:href="@{/product/bottom-thumbnail}">Bottom thumbnails</a></li>
-                                    <li><a th:href="@{/product/extra-content}">Extra content</a></li>
-                                    <li><a th:href="@{/product/variation-image}">Variations Images</a></li>
-                                    <li><a th:href="@{/product/affiliate}">Product details affiliate</a></li>
-                                    <li><a th:href="@{/product/group}">Product details group</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
+						<li class="menu-item-has-children"><a href="#">Shop</a>
+							<ul class="sub-menu">
+								<li class="menu-item-has-children"><a href="#">Shop
+										Pages</a>
+									<ul class="sub-menu">
+										<li><a th:href="@{/shop/fullwidth}">Shop Fullwidth</a></li>
+										<li><a th:href="@{/shop/list}">Shop List Layout</a></li>
+										<li><a th:href="@{/shop/no-sidebar}">Shop No Sidebar</a></li>
+										<li><a th:href="@{/shop/left-sidebar}">Shop With Left
+												Sidebar</a></li>
+										<li><a th:href="@{/shop/right-sidebar}">Shop With
+												Right Sidebar</a></li>
+										<li><a th:href="@{/shop/brand}">Shop By Brand</a></li>
+									</ul></li>
+								<li class="menu-item-has-children"><a href="#">Shop
+										Pages(Details)</a>
+									<ul class="sub-menu">
+										<li><a th:href="@{/product/basic}">Basic</a></li>
+										<li><a th:href="@{/product/fullwidth}">Fullwidth</a></li>
+										<li><a th:href="@{/product/sticky}">Sticky Details</a></li>
+										<li><a th:href="@{/product/bottom-thumbnail}">Bottom
+												thumbnails</a></li>
+										<li><a th:href="@{/product/extra-content}">Extra
+												content</a></li>
+										<li><a th:href="@{/product/variation-image}">Variations
+												Images</a></li>
+										<li><a th:href="@{/product/affiliate}">Product
+												details affiliate</a></li>
+										<li><a th:href="@{/product/group}">Product details
+												group</a></li>
+									</ul></li>
+							</ul></li>
+					</ul>
+				</nav>
 
-            <!-- 聯絡資訊 -->
-            <div class="offcanvas-widget-area">
-                <div class="off-canvas-contact-widget">
-                    <ul class="header-contact-info__list">
-                        <li><i class="pe-7s-phone"></i> <a href="tel://12452456012">(1245) 2456 012</a></li>
-                        <li><i class="pe-7s-mail-open"></i> <a href="mailto:info@yourdomain.com">info@yourdomain.com</a></li>
-                    </ul>
-                </div>
-                <!-- 社群連結 -->
-                <div class="off-canvas-widget-social">
-                    <a href="#" title="Facebook"><i class="fa fa-facebook"></i></a>
-                    <a href="#" title="Twitter"><i class="fa fa-twitter"></i></a>
-                    <a href="#" title="LinkedIn"><i class="fa fa-linkedin"></i></a>
-                    <a href="#" title="Youtube"><i class="fa fa-youtube-play"></i></a>
-                    <a href="#" title="Vimeo"><i class="fa fa-vimeo-square"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--=======  End of offcanvas mobile menu  =======-->
+				<!-- 聯絡資訊 -->
+				<div class="offcanvas-widget-area">
+					<div class="off-canvas-contact-widget">
+						<ul class="header-contact-info__list">
+							<li><i class="pe-7s-phone"></i> <a href="tel://12452456012">(1245)
+									2456 012</a></li>
+							<li><i class="pe-7s-mail-open"></i> <a
+								href="mailto:info@yourdomain.com">info@yourdomain.com</a></li>
+						</ul>
+					</div>
+					<!-- 社群連結 -->
+					<div class="off-canvas-widget-social">
+						<a href="#" title="Facebook"><i class="fa fa-facebook"></i></a> <a
+							href="#" title="Twitter"><i class="fa fa-twitter"></i></a> <a
+							href="#" title="LinkedIn"><i class="fa fa-linkedin"></i></a> <a
+							href="#" title="Youtube"><i class="fa fa-youtube-play"></i></a> <a
+							href="#" title="Vimeo"><i class="fa fa-vimeo-square"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--=======  End of offcanvas mobile menu  =======-->
 
-<!--=======  search overlay  =======-->
-<div class="search-overlay" id="search-overlay">
-    <span class="close-icon search-close-icon">
-        <a href="javascript:void(0)" id="search-close-icon">
-            <i class="pe-7s-close"></i>
-        </a>
-    </span>
-    <div class="search-overlay-content">
-        <div class="input-box">
-            <form th:action="@{/search}" method="get">
-                <input type="search" name="q" placeholder="Search Products...">
-            </form>
-        </div>
-        <div class="search-hint">
-            <span># Hit enter to search or ESC to close</span>
-        </div>
-    </div>
-</div>
-<!--=======  End of search overlay  =======-->
+	<!--=======  search overlay  =======-->
+	<div class="search-overlay" id="search-overlay">
+		<span class="close-icon search-close-icon"> <a
+			href="javascript:void(0)" id="search-close-icon"> <i
+				class="pe-7s-close"></i>
+		</a>
+		</span>
+		<div class="search-overlay-content">
+			<div class="input-box">
+				<form th:action="@{/search}" method="get">
+					<input type="search" name="q" placeholder="Search Products...">
+				</form>
+			</div>
+			<div class="search-hint">
+				<span># Hit enter to search or ESC to close</span>
+			</div>
+		</div>
+	</div>
+	<!--=======  End of search overlay  =======-->
 
-<!-- scroll to top -->
-<button class="scroll-top">
-    <i class="fa fa-angle-up"></i>
-</button>
+	<!-- scroll to top -->
+	<button class="scroll-top">
+		<i class="fa fa-angle-up"></i>
+	</button>
 
-<!-- JS files -->
-<script th:src="@{/js/vendors.js}"></script>
-<script th:src="@{/js/active.js}"></script>
+	<!-- JS files -->
+	<script th:src="@{/js/vendors.js}"></script>
+	<script th:src="@{/js/active.js}"></script>
 </body>
 </html>
