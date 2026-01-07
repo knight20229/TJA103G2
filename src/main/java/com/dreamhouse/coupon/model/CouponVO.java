@@ -24,9 +24,9 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-
 @Entity
 @Table(name ="coupon")
+@CouponDateCheck
 public class CouponVO {
 	
 	
@@ -42,6 +42,7 @@ public class CouponVO {
 	private LocalDateTime createTime;
 	private LocalDateTime updateTime;
 	private Set<MemCouponVO> memCoup;
+	private LocalDateTime sendTime;
 	
 	
 	@Id
@@ -121,7 +122,6 @@ public class CouponVO {
 	
 	@Column(name = "start_dt")
 	@NotNull(message = "請輸入開始日期")
-	@Future(message = "日期必須在今日(不含)之後")
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	public LocalDate getStartDt() {
 		return startDt;
@@ -133,7 +133,6 @@ public class CouponVO {
 	
 	@Column(name = "end_dt")
 	@NotNull(message = "請輸入結束日期")
-	@Future(message = "日期必須在今日(不含)之後")
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	public LocalDate getEndDt() {
 		return endDt;
@@ -161,13 +160,23 @@ public class CouponVO {
 		this.updateTime = updateTime;
 	}
 
-	@OneToMany(mappedBy = "couponId")
+	@OneToMany(mappedBy = "couponVO")
 	public Set<MemCouponVO> getMemCoup() {
 		return memCoup;
 	}
 
 	public void setMemCoup(Set<MemCouponVO> memCoup) {
 		this.memCoup = memCoup;
+	}
+
+	@Column(name = "send_time")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	public LocalDateTime getSendTime() {
+		return sendTime;
+	}
+
+	public void setSendTime(LocalDateTime sendTime) {
+		this.sendTime = sendTime;
 	}
 	
 

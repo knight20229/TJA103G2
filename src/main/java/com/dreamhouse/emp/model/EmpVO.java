@@ -2,11 +2,16 @@ package com.dreamhouse.emp.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Set;
+
+import com.dreamhouse.coupon.model.CouponVO;
+import com.dreamhouse.promotions.model.PromotionsVO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 
@@ -31,6 +36,8 @@ public class EmpVO implements Serializable {
     private Byte status;
     private Timestamp createTime;
     private Timestamp updateTime;
+    private Set<CouponVO> couponVO;
+    private Set<PromotionsVO> promotionsVO;
 
     public EmpVO() {}
 
@@ -109,4 +116,23 @@ public class EmpVO implements Serializable {
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
+    
+    @OneToMany(mappedBy = "empVO")
+	public Set<CouponVO> getCouponVO() {
+		return couponVO;
+	}
+
+	public void setCouponVO(Set<CouponVO> couponVO) {
+		this.couponVO = couponVO;
+	}
+
+	@OneToMany(mappedBy = "empVO")
+	public Set<PromotionsVO> getPromotionsVO() {
+		return promotionsVO;
+	}
+
+	public void setPromotionsVO(Set<PromotionsVO> promotionsVO) {
+		this.promotionsVO = promotionsVO;
+	}
+    
 }

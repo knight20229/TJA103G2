@@ -110,7 +110,6 @@ public class ProdVO implements java.io.Serializable {
 
     @Lob
     @Column(name = "DESCRIPTION", columnDefinition = "LONGTEXT") 
-    @NotEmpty(message="商品描述: 請勿空白") 
     public String getDescription() {
         return description;
     }

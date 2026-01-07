@@ -36,19 +36,14 @@ main {
 }
 
 .sidebar .nav-link {
-  color: #0d6efd;     /* 套用 Bootstrap 藍 */
-  font-weight: 600;   /* 設定為粗體 */
+  color: #0d6efd;     
+  font-weight: 600;   
 }
 
-.sidebar .nav-link i {
-  color: #0d6efd;
+.sidebar .nav-link:hover {
+  color: darkblue;  
 }
 
-.sidebar .nav-link.active {
-  background: #e8f0ff;
-  border-radius: 6px;
-  font-weight: 600;
-}
 .img-preview {
   width: 100%;
   border-radius: 10px;
@@ -78,8 +73,8 @@ main {
 
 /* hover 時：字保持白色（避免變黑） */
 .toggle-btn:hover {
-  background-color: lightblue !important;
-  color: black !important;
+  background-color:darkblue !important;
+  color: white !important;
   border-color: #0d6efd !important;
 }
 
@@ -97,13 +92,13 @@ main {
 }
 
 .btn-logout:hover {
-  background-color: lightblue !important;
-  color: black !important;
+  background-color: darkblue !important;
+  color: white !important;
 }
 
 .breadcrumb_index:hover {
   text-decoration: none;
-  color: white !important;
+  color: darkblue !important;
   background-color: #b3c9eb;
   border-radius: 5px;
   padding: 5px;
@@ -216,4 +211,9 @@ main {
     object-fit: contain !important;
     padding: 40px;
     opacity: 0.5;
+}
+
+/* 排程器更新畫面 */
+.card {
+    transition: opacity 0.8s ease, transform 0.3s ease;
 }

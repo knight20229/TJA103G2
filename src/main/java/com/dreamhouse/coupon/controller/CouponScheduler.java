@@ -24,16 +24,22 @@ public class CouponScheduler {
 	@Autowired
 	MemService memSer;
 
-	@Scheduled(cron = "0 43 15 * * ?")
+	@Scheduled(cron = "0 21 19 * * ?")
 	void sendCouponToMember() {
-		// ●取得所有memberId
-		List<MemVO> memList = memSer.findActiveMem();
+		// ●取得member
+		List<MemVO> activeMemList = memSer.findActiveMem();
 
-		// ●取得coupon state==1 && startDt==now()，並新增會員優惠券
+		// ●取得coupon
 		List<CouponVO> activeCoupList = coupSer.getActiveCoupon();
 
-		memCoupSer.addMemCoupon(activeCoupList, memList);
-		coupSer.updateSendTime(activeCoupList);
+		memCoupSer.addMemCoupon(activeCoupList, activeMemList);
 		System.out.println("新增成功");
+	}
+	
+	// 結束日期=當下日期，將狀態更新為停用
+	@Scheduled(cron = "0 23 19 * * ?")
+	void updateState() {
+		coupSer.updateState();
+		System.out.println("更新成功");
 	}
 }

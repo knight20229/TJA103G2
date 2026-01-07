@@ -51,18 +51,19 @@ public class ProdService {
     @Autowired
     private ServletContext servletContext;
     
-    @Scheduled(cron = "0 */1 * * * *")
+    @Scheduled(cron = "0 * * * * *")
     @Transactional
     public void autoUpdateProductStatus() {
-    	LocalDateTime now = LocalDateTime.now();
-        int activatedCount = repository.updateStatusToActive(now);
-        int deactivatedCount = repository.updateStatusToInactive(now);
+        int activatedCount = repository.updateStatusToActive();
+        int deactivatedCount = repository.updateStatusToInactive();
 
         if (activatedCount > 0 || deactivatedCount > 0) {
+            String timeStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
             String msg = String.format("系統通知：於 %s 自動上架 %d 件、下架 %d 件商品。", 
-                            now.format(DateTimeFormatter.ofPattern("HH:mm")), 
-                            activatedCount, deactivatedCount);            
+                            timeStr, activatedCount, deactivatedCount);            
             servletContext.setAttribute("productUpdateNotice", msg);
+            
+            System.out.println("DEBUG >>> " + msg);
         }
     }
 }
