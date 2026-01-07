@@ -16,5 +16,7 @@ public interface MemRepository extends JpaRepository<MemVO, Integer> {
 	boolean existsByAccount(String account);
 	boolean existsByEmail(String email);
 
+	MemVO findByEmail(String email);
+	
 }
 

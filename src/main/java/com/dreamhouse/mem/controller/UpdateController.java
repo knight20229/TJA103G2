@@ -45,8 +45,13 @@ public class UpdateController {
         // 確保更新的是目前登入的會員
         MemVO storedMemVO = memService.findById(memberId);
         memberVO.setMemberId(memberId);
+        //先設定好帳號密碼以免發生錯誤題是
         memberVO.setAccount(storedMemVO.getAccount());
         memberVO.setPassword(storedMemVO.getPassword());
+        
+        // 保留原本的最後登入時間
+        memberVO.setLastLogin(storedMemVO.getLastLogin());
+
         
 
         // 更新時間設為現在
