@@ -1,286 +1,279 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh-Hant">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>後台管理</title>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>後台管理</title>
 
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+<!-- Bootstrap CSS -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet" />
 
-    <!-- Bootstrap Icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-    />
+<!-- Bootstrap Icons -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
 
-    <!-- Summernote -->
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet" 
-	/>
+<!-- Summernote -->
+<link
+	href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css"
+	rel="stylesheet" />
 
-    <link rel="stylesheet" th:href="@{/css/product.css}" />
-  </head>
-  <body>
-    <!-- ========== 左側側邊欄 ========== -->
-    <nav class="sidebar">
-      <a class="mb-4 fs-4 text-decoration-none fw-bold" th:href="@{/back-end}">後台管理</a>
+<link rel="stylesheet" th:href="@{/css/product.css}" />
+</head>
+<body>
+	<!-- ========== 左側側邊欄 ========== -->
+	<nav class="sidebar">
+		<a class="mb-4 fs-4 text-decoration-none fw-bold"
+			th:href="@{/back-end}">後台管理</a>
 
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link fs-6" th:href="@{/admin/mem/list}">會員管理</a>
-        </li>
+		<ul class="nav flex-column">
+			<li class="nav-item"><a class="nav-link fs-5"
+				th:href="@{/admin/mem/list}">會員管理</a></li>
 
-        <!-- 折疊選單 -->
-        <li class="nav-item fs-6">
-          <a
-            class="nav-link d-flex justify-content-between align-items-center "
-            data-bs-toggle="collapse"
-            href="#menu_products"
-          >商品管理<i class="bi bi-chevron-down"></i>
-          </a>
-          <div class="collapse show" id="menu_products">
-            <ul class="nav flex-column ms-3">
-              <li>
-                <a class="nav-link" th:href="@{/prod/listAllProd}">商品列表</a>
-              </li>
-              <li>
-                <a class="nav-link" th:href="@{/prod/AddProd}">新增商品</a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        
+			<!-- 折疊選單 -->
+			<li class="nav-item fs-5"><a
+				class="nav-link d-flex justify-content-between align-items-center "
+				data-bs-toggle="collapse" href="#menu_products">商品管理<i
+					class="bi bi-chevron-down"></i>
+			</a>
+				<div class="collapse fs-6 show" id="menu_products">
+					<ul class="nav flex-column ms-3">
+						<li><a class="nav-link" th:href="@{/prod/listAllProd}">商品列表</a></li>
+						<li><a class="nav-link" th:href="@{/prod/addProd}">新增商品</a></li>
+					</ul>
+				</div></li>
 
-        <li class="nav-item fs-6" ><a class="nav-link" href="#">訂單管理</a></li>
-        <!-- 活動管理 -->
-        <li class="nav-item fs-6">
-          <a
-            class="nav-link d-flex justify-content-between align-items-center "
-            data-bs-toggle="collapse"
-            href="#menu_activity"
-          >活動管理<i class="bi bi-chevron-down"></i>
-          </a>
+			<!-- 訂單管理 -->
+			<li class="nav-item fs-5"><a
+				class="nav-link d-flex justify-content-between align-items-center "
+				data-bs-toggle="collapse" href="#menu_orders">訂單管理<i
+					class="bi bi-chevron-down"></i>
+			</a>
 
-          <div class="collapse" id="menu_activity">
-            <ul class="nav flex-column ms-3">
-              <li>
-                <a class="nav-link" th:href="@{/coupon/getAllCoupon}">優惠券管理</a>
-              </li>
-              <li>
-                <a class="nav-link" th:href="@{/promotions/getAllPromotions}">促銷管理</a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item fs-6"><a class="nav-link" href="#">客服管理</a></li>
-      </ul>
+				<div class="collapse fs-6" id="menu_orders">
+					<ul class="nav flex-column ms-3">
+						<li><a class="nav-link" th:href="@{/orders/list}">訂單紀錄</a></li>
+						<li><a class="nav-link" th:href="@{/returns/list}">退貨處理</a></li>
+					</ul>
+				</div></li>
+			<!-- 活動管理 -->
+			<li class="nav-item fs-5"><a
+				class="nav-link d-flex justify-content-between align-items-center "
+				data-bs-toggle="collapse" href="#menu_activity">活動管理<i
+					class="bi bi-chevron-down"></i>
+			</a>
 
-      <div class="mt-4 d-flex justify-content-center logout-wrapper">
-        <button class="btn btn-outline-primary w-50 fs-6 btn-logout fw-bold" ><i class="bi bi-box-arrow-right "></i> 登出</button>
-      </div>
-    </nav>
+				<div class="collapse fs-6" id="menu_activity">
+					<ul class="nav flex-column ms-3">
+						<li><a class="nav-link" th:href="@{/coupon/getAllCoupon}">優惠券管理</a></li>
+						<li><a class="nav-link"
+							th:href="@{/promotions/getAllPromotions}">促銷管理</a></li>
+					</ul>
+				</div></li>
+			<li class="nav-item fs-5"><a class="nav-link" href="#">客服管理</a></li>
+		</ul>
 
-    <!-- ========== 主內容區 ========== -->
-    <main th:inline="none">
-      <!-- 麵包屑 -->
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb d-flex align-items-center no-bg">
-          <li class="breadcrumb-item">
-            <a th:href="@{/prod/listAllProd}" class="fs-5 text-primary text-decoration-none fw-bold breadcrumb_index">商品管理</a>
-          </li>
-          <li class="breadcrumb-item active">新增商品</li>
-        </ol>
-      </nav>
-      <form th:action="@{insert}" method="post" th:object="${prodVO}" enctype="multipart/form-data">
-      <div class="row">
-              <!-- ========== 錯誤訊息 ========== -->
-         <div class="mt-2">
-	    	<ul class="list-unstyled mt-2" th:if="${#fields.hasAnyErrors()}">
-	        	<li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger small"></li>
-	    	</ul>	
-	  	</div>
-        <!-- 左半：圖片上傳 + 預覽 + Summernote -->
-        <div class="col-md-6">
-          <!-- ========== 圖片上傳 ========== -->
-          <section class="mb-4">
-			<img
-			  id="previewImg"
-			  th:src="${prodVO.base64Image != null} ? ${prodVO.base64Image} : (${prodVO.productId != null} ? @{'/prod/DBImgReader?productId=' + ${prodVO.productId}} : '')"
-			  th:style="${prodVO.base64Image != null || prodVO.productId != null} ? 'display:block' : 'display:none'"
-			  class="img-preview mb-2"
-			/>
-            <!-- 隱藏的 file input -->
-            <input type="hidden" th:field="*{base64Image}" id="base64Image" />
-            <input type="file" id="uploadImg" name = "images" accept= "image/*" class="d-none" />
-            
-            <!-- 使用 label 當按鈕 -->
-            <label for="uploadImg" class="btn btn-primary">
-              <i class="bi bi-upload"></i> 上傳圖片
-            </label>
-          </section>
+		<div class="mt-4 d-flex justify-content-center logout-wrapper">
+			<button class="btn btn-outline-primary w-50 fw-bold btn-logout">
+				<i class="bi bi-box-arrow-right"></i> 登出
+			</button>
+		</div>
+	</nav>
 
-          <!-- ========== Summernote 上稿器 ========== -->
-          <section>
-            <label class="form-label fw-bold">商品介紹：</label>
-              <textarea id="summernote" th:field="*{description}"></textarea>
+	<!-- ========== 主內容區 ========== -->
+	<main th:inline="none">
+		<!-- 麵包屑 -->
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb d-flex align-items-center no-bg">
+				<li class="breadcrumb-item"><a th:href="@{/back-end}"
+					class="fs-4 text-primary text-decoration-none fw-bold breadcrumb_index"><i
+						class="bi bi-house-door-fill me-1"></i>後台管理</a></li>
+				<li class="breadcrumb-item"><a th:href="@{/prod/listAllProd}"
+					class="fs-5 text-primary text-decoration-none fw-bold breadcrumb_index">商品管理</a>
+				</li>
+				<li class="breadcrumb-item active">新增商品</li>
+			</ol>
+		</nav>
+		<hr class="border border-primary border-2" />
 
-          </section>
-		  
-          
-        </div>
+		<form th:action="@{insert}" method="post" th:object="${prodVO}"
+			enctype="multipart/form-data">
+			<div class="row">
+				<!-- ========== 錯誤訊息 ========== -->
+				<div class="mt-2">
+					<ul class="list-unstyled mt-2" th:if="${#fields.hasAnyErrors()}">
+						<li th:each="err : ${#fields.allErrors()}" th:text="${err}"
+							class="text-danger small"></li>
+					</ul>
+				</div>
+				<!-- 左半：圖片上傳 + 預覽 + Summernote -->
+				<div class="col-md-6">
+					<!-- ========== 圖片上傳 ========== -->
+					<section class="mb-4">
+						<img id="previewImg"
+							th:src="${prodVO.base64Image != null} ? ${prodVO.base64Image} : (${prodVO.productId != null} ? @{'/prod/DBImgReader?productId=' + ${prodVO.productId}} : '')"
+							th:style="${prodVO.base64Image != null || prodVO.productId != null} ? 'display:block' : 'display:none'"
+							class="img-preview mb-2" />
+						<!-- 隱藏的 file input -->
+						<input type="hidden" th:field="*{base64Image}" id="base64Image" />
+						<input type="file" id="uploadImg" name="images" accept="image/*"
+							class="d-none" />
 
-        <!-- 右半：表單欄位 -->
-        <div class="col-md-6">
-            <!-- 商品編號 -->
-            <div class="mb-3">
-              <label class="form-label fw-bold">商品編號：</label>
-              <div class="col-3">
-                <input type="text" class="form-control" 
-                th:value="${prodVO.productId != null ? prodVO.productId : '系統自動編號'}" disabled/>
-              </div>
-            </div>
+						<!-- 使用 label 當按鈕 -->
+						<label for="uploadImg" class="btn btn-primary"> <i
+							class="bi bi-upload"></i> 上傳圖片
+						</label>
+					</section>
 
-            <!-- 商品名稱 -->
-            <div class="mb-3">
-              <label class="form-label fw-bold">商品名稱：</label>
-              <div class="col-5">
-                <input type="text" th:field="*{productName}" class="form-control" placeholder="請輸入商品名稱"/>
-              </div>
-            </div>
+					<!-- ========== Summernote 上稿器 ========== -->
+					<section>
+						<label class="form-label fw-bold">商品介紹：</label>
+						<textarea id="summernote" th:field="*{description}"></textarea>
 
-            <!-- 商品類型 -->
-            <div class="mb-3">
-              <label class="form-label fw-bold">商品類型：</label><br />
-              <div class="btn-group mb-3 gap-2" role="group">
-                <button
-                  type="button"
-                  class="btn btn-outline-primary toggle-btn active"
-                  id="btn_mattress">床墊
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-primary toggle-btn"
-                  id="btn_frame">床架
-                </button>
-              </div>
-				<input
-				    type="hidden"
-				    name="productType"
-				    id="product_type"
-				    th:value="${prodVO.productType != null} ? ${prodVO.productType} : 'false'"
-				/>
-            </div>
+					</section>
 
-            <!-- 商品材質 -->
-            <div class="mb-3">
-  				<label class="form-label fw-bold">商品材質：</label>
-  				<div class="col-4" id="mattress_material" th:classappend="*{productType} ? 'd-none' : ''">
-    				<select class="form-select" name="material" >
-      					<option th:each="m : ${mattressMaterials}" 
-              				th:value="${m}" 
-              				th:text="${m}"
-              				th:selected="${m == prodVO.material}"
-              				>材質名稱</option>
-    				</select>
-  				</div>
-  
-			  	<div class="col-4 d-none" id="frame_material" th:classappend="!*{productType} ? 'd-none' : ''">
-				    <select class="form-select" name="material" >
-				      <option th:each="f : ${frameMaterials}" 
-				              th:value="${f}" 
-				              th:text="${f}"
-				              th:selected="${f == prodVO.material}"
-				              >材質名稱</option>
-				    </select>
-				  </div>
+
+				</div>
+
+				<!-- 右半：表單欄位 -->
+				<div class="col-md-6">
+					<!-- 商品編號 -->
+					<div class="mb-3">
+						<label class="form-label fw-bold">商品編號：</label>
+						<div class="col-3">
+							<input type="text" class="form-control"
+								th:value="${prodVO.productId != null ? prodVO.productId : '系統自動編號'}"
+								disabled />
+						</div>
+					</div>
+
+					<!-- 商品名稱 -->
+					<div class="mb-3">
+						<label class="form-label fw-bold">商品名稱：</label>
+						<div class="col-5">
+							<input type="text" th:field="*{productName}" class="form-control"
+								placeholder="請輸入商品名稱" />
+						</div>
+					</div>
+
+					<!-- 商品類型 -->
+					<div class="mb-3">
+						<label class="form-label fw-bold">商品類型：</label><br />
+						<div class="btn-group mb-3 gap-2" role="group">
+							<button type="button"
+								class="btn btn-outline-primary toggle-btn active"
+								id="btn_mattress">床墊</button>
+							<button type="button" class="btn btn-outline-primary toggle-btn"
+								id="btn_frame">床架</button>
+						</div>
+						<input type="hidden" name="productType" id="product_type"
+							th:value="${prodVO.productType != null} ? ${prodVO.productType} : 'false'" />
+					</div>
+
+					<!-- 商品材質 -->
+					<div class="mb-3">
+						<label class="form-label fw-bold">商品材質：</label>
+						<div class="col-4" id="mattress_material"
+							th:classappend="*{productType} ? 'd-none' : ''">
+							<select class="form-select" name="material">
+								<option th:each="m : ${mattressMaterials}" th:value="${m}"
+									th:text="${m}" th:selected="${m == prodVO.material}">材質名稱</option>
+							</select>
+						</div>
+
+						<div class="col-4 d-none" id="frame_material"
+							th:classappend="!*{productType} ? 'd-none' : ''">
+							<select class="form-select" name="material">
+								<option th:each="f : ${frameMaterials}" th:value="${f}"
+									th:text="${f}" th:selected="${f == prodVO.material}">材質名稱</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label fw-bold text-primary">商品功能：</label><br />
+
+						<div id="mattress_func_group">
+							<label class="form-label fw-bold text-primary">床墊功能：</label><br />
+							<div th:each="feat : ${featListData}"
+								th:if="${feat.featureId >= 1 && feat.featureId <= 5}"
+								class="form-check form-check-inline mattress_functions">
+								<input class="form-check-input" type="checkbox"
+									th:field="*{features}" th:id="'f' + ${feat.featureId}"
+									th:value="${feat.featureId}" /> <label
+									class="form-check-label" th:for="'f' + ${feat.featureId}"
+									th:text="${feat.featureName}">功能名稱</label>
+							</div>
+						</div>
+
+						<div id="frame_func_group" class="mt-2">
+							<label class="form-label fw-bold text-primary">床架功能：</label><br />
+							<div th:each="feat : ${featListData}"
+								th:if="${feat.featureId >= 6 && feat.featureId <= 10}"
+								class="form-check form-check-inline frame_functions">
+								<input class="form-check-input" type="checkbox"
+									th:field="*{features}" th:id="'f' + ${feat.featureId}"
+									th:value="${feat.featureId}" disabled /> <label
+									class="form-check-label" th:for="'f' + ${feat.featureId}"
+									th:text="${feat.featureName}">功能名稱</label>
+							</div>
+						</div>
+					</div>
+
+					<!-- 上架日期與時間 -->
+					<div class="mb-3 d-flex flex-column gap-1">
+						<label class="form-label fw-bold">設定上架日期：</label>
+
+						<div class="d-flex gap-2">
+							<div class="col-auto">
+								<input type="datetime-local" class="form-control"
+									th:field="*{onDate}" />
+							</div>
+						</div>
+					</div>
+
+					<!-- 下架日期與時間 -->
+					<div class="mb-3 d-flex flex-column gap-1">
+						<label class="form-label fw-bold">設定下架日期：</label>
+
+						<div class="d-flex gap-2">
+							<div class="col-auto">
+								<input type="datetime-local" class="form-control"
+									th:field="*{offDate}" />
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label fw-bold">商品狀態：</label><br />
+						<div class="btn-group">
+							<button type="button" class="btn btn-outline-primary toggle-btn"
+								id="btn_on">上架</button>
+							<button type="button"
+								class="btn btn-outline-primary toggle-btn active" id="btn_off">
+								下架</button>
+						</div>
+						<input type="hidden" id="product_status" name="status"
+							th:value="${prodVO.status != null} ? ${prodVO.status} : 'false'" />
+					</div>
+					<!-- 儲存/取消 -->
+					<div class="mt-4">
+						<button type="submit" class="btn btn-primary me-3">儲存並設置庫存</button>
+						<a th:href="@{/prod/listAllProd}"
+							class="btn btn-outline-secondary">取消</a>
+					</div>
+				</div>
 			</div>
+		</form>
+	</main>
 
-			<div class="mb-3">
-			    <label class="form-label fw-bold text-primary">商品功能：</label><br />
-			
-			    <div id="mattress_func_group">
-			        <label class="form-label fw-bold text-primary">床墊功能：</label><br/>
-			        <div th:each="feat : ${featListData}" th:if="${feat.featureId >= 1 && feat.featureId <= 5}" 
-			             class="form-check form-check-inline mattress_functions">
-			            <input class="form-check-input" type="checkbox" th:field="*{features}" 
-			                   th:id="'f' + ${feat.featureId}" th:value="${feat.featureId}" />
-			            <label class="form-check-label" th:for="'f' + ${feat.featureId}" th:text="${feat.featureName}">功能名稱</label>
-			        </div>
-			    </div>
-			
-			    <div id="frame_func_group" class="mt-2">
-			        <label class="form-label fw-bold text-primary">床架功能：</label><br/>
-			        <div th:each="feat : ${featListData}" th:if="${feat.featureId >= 6 && feat.featureId <= 10}" 
-			             class="form-check form-check-inline frame_functions">
-			            <input class="form-check-input" type="checkbox" th:field="*{features}" 
-			                   th:id="'f' + ${feat.featureId}" th:value="${feat.featureId}" disabled />
-			            <label class="form-check-label" th:for="'f' + ${feat.featureId}" th:text="${feat.featureName}">功能名稱</label>
-			        </div>
-			    </div>
-			</div>
-
-            <!-- 上架日期與時間 -->
-            <div class="mb-3 d-flex flex-column gap-1">
-              <label class="form-label fw-bold">設定上架日期：</label>
-
-              <div class="d-flex gap-2">
-                <div class="col-auto">
-					<input type="datetime-local" class="form-control" th:field="*{onDate}" />                </div>
-              </div>
-            </div>
-
-            <!-- 下架日期與時間 -->
-            <div class="mb-3 d-flex flex-column gap-1">
-              <label class="form-label fw-bold">設定下架日期：</label>
-
-              <div class="d-flex gap-2">
-                <div class="col-auto">
-                  <input type="datetime-local" class="form-control" th:field="*{offDate}" />
-                </div>
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label fw-bold">商品狀態：</label><br />
-              <div class="btn-group">
-                <button
-                  type="button"
-                  class="btn btn-outline-primary toggle-btn"
-                  id="btn_on"
-                >
-                  上架
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-primary toggle-btn active"
-                  id="btn_off"
-                >
-                  下架
-                </button>
-              </div>
-              <input
-                type="hidden"
-                id="product_status"
-                name="status"
-				th:value="${prodVO.status != null} ? ${prodVO.status} : 'false'"              />
-            </div>
-            <!-- 儲存/取消 -->
-            <div class="mt-4">
-              <button type="submit" class="btn btn-primary me-3">儲存並設置庫存</button>
-			  <a th:href="@{/prod/listAllProd}" class="btn btn-outline-secondary">取消</a>
-            </div>
-        </div>
-      </div>
-      </form>
-    </main>
-
-    <!-- JS 套件 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- JS 套件 -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
-    <script th:src="@{/js/product_save.js}"></script>
-  </body>
+	<script
+		src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+	<script th:src="@{/js/product_save.js}"></script>
+</body>
 </html>

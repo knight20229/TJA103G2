@@ -22,69 +22,84 @@
 <!-- 專案樣式 -->
 <link th:href="@{/css/base.css}" rel="stylesheet" />
 <link th:href="@{/css/orders.css}" rel="stylesheet" />
+<!-- 後台首頁 -->
+<link rel="stylesheet" th:href="@{/css/back-end-index.css}" />
+
 </head>
 
 <body>
 
-	<!-- ================= Sidebar ================= -->
+	<!-- ========== 左側側邊欄 ========== -->
 	<nav class="sidebar">
-		<a class="mb-4 fs-4 text-decoration-none fw-bold" th:href="@{/back-end}">後台管理</a>
+		<a class="mb-4 fs-4 text-decoration-none fw-bold"
+			th:href="@{/back-end}">後台管理</a>
 
 		<ul class="nav flex-column">
-			<li class="nav-item"><a class="nav-link fs-6"
+			<li class="nav-item"><a class="nav-link fs-5"
 				th:href="@{/admin/mem/list}">會員管理</a></li>
 
-			<!-- 商品管理 -->
-			<li class="nav-item fs-6"><a
-				class="nav-link d-flex justify-content-between align-items-center"
-				data-bs-toggle="collapse" th:href="@{#menu_products}"> 商品管理 <i
+			<!-- 折疊選單 -->
+			<li class="nav-item fs-5"><a
+				class="nav-link d-flex justify-content-between align-items-center "
+				data-bs-toggle="collapse" href="#menu_products">商品管理<i
 					class="bi bi-chevron-down"></i>
 			</a>
-				<div class="collapse" id="menu_products">
+				<div class="collapse fs-6" id="menu_products">
 					<ul class="nav flex-column ms-3">
-						<li><a class="nav-link fs-6" th:href="@{/prod/listAllProd}">商品列表</a></li>
-						<li><a class="nav-link fs-6" th:href="@{/prod/addProd}">新增商品</a></li>
+						<li><a class="nav-link" th:href="@{/prod/listAllProd}">商品列表</a></li>
+						<li><a class="nav-link" th:href="@{/prod/addProd}">新增商品</a></li>
 					</ul>
 				</div></li>
 
 			<!-- 訂單管理 -->
-			<li class="nav-item fs-6"><a
-				class="nav-link d-flex justify-content-between align-items-center"
-				data-bs-toggle="collapse" th:href="@{#menu_orders}"> 訂單管理 <i
+			<li class="nav-item fs-5"><a
+				class="nav-link d-flex justify-content-between align-items-center "
+				data-bs-toggle="collapse" href="#menu_orders">訂單管理<i
 					class="bi bi-chevron-down"></i>
 			</a>
-				<div class="collapse show" id="menu_orders">
-					<ul class="nav flex-column ms-3">
-						<li><a class="nav-link fs-6 active" th:href="@{/orders/list}">
-								訂單記錄 </a></li>
-						<li><a class="nav-link fs-6" th:href="@{/returns/list}">
-								退貨處理 </a></li>
-					</ul>
-				</div></li>
 
-			<li class="nav-item fs-6"><a
-				class="nav-link d-flex justify-content-between align-items-center"
-				data-bs-toggle="collapse" th:href="@{#menu_activity}"> 活動管理 <i
-					class="bi bi-chevron-down"></i>
-			</a>
-				<div class="collapse show" id="menu_activity">
+				<div class="collapse fs-6 show" id="menu_orders">
 					<ul class="nav flex-column ms-3">
-						<li><a class="nav-link fs-6"
-							th:href="@{/coupon/getAllCoupon}"> 優惠券管理</a></li>
-						<li><a class="nav-link fs-6"
-							th:href="@{/promotions/getAllPromotions}"> 促銷管理</a></li>
+						<li><a class="nav-link" th:href="@{/orders/list}">訂單紀錄</a></li>
+						<li><a class="nav-link" th:href="@{/returns/list}">退貨處理</a></li>
 					</ul>
 				</div></li>
-			<li class="nav-item fs-6"><a class="nav-link"
-				href="../chat/chat.html">客服管理</a></li>
-			<div class="mt-4 d-flex justify-content-center logout-wrapper">
-        <button class="btn btn-primary fs-6 btn-logout" ><i class="bi bi-box-arrow-right"></i> 登出</button>
-      </div>
+			<!-- 活動管理 -->
+			<li class="nav-item fs-5"><a
+				class="nav-link d-flex justify-content-between align-items-center "
+				data-bs-toggle="collapse" href="#menu_activity">活動管理<i
+					class="bi bi-chevron-down"></i>
+			</a>
+
+				<div class="collapse fs-6" id="menu_activity">
+					<ul class="nav flex-column ms-3">
+						<li><a class="nav-link" th:href="@{/coupon/getAllCoupon}">優惠券管理</a></li>
+						<li><a class="nav-link"
+							th:href="@{/promotions/getAllPromotions}">促銷管理</a></li>
+					</ul>
+				</div></li>
+			<li class="nav-item fs-5"><a class="nav-link" href="#">客服管理</a></li>
+		</ul>
+
+		<div class="mt-4 d-flex justify-content-center logout-wrapper">
+			<button class="btn btn-outline-primary w-50 fw-bold btn-logout">
+				<i class="bi bi-box-arrow-right"></i> 登出
+			</button>
+		</div>
 	</nav>
 
 	<!-- ================= Main ================= -->
 	<main class="p-4">
-		<h2 class="mb-3">訂單紀錄</h2>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb d-flex align-items-center no-bg">
+				<li class="breadcrumb-item"><a th:href="@{/back-end}"
+					class="fs-4 text-primary text-decoration-none fw-bold breadcrumb_index"><i
+						class="bi bi-house-door-fill me-1"></i>後台管理</a></li>
+				<li class="breadcrumb-item"><a th:href="@{/orders/list}"
+					class="fs-5 text-primary text-decoration-none fw-bold breadcrumb_index">訂單紀錄</a>
+				</li>
+			</ol>
+		</nav>
 		<hr class="border border-primary border-2" />
 
 		<div class="container-fluid">

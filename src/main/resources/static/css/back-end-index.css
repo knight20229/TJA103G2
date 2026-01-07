@@ -1,62 +1,55 @@
 body {
-  background: #eef1f7;
-}
-.sidebar {
-  width: 240px;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
-  background: #fff;
-  border-right: 1px solid #ddd;
-  padding: 20px 10px;
+	background: #eef1f7;
 }
 
 .sidebar {
-  display: flex;
-  flex-direction: column;
-  height: 100vh; /* 讓 sidebar 填滿整個高度 */
+	width: 240px;
+	height: 100vh;
+	position: fixed;
+	left: 0;
+	top: 0;
+	background: #fff;
+	border-right: 1px solid #ddd;
+	padding: 20px 10px;
+}
+
+.sidebar {
+	display: flex;
+	flex-direction: column;
+	height: 100vh; /* 讓 sidebar 填滿整個高度 */
 }
 
 /* 讓上面的選單可捲動 */
 .sidebar .nav {
-  flex: 1;
-  overflow-y: auto;
+	flex: 1;
+	overflow-y: auto;
 }
 
 .sidebar .logout-wrapper {
-  padding: 16px;
-  border-top: 1px solid #ddd;
-  background: #fff;
+	padding: 16px;
+	border-top: 1px solid #ddd;
+	background: #fff;
 }
 
 main {
-  margin-left: 260px;
-  padding: 20px;
+	margin-left: 260px;
+	padding: 20px;
 }
 
 .sidebar .nav-link {
-  color: #0d6efd;     /* 套用 Bootstrap 藍 */
-  font-weight: 600;   /* 設定為粗體 */
+	color: #0d6efd; 
+	font-weight: 600; 
 }
-
-.sidebar .nav-link i {
-  color: #0d6efd;
+.sidebar .nav-link:hover {
+  color: darkblue;  
 }
-
-.sidebar .nav-link.active {
-  background: #e8f0ff;
-  border-radius: 6px;
-  font-weight: 600;
-}
-
 
 
 .admin-card {
 	transition: all 0.3s ease;
 	border: none;
 	border-radius: 15px;
-	height: 100%; /* 確保高度一致 */
+	height: 100%; 
 }
 
 .admin-card:hover {
@@ -71,7 +64,7 @@ main {
 	align-items: center;
 	justify-content: center;
 	border-radius: 12px;
-	flex-shrink: 0; /* 防止圖示被壓縮 */
+	flex-shrink: 0; 
 }
 
 /* 子按鈕樣式 */
@@ -79,17 +72,15 @@ main {
 	transition: all 0.3s ease;
 	border: none;
 	color: #543d00 !important;
-	background-color: #ffc107; /* 預設填滿黃色 */
+	background-color: #ffc107; 
 }
 
 .sub-management-btn:hover {
-	/* 這裡稍微減輕位移，避免跟外層卡片的 translateY(-10px) 衝突 */
 	transform: scale(1.02);
 	filter: brightness(0.9);
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* 讓客服管理的整張連結不會有藍色底線 */
 .admin-link {
 	text-decoration: none !important;
 }
@@ -97,4 +88,27 @@ main {
 .feature-pending {
 	opacity: 0.7;
 	filter: grayscale(0.5);
+}
+/* 訂單管理按鈕 */
+/* 確保移入時顏色變深且文字變白 */
+.btn-info:hover {
+	background-color: #087990; /* 較深的 info 色 */
+	border-color: #087990;
+	color: white !important;
+}
+.icon-box {
+	transition: transform 0.3s ease;
+}
+
+.card:hover .icon-box {
+	transform: scale(1.1);
+}
+/* 麵包屑 */
+.breadcrumb_index:hover {
+	text-decoration: none;
+	color: darkblue !important;
+	background-color: #b3c9eb;
+	border-radius: 5px;
+	padding: 5px;
+	margin-left: -10px;
 }
