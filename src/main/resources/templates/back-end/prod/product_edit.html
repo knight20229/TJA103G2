@@ -124,7 +124,7 @@
 							class="d-none" />
 
 						<!-- 使用 label 當按鈕 -->
-						<label for="uploadImg" class="btn btn-primary"> <i
+						<label for="uploadImg" class="btn btn-primary fw-bold"> <i
 							class="bi bi-upload"></i> 上傳圖片
 						</label>
 					</section>
@@ -154,7 +154,7 @@
 					<div class="mb-3">
 						<label class="form-label fw-bold">商品名稱：</label>
 						<div class="col-5">
-							<input type="text" th:field="*{productName}" class="form-control"
+							<input type="text" th:field="*{productName}" class="form-control fw-bold"
 								placeholder="請輸入商品名稱" />
 						</div>
 					</div>
@@ -163,10 +163,10 @@
 					<div class="mb-3">
 						<label class="form-label fw-bold">商品類型：</label><br />
 						<div class="btn-group mb-3 gap-2" role="group">
-							<button type="button" class="btn btn-outline-primary toggle-btn"
+							<button type="button" class="btn btn-outline-primary toggle-btn fw-bold"
 								th:classappend="!*{productType} ? 'active' : ''"
 								id="btn_mattress">床墊</button>
-							<button type="button" class="btn btn-outline-primary toggle-btn"
+							<button type="button" class="btn btn-outline-primary toggle-btn fw-bold"
 								th:classappend="*{productType} ? 'active' : ''" id="btn_frame">床架
 							</button>
 						</div>
@@ -178,7 +178,7 @@
 						<label class="form-label fw-bold">商品材質：</label>
 						<div class="col-4" id="mattress_material"
 							th:classappend="*{productType} ? 'd-none' : ''">
-							<select class="form-select" th:field="*{material}">
+							<select class="form-select fw-bold" th:field="*{material}">
 								<option th:each="m : ${mattressMaterials}" th:value="${m}"
 									th:text="${m}">材質名稱</option>
 							</select>
@@ -204,7 +204,7 @@
 								<input class="form-check-input" type="checkbox"
 									th:field="*{features}" th:id="'f' + ${feat.featureId}"
 									th:value="${feat.featureId}" /> <label
-									class="form-check-label" th:for="'f' + ${feat.featureId}"
+									class="form-check-label fw-bold" th:for="'f' + ${feat.featureId}"
 									th:text="${feat.featureName}">功能</label>
 							</div>
 						</div>
@@ -217,7 +217,7 @@
 								<input class="form-check-input" type="checkbox"
 									th:field="*{features}" th:id="'f' + ${feat.featureId}"
 									th:value="${feat.featureId}" /> <label
-									class="form-check-label" th:for="'f' + ${feat.featureId}"
+									class="form-check-label fw-bold" th:for="'f' + ${feat.featureId}"
 									th:text="${feat.featureName}">功能</label>
 							</div>
 						</div>
@@ -250,9 +250,9 @@
 					<div class="mb-3">
 						<label class="form-label fw-bold">商品狀態：</label><br />
 						<div class="btn-group">
-							<button type="button" class="btn btn-outline-primary toggle-btn"
+							<button type="button" class="btn btn-outline-primary toggle-btn fw-bold"
 								id="btn_on">上架</button>
-							<button type="button" class="btn btn-outline-primary toggle-btn"
+							<button type="button" class="btn btn-outline-primary toggle-btn fw-bold"
 								id="btn_off">下架</button>
 						</div>
 						<input type="hidden" id="product_status" th:field="*{status}" />
@@ -270,9 +270,9 @@
 								最後更新：<span
 									th:text="${#temporals.format(prodVO.updateTime, 'yyyy-MM-dd HH:mm')}"></span>
 							</p>
-							<button type="submit" class="btn btn-primary me-3">儲存</button>
+							<button type="submit" class="btn btn-primary me-3 fw-bold">儲存</button>
 							<a th:href="@{/prod/listAllProd}"
-								class="btn btn-outline-secondary">取消</a>
+								class="btn btn-outline-secondary fw-bold">取消</a>
 						</div>
 					</div>
 				</div>
@@ -281,9 +281,9 @@
 	</main>
 
 	<!-- JS 套件 -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
 	<script th:src="@{/js/product_save.js}"></script>

@@ -212,3 +212,8 @@ main {
     padding: 40px;
     opacity: 0.5;
 }
+
+/* 排程器更新畫面 */
+.card {
+    transition: opacity 0.8s ease, transform 0.3s ease;
+}
