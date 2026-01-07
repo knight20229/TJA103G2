@@ -67,13 +67,6 @@ public class CouponController {
 	}
 	
 	
-	@GetMapping("deleteCoupon")
-	public String deleteCoupon(@RequestParam("couponId") String couponId, ModelMap model) {
-		coupSer.deleteCoupon(Integer.valueOf(couponId));
-		List<CouponVO> list = coupSer.getAll();
-		model.addAttribute("couponList", list);
-		return "back-end/coupon/coupon_list";
-	}
 	
 	@GetMapping("getAllCoupon")
 	public String getAllCoupon(ModelMap model) {

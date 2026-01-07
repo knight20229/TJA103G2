@@ -31,8 +31,7 @@ public class CouponVO {
 	
 	
 	private Integer couponId;
-	private Integer employeeId;
-//	private EmpVO employeeId;
+	private EmpVO empVO;
 	private String name;
 	private String type;
 	private Integer couponValue;
@@ -56,26 +55,17 @@ public class CouponVO {
 		this.couponId = couponId;
 	}
 	
-	@Column(name = "employee_id")
+	@ManyToOne
+	@JoinColumn(name = "employee_id", referencedColumnName = "employee_id")
 	@NotNull(message = "請輸入員工編號")
-	public Integer getEmployeeId() {
-		return employeeId;
+	public EmpVO getEmpVO() {
+		return empVO;
 	}
-	
-	public void setEmployeeId(Integer employeeId) {
-		this.employeeId = employeeId;
+
+	public void setEmpVO(EmpVO empVO) {
+		this.empVO = empVO;
 	}
-	
-//	@ManyToOne
-//	@JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
-//	@NotNull(message = "請輸入員工編號")
-//	public EmpVO getEmployeeId() {
-//		return employeeId;
-//	}
-//
-//	public void setEmployeeId(EmpVO employeeId) {
-//		this.employeeId = employeeId;
-//	}
+
 
 	@Column(name = "`name`", length = 20)
 	@NotEmpty(message = "請輸入優惠券名稱")
@@ -179,5 +169,7 @@ public class CouponVO {
 	public void setMemCoup(Set<MemCouponVO> memCoup) {
 		this.memCoup = memCoup;
 	}
+	
 
+	
 }

@@ -64,13 +64,6 @@ public class PromotionsController {
 	}
 	
 	
-	@GetMapping("deletePromotions")
-	public String deletePromotions(@RequestParam("promotionsId") String promotionsId, ModelMap model) {
-		proSer.deletePromotions(Integer.valueOf(promotionsId));
-		List<PromotionsVO> list = proSer.getAll();
-		model.addAttribute("promotionsList", list);
-		return "back-end/promotions/promotions_list";
-	}
 	
 	@GetMapping("getAllPromotions")
 	public String getAllPromotions(ModelMap model) {

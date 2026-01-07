@@ -5,11 +5,15 @@ import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.dreamhouse.emp.model.EmpVO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Min;
@@ -23,8 +27,7 @@ import jakarta.validation.constraints.Pattern;
 public class PromotionsVO {
 
 	private Integer promotionsId;
-	private Integer employeeId;
-//	private EmpVO employeeId;
+	private EmpVO empVO;
 	private String name;
 	private String type;
 	private Integer promotionsValue;
@@ -47,26 +50,16 @@ public class PromotionsVO {
 		this.promotionsId = promotionsId;
 	}
 
-	@Column(name = "employee_id")
+	@ManyToOne
+	@JoinColumn(name = "employee_id", referencedColumnName = "employee_id")
 	@NotNull(message = "請輸入員工編號")
-	public Integer getEmployeeId() {
-		return employeeId;
+	public EmpVO getEmpVO() {
+		return empVO;
 	}
 
-	public void setEmployeeId(Integer employeeId) {
-		this.employeeId = employeeId;
+	public void setEmpVO(EmpVO empVO) {
+		this.empVO = empVO;
 	}
-	
-//	@ManyToOne
-//	@JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
-//	@NotNull(message = "請輸入員工編號")
-//	public EmpVO getEmployeeId() {
-//		return employeeId;
-//	}
-//
-//	public void setEmployeeId(EmpVO employeeId) {
-//		this.employeeId = employeeId;
-//	}
 
 	@Column(name = "`name`", length = 50)
 	@NotEmpty(message = "請輸入促銷活動名稱")
