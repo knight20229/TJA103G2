@@ -90,6 +90,22 @@ public class ProdController {
 			@RequestParam(value = "images", required = false) MultipartFile[] parts) throws IOException {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+	    // 上稿器空白時不會跳出訊息，有空標籤：<p><br></p>
+	    if (prodVO.getDescription() != null) {
+	        String desc = prodVO.getDescription();
+
+	        String plainText = desc.replaceAll("<[^>]*>", "");
+
+	        plainText = plainText.replaceAll("&[a-zA-Z0-9#]+;", "")
+	                             .replaceAll("\\s", "")
+	                             .trim();
+
+	        if (plainText.isEmpty() || "<p><br></p>".equals(desc.trim())) {
+	            result.rejectValue("description", "error.prodVO", "商品描述：請勿空白！");
+	        }
+	    }
+		
+		
 		result = removeFieldError(prodVO, result, "images");
 
 		if (result.hasErrors()) {
@@ -242,13 +258,26 @@ public class ProdController {
 			@RequestParam("images") MultipartFile[] parts) throws IOException {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		// 修正：針對上稿器產生的隱形 HTML 標籤進行清理檢查
-		if (prodVO.getDescription() != null) {
-			String cleanDesc = prodVO.getDescription().replaceAll("<[^>]*>", "").replaceAll("&nbsp;", "").trim();
-			if (cleanDesc.isEmpty()) {
-				prodVO.setDescription("");
-			}
-		}
+		// 1. 檢查日期邏輯：下架日期不為空，且必須遠於上架日期
+	    if (prodVO.getOnDate() != null && prodVO.getOffDate() != null) {
+	        if (!prodVO.getOffDate().isAfter(prodVO.getOnDate())) {
+	            result.rejectValue("offDate", "error.prodVO", "下架日期必須晚於上架日期！");
+	        }
+	    }
+	    // 上稿器空白時不會跳出訊息，有空標籤：<p><br></p>
+	    if (prodVO.getDescription() != null) {
+	        String desc = prodVO.getDescription();
+
+	        String plainText = desc.replaceAll("<[^>]*>", "");
+
+	        plainText = plainText.replaceAll("&[a-zA-Z0-9#]+;", "")
+	                             .replaceAll("\\s", "")
+	                             .trim();
+
+	        if (plainText.isEmpty() || "<p><br></p>".equals(desc.trim())) {
+	            result.rejectValue("description", "error.prodVO", "商品描述：請勿空白！");
+	        }
+	    }
 
 		System.out.println("DEBUG: 修改中的商品 ID = " + prodVO.getProductId());
 		// 去除BindingResult中images欄位的FieldError紀錄 --> 見第256行
@@ -331,6 +360,19 @@ public class ProdController {
 						return element;
 					}
 				});
+	}
+	
+
+	@GetMapping("/api/allProdStatus")
+	@ResponseBody
+	public List<Map<String, Object>> getAllStatus() {
+	    // 取得所有商品，並只提取 ID 與 狀態
+	    return prodSvc.getAll().stream().map(p -> {
+	        Map<String, Object> map = new HashMap<>();
+	        map.put("id", p.getProductId());
+	        map.put("status", p.getStatus()); 
+	        return map;
+	    }).collect(Collectors.toList());
 	}
 
 }
