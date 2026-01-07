@@ -90,7 +90,15 @@ public class ProdController {
 			@RequestParam(value = "images", required = false) MultipartFile[] parts) throws IOException {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-	    // 上稿器空白時不會跳出訊息，有空標籤：<p><br></p>
+		// 1. 檢查日期邏輯：下架日期不為空，且必須遠於上架日期
+	    if (prodVO.getOnDate() != null && prodVO.getOffDate() != null) {
+	        if (!prodVO.getOffDate().isAfter(prodVO.getOnDate())) {
+	            result.rejectValue("offDate", "error.prodVO", "下架日期必須晚於上架日期！");
+	        }
+	    }
+		
+		
+		// 上稿器空白時不會跳出訊息，有空標籤：<p><br></p>
 	    if (prodVO.getDescription() != null) {
 	        String desc = prodVO.getDescription();
 
