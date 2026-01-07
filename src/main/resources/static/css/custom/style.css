@@ -59,7 +59,7 @@
     float: none;
     width: 40%;
     display: inline-block;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 .shop-sidebar-wrapper button {
     background: none;
@@ -70,12 +70,15 @@
     font: inherit;
 }
 .功能布料{
-  width: 55%;
+  width: 70%;
 }
 .材質功能{
   display: flex;
 }
 
+.material{
+	width:70%;
+}
 .single-image{
   display: flex;
 }
@@ -88,7 +91,7 @@
 .客製化商品總額{
   margin-bottom: 5px;
   margin-right: 5px;
-  width: 22%;
+  width: 25%;
   border: 1px solid #ccc;
   padding: 5px;
   border-radius: 6px;
