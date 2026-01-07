@@ -61,6 +61,7 @@ public class CouponController {
 		}
 		
 		coupSer.updateCoupon(couponVO);
+		
 		couponVO = coupSer.getOneById(Integer.valueOf(couponVO.getCouponId()));
 		model.addAttribute("couponVO", couponVO);
 		return "back-end/coupon/coupon_viewOne";

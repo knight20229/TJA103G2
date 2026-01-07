@@ -154,7 +154,7 @@ public class MemVO implements Serializable {
 				+ lastlogin + "]";
 	}
 
-	@OneToMany(mappedBy = "memberId")
+	@OneToMany(mappedBy = "memVO")
 	public Set<MemCouponVO> getMemCoup() {
 		return memCoup;
 	}
