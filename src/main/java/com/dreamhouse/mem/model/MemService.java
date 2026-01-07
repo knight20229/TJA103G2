@@ -74,6 +74,7 @@ public class MemService {
         }
     }
 
+    // 查詢會員狀態=1
     public List<MemVO> findActiveMem(){
     	return repository.findActiveMem(1);
     }

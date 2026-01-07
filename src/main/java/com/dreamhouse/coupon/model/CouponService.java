@@ -16,7 +16,8 @@ public class CouponService {
 	@Autowired
 	CouponRepository repository;
 	
-	MemCouponService memCoupSer;
+//	@Autowired
+//	MemCouponService memCoupSer;
 	
 	@Transactional
 	public void addCoupon(CouponVO couponVO) {
@@ -29,7 +30,6 @@ public class CouponService {
 	}
 	
 	
-	
 	public CouponVO getOneById(Integer couponId) {
 		Optional<CouponVO> optional = repository.findById(couponId);
 		return optional.orElse(null);
@@ -39,13 +39,25 @@ public class CouponService {
 		return repository.findAll();
 	}
 	
-	// 發送優惠券用
+	// 發送優惠券
 	public List<CouponVO> getActiveCoupon(){
 		return repository.findActiveCoupon(1, LocalDate.now());
 	}
 	
-	public void updateSendTime(List<CouponVO> activeCoupList){
-		repository.saveAll(activeCoupList);
+	public void updateSendTime(CouponVO couponVO){
+		repository.save(couponVO);
+	}
+	
+	
+	// 給排程更新優惠券狀態用
+	public void updateState() {
+		List<CouponVO> coupList = repository.findByState(1);
+		for (CouponVO couponVO : coupList) {
+			if (couponVO.getEndDt().equals(LocalDate.now())) {
+				couponVO.setState(0);
+				repository.save(couponVO);
+			}
+		}
 	}
 }
 
