@@ -9,7 +9,7 @@
     <!-- Favicon -->
     <link th:href="@{/images/dreamhouseb.ico}" rel="icon">
     <!-- Font Awesome 6 CDN -->
-    <link th:href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <!-- Vendor CSS -->
     <link th:href="@{/css/custom/vendors.css}" rel="stylesheet">
     <!-- Main CSS -->
@@ -32,7 +32,7 @@
 
                             <div class="header-logo">
                                 <a href="首頁.html">
-                                    <img th:src="@{/images/logo.png}" class="img-fluid" alt="">
+                                    <img th:src="@{/images/headlogo.png}" class="img-fluid" alt="">
                                 </a>
                             </div>
 
@@ -86,7 +86,7 @@
                                                         <a href="javascript:void(0)" class="close-icon"><i class="pe-7s-close"></i></a>
                                                         <div class="image">
                                                             <a href="商品瀏覽.html">
-                                                                <img src="assets/img/products/product-2-90x100.jpg" class="img-fluid" alt="">
+                                                                <img th:src="@{/images/custom/product-2-90x100.jpg}" class="img-fluid" alt="">
                                                             </a>
                                                         </div>
                                                         <div class="content">
@@ -118,7 +118,7 @@
                     <div class="col-6 col-md-6">
                         <div class="header-logo">
                             <a href="index.html">
-                                <img src="@{/images/logo.png}" class="img-fluid" alt="">
+                                <img th:src="@{/images/headlogo.png}" class="img-fluid" alt="">
                             </a>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                     <div class="col-6 col-md-6">
                         <div class="header-logo">
                             <a href="index.html">
-                                <img src="assets/img/logo.png" class="img-fluid" alt="">
+                                <img th:src="@{assets/img/logo.png}" class="img-fluid" alt="">
                             </a>
                         </div>
                     </div>
@@ -233,42 +233,59 @@
 		                        <div class="length_weight">
 		                            <div class="product-size">
 		                                <span class="product-details-title">長度:</span>
-		                                <select class="nice-select" name="size">
-		                                    <option th:each="CustomSizeVO : ${sizeList}" th:value="${CustomSizeVO.customSizeId}" th:text="${CustomSizeVO.customLength} + '公分' "/>                               
+		                                <select class="nice-select" name="size" id="size-select">
+		                                    <option th:each="CustomSizeVO : ${sizeList}" 
+		                                    		th:value="${CustomSizeVO.customSizeId}" 
+		                                    		th:text="${CustomSizeVO.customLength} + '公分' " 
+		                                    		th:attr="data-price=${CustomSizeVO.customSizePrice}"/>                            
 		                                </select>                                  
 		                                <span class="product-details-title">寬度:</span>
-		                                <select class="nice-select" name="weight">
-		                                    <option th:each="CustomSizeVO : ${sizeList}" th:value="${CustomSizeVO.customSizeId}" th:text="${CustomSizeVO.customWidth} + '公分' "/>
+		                                <select class="nice-select" name="weight" id="weight-select">
+		                                    <option th:each="CustomSizeVO : ${sizeList}" 
+				                                    th:value="${CustomSizeVO.customSizeId}" 
+				                                    th:text="${CustomSizeVO.customWidth} + '公分' "
+				                                    th:attr="data-price=${CustomSizeVO.customSizePrice}"/>
 		                                </select>
 		                            </div>
 		                        </div>
                             <div class="材質">
+                            <div class="material">
                             <div class="product-size">
                                 <span class="product-details-title">材質: </span>
-                                <select class="nice-select" name="material">
-                                    <option th:each="CustomMaterialVO : ${materialList}" th:value="${CustomMaterialVO.customMaterialName}" th:text="${CustomMaterialVO.customMaterialName}"/>
+                                <select class="nice-select" name="material" id="material-select">
+                                    <option th:each="CustomMaterialVO : ${materialList}" 
+		                                    th:value="${CustomMaterialVO.customMaterialName}" 
+		                                    th:text="${CustomMaterialVO.customMaterialName}"
+		                                    th:attr="data-price=${CustomMaterialVO.customMaterialPrice}"/>
                                 </select>
+                            </div>
                             </div>
                             <div class="功能布料">
                             <div class="product-size">
                                 <span class="product-details-title">功能: </span>
-                                <select class="nice-select" name="feature">
-                                    <option th:each="CustomFeatureVO : ${featureList}" th:value="${CustomFeatureVO.customFeatureName}" th:text="${CustomFeatureVO.customFeatureName}"/>
+                                <select class="nice-select" name="feature" id="feature-select">
+                                    <option th:each="CustomFeatureVO : ${featureList}" 
+		                                    th:value="${CustomFeatureVO.customFeatureName}" 
+		                                    th:text="${CustomFeatureVO.customFeatureName}"
+		                                    th:attr="data-price=${CustomFeatureVO.customFeaturePrice}"/>
                                 </select>
                             </div>
 
                             <div class="product-size">
                                 <span class="product-details-title">布料: </span>
-                                <select class="nice-select" name="cloth">
-                                    <option th:each="CustomClothVO : ${clothList}" th:value="${CustomClothVO.customClothName}" th:text="${CustomClothVO.customClothName}"/>
+                                <select class="nice-select" name="cloth" id="cloth-select" >
+                                    <option th:each="CustomClothVO : ${clothList}" 
+                                   			th:value="${CustomClothVO.customClothName}" 
+                                   			th:text="${CustomClothVO.customClothName}"
+                                   			th:attr="data-price=${CustomClothVO.customClothPrice}"/>
                                 </select>
                             </div>
                             </div>
                             <div class="has_bed_frame">
-                                <span class="product-details-title">是否加購床架: </span>
-                                <select class="nice-select">
-                                    <option value="1">是</option>
-                                    <option value="2">否</option>
+                                <span class="product-details-title" >是否加購床架: </span>
+                                <select class="nice-select" name="bed_frame" id="bed-frame-select">
+                                    <option  value="1">是</option>
+                                    <option  value="2">否</option>
                                 </select>
                             </div>
                             </div>
@@ -278,13 +295,10 @@
                             
                             <div class="客製化商品總額">
                                 <span style="font-size: 18px; font-weight: 600;">小計：</span>
-                                <span id="total-price" style="font-size: 18px;">$5000</span>
+                                <span id="total-price" style="font-size: 18px;"></span>
                             </div>
                             
-                            <div class="商品數量">
-                            <div class="pro-qty d-inline-block">
-                                <input type="text" value="1">
-                            </div>
+
 
                             <div class="add-to-cart-btn d-inline-block">
                                 <button class="theme-button theme-button--alt">加入購物車</button>
@@ -298,13 +312,14 @@
             </div>
         </div>
     </div>
-    </div>
     
     <!-- Vendor JS -->
     <script th:src="@{/js/custom/vendors.js}"></script>
 
     <!-- Active JS -->
     <script th:src="@{/js/custom/active.js}"></script>
+    
+    <script th:src="@{/js/custom/custom.js}"></script>
 
     <!--=====  End of JS files ======-->
 

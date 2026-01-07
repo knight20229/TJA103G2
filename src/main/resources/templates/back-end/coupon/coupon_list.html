@@ -126,14 +126,12 @@
 							<td><span th:text="${couponVO.startDt}"> </span> <span>~</span>
 								<span th:text="${couponVO.endDt}"></span></td>
 							<td th:text="${couponVO.state}"></td>
-							<td th:text="${couponVO.employeeId}"></td>
+							<td th:text="${couponVO.empVO.employeeId}"></td>
 							<td class="project-actions text-right">
 								<a class="btn btn-primary btn-sm" th:href="@{/coupon/viewCoupon(couponId=${couponVO.couponId})}">
 									<i class="fas fa-folder"> </i> View </a>
 								<a class="btn btn-info btn-sm" th:href="@{/coupon/getOneForUpdate(couponId=${couponVO.couponId})}">
 										<i class="fas fa-pencil-alt"> </i> Edit</a>
-								<a class="btn btn-danger btn-sm" id="delete" th:href="@{/coupon/deleteCoupon(couponId=${couponVO.couponId})}">
-									<i class="fas fa-trash"> </i> Delete</a>
 							</td>
 						</tr>
 					</th:block>
@@ -147,7 +145,6 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 	
-	<script th:src="@{/js/coupon/coupon_list.js}"></script>
 </body>
 
 </html>

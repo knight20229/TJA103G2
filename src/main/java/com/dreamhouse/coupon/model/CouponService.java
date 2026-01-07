@@ -8,11 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dreamhouse.memcoupon.model.MemCouponService;
+
 @Service("couponService")
 public class CouponService {
 	
 	@Autowired
 	CouponRepository repository;
+	
+	MemCouponService memCoupSer;
 	
 	@Transactional
 	public void addCoupon(CouponVO couponVO) {
@@ -24,11 +28,7 @@ public class CouponService {
 		repository.save(couponVO);
 	}
 	
-	public void deleteCoupon(Integer couponId) {
-		if(repository.existsById(couponId)) {
-			repository.deleteById(couponId);
-		}
-	}
+	
 	
 	public CouponVO getOneById(Integer couponId) {
 		Optional<CouponVO> optional = repository.findById(couponId);
@@ -42,6 +42,10 @@ public class CouponService {
 	// 發送優惠券用
 	public List<CouponVO> getActiveCoupon(){
 		return repository.findActiveCoupon(1, LocalDate.now());
+	}
+	
+	public void updateSendTime(List<CouponVO> activeCoupList){
+		repository.saveAll(activeCoupList);
 	}
 }
 

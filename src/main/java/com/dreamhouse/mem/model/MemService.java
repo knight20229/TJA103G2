@@ -85,6 +85,9 @@ public class MemService {
         }
     }
 
+    public List<MemVO> findActiveMem(){
+    	return repository.findActiveMem(1);
+    }
     @Autowired
     private MailService mailService;
 
@@ -97,6 +100,8 @@ public class MemService {
         }
         return false;
     }
+
+
 
     // 重設密碼
     public boolean resetPassword(String email, String newPassword) {
