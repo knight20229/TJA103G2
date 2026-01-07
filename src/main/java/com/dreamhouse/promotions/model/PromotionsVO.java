@@ -15,7 +15,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -24,6 +23,7 @@ import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "promotions")
+@PromotionsDateCheck
 public class PromotionsVO {
 
 	private Integer promotionsId;
@@ -37,6 +37,7 @@ public class PromotionsVO {
 	private LocalDate endDt;
 	private LocalDateTime createTime;
 	private LocalDateTime updateTime;
+	private LocalDateTime sendTime;
 
 	
 	@Id
@@ -116,7 +117,6 @@ public class PromotionsVO {
 
 	@Column(name = "start_dt")
 	@NotNull(message = "請輸入開始日期")
-	@Future(message = "日期必須在今日(不含)之後")
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	public LocalDate getStartDt() {
 		return startDt;
@@ -128,7 +128,6 @@ public class PromotionsVO {
 
 	@Column(name = "end_dt")
 	@NotNull(message = "請輸入結束日期")
-	@Future(message = "日期必須在今日(不含)之後")
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	public LocalDate getEndDt() {
 		return endDt;
@@ -155,5 +154,16 @@ public class PromotionsVO {
 	public void setUpdateTime(LocalDateTime updateTime) {
 		this.updateTime = updateTime;
 	}
+
+	@Column(name = "send_time")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	public LocalDateTime getSendTime() {
+		return sendTime;
+	}
+
+	public void setSendTime(LocalDateTime sendTime) {
+		this.sendTime = sendTime;
+	}
+	
 	
 }

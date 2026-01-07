@@ -16,8 +16,6 @@ public class CouponService {
 	@Autowired
 	CouponRepository repository;
 	
-//	@Autowired
-//	MemCouponService memCoupSer;
 	
 	@Transactional
 	public void addCoupon(CouponVO couponVO) {
