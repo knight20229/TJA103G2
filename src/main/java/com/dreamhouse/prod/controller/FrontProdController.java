@@ -21,7 +21,8 @@ public class FrontProdController {
             "products",
             frontProdService.getAllProd(null, null)
         );
-        return "front-end/index"; // 你的首頁 Thymeleaf
+        return "front-end/index"; 
+        
     }
 
     // 價格篩選
@@ -36,6 +37,6 @@ public class FrontProdController {
             frontProdService.getAllProd(minPrice, maxPrice)
         );
 
-        return "front-end/index"; // 建議還是用同一個 template
+        return "front-end/index"; 
     }
 }
