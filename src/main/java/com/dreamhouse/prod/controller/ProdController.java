@@ -35,12 +35,26 @@ public class ProdController {
 	protected List<ProdVO> referenceListData() {
 		return prodSvc.getAll();
 	}
+	
 
 	// --- 商品清單頁面 ---
 	@GetMapping("listAllProd")
 	public String listAllProd(ModelMap model) {
 		return "back-end/prod/product_listAll";
 	}
+	// --- 前台商品清單頁面(測試) ---
+	@GetMapping("listAllProduct")
+	public String listAllProduct(ModelMap model) {
+		return "front-end/product_front_listAll";
+	}
+	// --- 前台商品清單頁面(測試) ---
+	@GetMapping("getOne_For_Display_front") 
+	public String getOneForDisplayFront(@RequestParam("productId") Integer productId, ModelMap model) {
+	    ProdVO prodVO = prodSvc.getOneProd(productId);
+	    model.addAttribute("prodVO", prodVO);
+	    return "front-end/product_front_listOne";
+	}
+	
 
 	@GetMapping("getOne_For_Display")
 	public String getOneForDisplay(@RequestParam("productId") Integer productId, ModelMap model) {
