@@ -242,7 +242,7 @@ public class OrdersVO implements Serializable{
 		this.paymentCreateTime = paymentCreateTime;
 	}
 
-	@Column(name = "returnCreate_time", insertable = false, updatable = false)
+	@Column(name = "returnCreate_time", insertable = false)
 	public Timestamp getReturnCreateTime() {
 		return returnCreateTime;
 	}
@@ -250,8 +250,8 @@ public class OrdersVO implements Serializable{
 	public void setReturnCreateTime(Timestamp returnCreateTime) {
 		this.returnCreateTime = returnCreateTime;
 	}
-	
-	@Column(name = "returnApprove_time", insertable = false, updatable = false)
+
+	@Column(name = "returnApprove_time", insertable = false)
 	public Timestamp getReturnApproveTime() {
 		return returnApproveTime;
 	}
