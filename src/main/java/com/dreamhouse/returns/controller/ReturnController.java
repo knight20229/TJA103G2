@@ -10,12 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dreamhouse.orderproductsize.model.OrderProductSizeService;
 import com.dreamhouse.orderproductsize.model.OrderProductSizeVO;
 import com.dreamhouse.orders.model.OrdersService;
 import com.dreamhouse.orders.model.OrdersVO;
+import com.dreamhouse.orders.model.RefusalReason;
+import com.dreamhouse.orders.model.ReturnStatus;
 import com.dreamhouse.prod.model.ProdSizeConnectVO;
 
 @Controller
@@ -92,6 +97,54 @@ public class ReturnController {
 
 		model.addAttribute("orderListWithDetails", orderListWithDetails);
 		return "back-end/return/listAllReturn";
+	}
+
+	/**
+	 * 處理退貨審核
+	 * @param orderId 訂單ID
+	 * @param returnStatusStr 退貨狀態（enum 名稱）
+	 * @param refusalReasonStr 拒絕原因（enum 名稱，可選）
+	 * @param redirectAttributes 重定向訊息
+	 * @return 重定向到退貨列表頁
+	 */
+	@PostMapping("/process")
+	public String processReturn(
+			@RequestParam("orderId") Integer orderId,
+			@RequestParam("returnStatus") String returnStatusStr,
+			@RequestParam(value = "refusalReason", required = false) String refusalReasonStr,
+			RedirectAttributes redirectAttributes) {
+
+		try {
+			// 轉換字串為枚舉
+			ReturnStatus returnStatus = ReturnStatus.valueOf(returnStatusStr);
+			RefusalReason refusalReason = null;
+
+			// 如果選擇拒絕退貨，驗證拒絕原因
+			if (returnStatus == ReturnStatus.REJECTED) {
+				if (refusalReasonStr == null || refusalReasonStr.isEmpty()) {
+					redirectAttributes.addFlashAttribute("errorMessage",
+						"拒絕退貨時必須選擇拒絕原因！");
+					return "redirect:/returns/list";
+				}
+				refusalReason = RefusalReason.valueOf(refusalReasonStr);
+			}
+
+			// 更新退貨狀態
+			ordersSvc.updateReturnStatus(orderId, returnStatus, refusalReason);
+
+			redirectAttributes.addFlashAttribute("successMessage",
+				"訂單 #" + orderId + " 的退貨處理已完成！狀態：" + returnStatus.getLabel());
+
+		} catch (IllegalArgumentException e) {
+			redirectAttributes.addFlashAttribute("errorMessage",
+				"無效的處理方式或拒絕原因！");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("errorMessage",
+				"系統錯誤，請稍後再試。");
+			e.printStackTrace();
+		}
+
+		return "redirect:/returns/list";
 	}
 
 	/**
