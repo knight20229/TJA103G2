@@ -22,5 +22,7 @@ public interface MemRepository extends JpaRepository<MemVO, Integer> {
 	@Query(value = "select * from member where status=?1 order by member_id", nativeQuery = true)
 	List<MemVO> findActiveMem(Integer state1);
 
+	MemVO findByEmail(String email);
+	
 }
 

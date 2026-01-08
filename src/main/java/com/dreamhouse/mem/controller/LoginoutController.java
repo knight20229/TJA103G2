@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/mem")
-public class LoginController {
+public class LoginoutController {
 
     @Autowired
     private MemService memService;
@@ -60,6 +60,15 @@ public class LoginController {
 
         return "redirect:/mem/my-account";
     }
+    
+    // 處理登出
+ 	@GetMapping("/logout")
+ 	public String logout(HttpSession session) {
+ 		// 清除所有 Session 資料
+ 		session.invalidate();
+ 		// 導回登入頁面
+ 		return "redirect:/mem/login";
+ 	}
 }
 
 
