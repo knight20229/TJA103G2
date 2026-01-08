@@ -150,8 +150,11 @@
 							<td th:text="${orderData.order.payment}"></td>
 
 							<!-- 訂單狀態 -->
-							<td th:text="${orderData.order.orderStatus}"></td>
-
+							<td>
+							<span th:text="${orderData.order.orderStatus}"></span>
+<!-- 							<span th:if="${orderData.order.returnStatus != null}" -->
+<!-- 								th:text="' / ' + ${orderData.order.returnStatus}"></span> -->
+							</td>
 							<!-- 付款方式 -->
 							<td th:text="${orderData.order.paymentMethod}"></td>
 

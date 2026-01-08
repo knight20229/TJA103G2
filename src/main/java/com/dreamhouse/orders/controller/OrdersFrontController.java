@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.dreamhouse.orders.model.OrderStatus;
 import com.dreamhouse.orders.model.OrdersService;
 import com.dreamhouse.orders.model.OrdersVO;
+import com.dreamhouse.orders.model.ReturnReason;
 import com.dreamhouse.orders.model.ReturnStatus;
 
 import jakarta.servlet.http.HttpSession;
@@ -138,8 +139,9 @@ public class OrdersFrontController {
 		if (order != null && (OrderStatus.SHIPPED.getLabel().equals(order.getOrderStatus())
 				|| OrderStatus.COMPLETED.getLabel().equals(order.getOrderStatus()))) {
 
-			order.setReturnStatus(ReturnStatus.RETURNING.getLabel());
-			order.setReturnReason(returnReason);
+			order.setReturnStatus(ReturnStatus.APPLYING.getLabel());
+			ReturnReason reasonEnum = ReturnReason.valueOf(returnReason); // 轉成 enum
+			order.setReturnReason(reasonEnum.getLabel()); // 存中文
 			order.setReturnText(returnText);
 			order.setReturnCreateTime(Timestamp.valueOf(LocalDateTime.now()));
 			ordersSvc.updateOrder(order);

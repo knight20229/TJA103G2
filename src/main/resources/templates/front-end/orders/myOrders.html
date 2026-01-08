@@ -166,7 +166,10 @@
 							<td th:text="'$' + ${#numbers.formatDecimal(order.amount, 1, 2)}"></td>
 							<td th:text="'$' + ${#numbers.formatDecimal(order.discount != null ? order.discount : 0, 1, 2)}"></td>
 							<td th:text="'$' + ${#numbers.formatDecimal(order.payment, 1, 2)}"></td>
-							<td th:text="${order.orderStatus}"></td>
+							<td>
+							<span th:text="${order.orderStatus}"></span>
+							<span th:if="${order.returnStatus != null}" th:text="' / ' + ${order.returnStatus}"></span>
+							</td>
 							<td th:text="${order.paymentMethod}"></td>
 							<td th:text="${order.paymentStatus}"></td>
 							<td th:text="${order.orderCreateTime != null ? #dates.format(order.orderCreateTime,'yyyy-MM-dd HH:mm') : '-'}"></td>
