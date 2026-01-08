@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 public class SizeService {
 
     @Autowired
-    private SizeRepository repository;
+    private SizeRepository sizeRepository;
 
     public List<SizeVO> getAll() {
-        return repository.findAll();
+        return sizeRepository.findAll();
     }
 
     public SizeVO getOneSize(Integer sizeId) {
-        return repository.findById(sizeId).orElse(null);
+        return sizeRepository.findById(sizeId).orElse(null);
     }
 }
