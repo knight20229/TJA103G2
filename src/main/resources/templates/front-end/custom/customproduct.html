@@ -231,21 +231,22 @@
 					<ul>
 						<li>
 							<form method="get" th:action="@{/custom/product}">
+								<input type="hidden" name="isCustom" value="1">
 		                        <div class="length_weight">
 		                            <div class="product-size">
 		                                <span class="product-details-title">長度:</span>
 		                                <select class="nice-select" name="size" id="size-select">
-		                                    <option th:each="CustomSizeVO : ${sizeList}" 
-		                                    		th:value="${CustomSizeVO.customSizeId}" 
-		                                    		th:text="${CustomSizeVO.customLength} + '公分' " 
-		                                    		th:attr="data-price=${CustomSizeVO.customSizePrice}"/>                            
+		                                    <option th:each="length : ${sizeList}" 
+		                                    		th:value="${length.customSizeId}" 
+		                                    		th:text="${length.customLength} + '公分' " 
+		                                    		th:attr="data-price=${length.customSizePrice}"></option>               
 		                                </select>                                  
 		                                <span class="product-details-title">寬度:</span>
 		                                <select class="nice-select" name="weight" id="weight-select">
-		                                    <option th:each="CustomSizeVO : ${sizeList}" 
-				                                    th:value="${CustomSizeVO.customSizeId}" 
-				                                    th:text="${CustomSizeVO.customWidth} + '公分' "
-				                                    th:attr="data-price=${CustomSizeVO.customSizePrice}"/>
+		                                    <option th:each="width : ${sizeList}" 
+				                                    th:value="${width.customSizeId}" 
+				                                    th:text="${width.customWidth} + '公分' "
+				                                    th:attr="data-price=${width.customSizePrice}"></option>
 		                                </select>
 		                            </div>
 		                        </div>
@@ -254,10 +255,10 @@
                             <div class="product-size">
                                 <span class="product-details-title">材質: </span>
                                 <select class="nice-select" name="material" id="material-select">
-                                    <option th:each="CustomMaterialVO : ${materialList}" 
-		                                    th:value="${CustomMaterialVO.customMaterialName}" 
-		                                    th:text="${CustomMaterialVO.customMaterialName}"
-		                                    th:attr="data-price=${CustomMaterialVO.customMaterialPrice}"/>
+                                    <option th:each="material : ${materialList}" 
+		                                    th:value="${material.customMaterialName}" 
+		                                    th:text="${material.customMaterialName}"
+		                                    th:attr="data-price=${material.customMaterialPrice}"></option>
                                 </select>
                             </div>
                             </div>
@@ -265,20 +266,20 @@
                             <div class="product-size">
                                 <span class="product-details-title">功能: </span>
                                 <select class="nice-select" name="feature" id="feature-select">
-                                    <option th:each="CustomFeatureVO : ${featureList}" 
-		                                    th:value="${CustomFeatureVO.customFeatureName}" 
-		                                    th:text="${CustomFeatureVO.customFeatureName}"
-		                                    th:attr="data-price=${CustomFeatureVO.customFeaturePrice}"/>
+                                    <option th:each="feature : ${featureList}" 
+		                                    th:value="${feature.customFeatureId}" 
+		                                    th:text="${feature.customFeatureName}"
+		                                    th:attr="data-price=${feature.customFeaturePrice}"></option>
                                 </select>
                             </div>
 
                             <div class="product-size">
                                 <span class="product-details-title">布料: </span>
                                 <select class="nice-select" name="cloth" id="cloth-select" >
-                                    <option th:each="CustomClothVO : ${clothList}" 
-                                   			th:value="${CustomClothVO.customClothName}" 
-                                   			th:text="${CustomClothVO.customClothName}"
-                                   			th:attr="data-price=${CustomClothVO.customClothPrice}"/>
+                                    <option th:each="cloth : ${clothList}" 
+                                   			th:value="${cloth.customClothName}" 
+                                   			th:text="${cloth.customClothName}"
+                                   			th:attr="data-price=${cloth.customClothPrice}">
                                 </select>
                             </div>
                             </div>
@@ -286,7 +287,7 @@
                                 <span class="product-details-title" >是否加購床架: </span>
                                 <select class="nice-select" name="bed_frame" id="bed-frame-select">
                                     <option  value="1">是</option>
-                                    <option  value="2">否</option>
+                                    <option  value="0">否</option>
                                 </select>
                             </div>
                             </div>
@@ -302,7 +303,7 @@
 
 
                             <div class="add-to-cart-btn d-inline-block">
-                                <button class="theme-button theme-button--alt">加入購物車</button>
+                                <button type="submit" class="theme-button theme-button--alt">加入購物車</button>
                             </div>
 
                         </div>

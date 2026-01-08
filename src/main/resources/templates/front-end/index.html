@@ -12,9 +12,9 @@
     <!-- Font Awesome 6 CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <!-- Vendor CSS -->
-    <link rel="stylesheet" th:href="@{/css/custom/vendors.css}">
+    <link rel="stylesheet" th:href="@{/css/prod/vendors.css}">
     <!-- Main CSS -->
-    <link rel="stylesheet" th:href="@{/css/custom/style.css}">
+    <link rel="stylesheet" th:href="@{/css/prod/style.css}">
 
 
 </head>
@@ -161,99 +161,38 @@
                                 <h2 class="single-sidebar-widget__title">價格篩選</h2>
                                             <ul class="sub-menu">
                                                 <li>
-                                                    <button type="button"
-                                                            class="filter-btn"
-                                                            data-type="price"
-                                                            data-min="5000"
-                                                            data-max="10000">
-                                                        $5000 - $10000
-                                                    </button>
+<a th:href="@{/price(minPrice=5000,maxPrice=10000)}" class="filter-btn">$5000 - $10000</a>
+
                                                 </li><br>
 
                                                 <li>
-                                                    <button type="button"
-                                                            class="filter-btn"
-                                                            data-type="price"
-                                                            data-min="10001"
-                                                            data-max="20000">
-                                                        $10001 - $20000
-                                                    </button>
+<a th:href="@{/price(minPrice=10001,maxPrice=20000)}" class="filter-btn">$10001 - $20000</a>
+
                                                 </li><br>
 
                                                 <li>
-                                                    <button type="button"
-                                                            class="filter-btn"
-                                                            data-type="price"
-                                                            data-min="20001"
-                                                            data-max="30000">
-                                                        $20001 - $30000
-                                                    </button>
+<a th:href="@{/price(minPrice=20001,maxPrice=30000)}" class="filter-btn">$20001 - $30000</a>
                                                 </li>
                                             </ul>
                             </div>
 
+							<br>
+
                             <div class="single-sidebar-widget">
-                                <h2 class="single-sidebar-widget__title">床墊尺寸</h2>
-                                    <!-- <ul class="single-sidebar-widget__dropdown" id="single-sidebar-widget__dropdown"> -->
-                                        <ul class="sub-menu">
-                                            <li>
-                                                <button type="button"
-                                                        class="filter-btn"
-                                                        data-type="size"
-                                                        data-value="single">
-                                                    單人床
-                                                </button>
-                                            </li><br>
-
-                                            <li>
-                                                <button type="button"
-                                                        class="filter-btn"
-                                                        data-type="size"
-                                                        data-value="double">
-                                                    雙人床
-                                                </button>
-                                            </li><br>
-
-                                            <li>
-                                                <button type="button"
-                                                        class="filter-btn"
-                                                        data-type="size"
-                                                        data-value="queen">
-                                                    加大雙人床
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    
-                                        <br>
 
                                         <!-- <li class="has-children"><a href="shop-left-sidebar.html">軟硬度</a> -->
                                     <h2 class="single-sidebar-widget__title">軟硬度</h2>
                                         <ul class="sub-menu">
                                             <li>
-                                                <button type="button"
-                                                        class="filter-btn"
-                                                        data-type="firmness"
-                                                        data-value="soft">
-                                                    偏軟
-                                                </button>
+<a th:href="@{/description(description='soft')}" class="filter-btn">偏軟</a>
                                             </li><br>
 
                                             <li>
-                                                <button type="button"
-                                                        class="filter-btn"
-                                                        data-type="firmness"
-                                                        data-value="medium">
-                                                    中等
-                                                </button>
+<a th:href="@{/description(description='medium')}" class="filter-btn">適中</a>
                                             </li><br>
 
                                             <li>
-                                                <button type="button"
-                                                        class="filter-btn"
-                                                        data-type="firmness"
-                                                        data-value="hard">
-                                                    偏硬
-                                                </button>
+<a th:href="@{/description(description='hard')}" class="filter-btn">較硬</a>
                                             </li>
                                         </ul>
 
@@ -261,19 +200,17 @@
 
                                     <h2 class="single-sidebar-widget__title">材質</h2>
                                         <ul class="sub-menu">
-                                            <li><button type="button" class="filter-btn" data-type="material" data-value="material1">材質1</button></li><br>
-                                            <li><button type="button" class="filter-btn" data-type="material" data-value="material2">材質2</button></li><br>
-                                            <li><button type="button" class="filter-btn" data-type="material" data-value="material3">材質3</button></li><br>
-                                            <li><button type="button" class="filter-btn" data-type="material" data-value="material4">材質4</button></li>
+                                            <li><button type="button" class="filter-btn" data-type="material" data-value="material1">彈簧</button></li><br>
+                                            <li><button type="button" class="filter-btn" data-type="material" data-value="material2">乳膠</button></li><br>
+                                            <li><button type="button" class="filter-btn" data-type="material" data-value="material3">棉</button></li><br>
                                         </ul>  
 
                                         <br>
 
-                                     <h2 class="single-sidebar-widget__title">床架</h2>
+                                     <h2 class="single-sidebar-widget__title">類型</h2>
                                         <ul class="sub-menu">
-                                            <li><button type="button" class="filter-btn" data-type="frame" data-value="flat">平面式</button></li><br>
-                                            <li><button type="button" class="filter-btn" data-type="frame" data-value="embed">嵌入式</button></li><br>
-                                            <li><button type="button" class="filter-btn" data-type="frame" data-value="grid">網格狀</button></li>
+                                            <li><button type="button" class="filter-btn" data-type="frame" data-value="flat">床墊</button></li><br>
+                                            <li><button type="button" class="filter-btn" data-type="frame" data-value="embed">床架</button></li>
                                         </ul>  
                             </div>
 
@@ -295,10 +232,10 @@
 
                                         <div class="shop-header__left">
                                             <p class="result-text d-inline-block mb-0">商品展示</p>
-                                            <div class="view-mode-icons d-inline-block">
-                                                <a href="javascript:void(0)" class="active" data-tippy="網格" data-target="grid" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder"><i class="fa fa-th"></i></a>
-                                                <a href="javascript:void(0)" data-target="list" data-tippy="清單" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder"><i class="fa fa-list"></i></a>
-                                            </div>
+<!--                                             <div class="view-mode-icons d-inline-block"> -->
+<!--                                                 <a href="javascript:void(0)" class="active" data-tippy="網格" data-target="grid" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder"><i class="fa fa-th"></i></a> -->
+<!--                                                 <a href="javascript:void(0)" data-target="list" data-tippy="清單" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder"><i class="fa fa-list"></i></a> -->
+<!--                                             </div> -->
                                         </div>
 
                                         <!--=======  End of header left content  =======-->
@@ -310,7 +247,7 @@
 
                                         <div class="shop-header__right d-flex justify-content-start justify-content-sm-end align-items-center">
                                             <div class="grid-view-changer" id="grid-view-changer">
-                                                <a href="javascript:void(0)" id="grid-view-change-trigger" data-tippy="查看選項" data-target="grid" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                <a href="javascript:void(0)" id="grid-view-change-trigger" data-tippy="排列組合" data-target="grid" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                                 <div class="grid-view-changer__menu" id="grid-view-changer__menu">
@@ -342,45 +279,45 @@
                             <div class="shop-product-wrap shop-product-wrap--with-sidebar row grid">
 
                                 <div class="col-lg-4 col-md-6 col-sm-6 col-custom-sm-6 col-12"
-     th:each="p : ${products}">
-
-    <div class="single-grid-product">
-        <div class="single-grid-product__image">
-
-            <a th:href="@{/product/{id}(id=${p.productId})}"
-               class="image-wrap">
-               
-                <img th:if="${p.imageBase64 != null}"
-                     th:src="${p.imageBase64}"
-                     class="img-fluid"
-                     alt="商品圖片">
-                     
-                <img th:if="${p.imageBase64 == null}"
-                     th:src="@{/images/no-image.png}"
-                     class="img-fluid"
-                     alt="無圖片">
-            </a>
-
-        </div>
-
-        <div class="single-grid-product__content">
-            <h3 class="title">
-                <a th:href="@{/product/{id}(id=${p.productId})}"
-                   th:text="${p.productName}">
-                    商品名稱
-                </a>
-            </h3>
-
-            <div class="price">
-                <span class="main-price"
-                      th:text="'$' + ${p.displayPrice}">
-                    $0
-                </span>
-            </div>
-        </div>
-    </div>
-
-</div>
+								     th:each="p : ${products}">
+								
+								    <div class="single-grid-product">
+								        <div class="single-grid-product__image">
+								
+								            <a th:href="@{/product/{id}(id=${p.productId})}"
+								               class="image-wrap">
+								               
+								                <img th:if="${p.imageBase64 != null}"
+								                     th:src="${p.imageBase64}"
+								                     class="img-fluid"
+								                     alt="商品圖片">
+								                     
+								                <img th:if="${p.imageBase64 == null}"
+								                     th:src="@{/images/no-image.png}"
+								                     class="img-fluid"
+								                     alt="無圖片">
+								            </a>
+								
+								        </div>
+								
+								        <div class="single-grid-product__content">
+								            <h3 class="title">
+								                <a th:href="@{/product/{id}(id=${p.productId})}"
+								                   th:text="${p.productName}">
+								                    商品名稱
+								                </a>
+								            </h3>
+								
+								            <div class="price">
+								                <span class="main-price"
+								                      th:text="'$' + ${p.displayPrice}">
+								                    $0
+								                </span>
+								            </div>
+								        </div>
+								    </div>
+								
+								</div>
 
 
                                     <!--=======  End of list view product  =======-->
@@ -396,7 +333,6 @@
                             <div class="pagination-wrapper">
                                 <ul>
                                     <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
                                 </ul>
                             </div>
 
@@ -412,10 +348,10 @@
 
         <!--=======  End of shop page area  =======-->
 
-    <script th:src="@{/js/vendors.js}"></script>
+    <script th:src="@{/js/frontprod/vendors.js}"></script>
 
     <!-- Active JS -->
-    <script th:src="@{/jsactive.js}"></script>
+    <script th:src="@{/js/frontprod/active.js}"></script>
 
     <!--=====  End of JS files ======-->
 

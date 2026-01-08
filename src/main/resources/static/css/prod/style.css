@@ -1795,13 +1795,8 @@ select {
 /*=====  End of blue page style  ======*/
 /*=============================================
 =            Sidebar            =
-=============================================*/
-.single-sidebar-widget {
-  margin-bottom: 50px;
-}
-.single-sidebar-widget:last-child {
-  margin-bottom: 0;
-}
+/* =============================================*/ */
+
 .single-sidebar-widget__title {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 22px;
