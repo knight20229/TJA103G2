@@ -44,7 +44,7 @@ public class EmpController {
 		}
 
 		// 存入 Session（只存必要資訊）
-		session.setAttribute("memberId", employee.getEmployeeId());
+		session.setAttribute("employeeId", employee.getEmployeeId());
 
 		// 檢查是否有來源頁面
 		String location = (String) session.getAttribute("location");
@@ -76,7 +76,7 @@ public class EmpController {
 //	                             Object handler) throws Exception {
 //	        HttpSession session = request.getSession(false);
 //
-//	        if (session == null || session.getAttribute("memberId") == null) {
+//	        if (session == null || session.getAttribute("employeeId") == null) {
 //	            response.sendRedirect("/emp/login");
 //	            return false;
 //	        }
