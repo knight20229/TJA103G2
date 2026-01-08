@@ -1,0 +1,69 @@
+/* Header 整體容器 */
+.dreamhouse-header {
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.header-info-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* 導覽列 */
+.nav-list li a {
+  font-weight: 500;
+  color: #333;
+  text-decoration: none;
+}
+
+/* 搜尋列 */
+.header-search-wrapper {
+  background-color: #f8f9fa;
+  padding: 6px 12px;
+  border-radius: 8px;
+  width: 100%; /* 讓搜尋列佔滿左側空間 */
+  box-sizing: border-box;
+}
+
+.header-search-wrapper .form-control {
+  width: 100%; /* 讓 input 撐滿容器 */
+  height: 36px;
+  font-size: 14px;
+}
+
+.header-search input {
+  width: 180px; /* 預設寬度，可視需求調整 */
+}
+
+/* Icon 區域 */
+.header-icon-area {
+  display: flex;
+  align-items: center;
+}
+
+.header-icon__list {
+  display: flex;
+  gap: 12px; /* 四個 icon 間距一致 */
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header-icon__list li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-icon__list li a i {
+  font-size: 20px;
+  color: #B197FC;
+  transition: transform 0.2s ease;
+}
+
+.header-icon__list li a i:hover {
+  transform: scale(1.2);
+}
