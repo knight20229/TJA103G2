@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>後台管理</title>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>後台管理</title>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"/>
+<!-- Bootstrap CSS -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet" />
+<!-- Bootstrap Icons -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
-    
-   	<link rel="stylesheet" th:href="@{/css/back-end-index.css}" />
-    
-    <link rel="stylesheet" href="/css/admin.css">
-  </head>
-  <body>
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+<link rel="stylesheet" th:href="@{/css/back-end-index.css}" />
+
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
 	<!-- ========== 左側側邊欄 ========== -->
 	<nav class="sidebar">
 		<a class="mb-4 fs-4 text-decoration-none fw-bold"
@@ -71,7 +75,8 @@
 		</ul>
 
 		<div class="mt-4 d-flex justify-content-center logout-wrapper">
-			<button class="btn btn-outline-primary w-50 fw-bold btn-logout">
+			<button class="btn btn-outline-primary w-50 fw-bold btn-logout"
+				data-bs-toggle="modal" data-bs-target="#logoutModal">
 				<i class="bi bi-box-arrow-right"></i> 登出
 			</button>
 		</div>
@@ -89,7 +94,7 @@
 					class="fs-5 text-primary text-decoration-none fw-bold breadcrumb_index">會員管理</a></li>
 			</ol>
 		</nav>
-					<table class="table table-bordered align-middle text-center">
+		<table class="table table-bordered align-middle text-center">
 			<thead class="table-light">
 				<tr>
 					<th>會員編號</th>
