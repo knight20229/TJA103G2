@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 public class FeatService {
 
     @Autowired
-    private FeatRepository repository;
+    private FeatRepository featRepository;
 
     public List<FeatVO> getAll() {
-        return repository.findAll();
+        return featRepository.findAll();
     }
 
     public FeatVO getOneFeat(Integer featureId) {
-        return repository.findById(featureId).orElse(null);
+        return featRepository.findById(featureId).orElse(null);
     }
 }
