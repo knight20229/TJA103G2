@@ -16,6 +16,6 @@ public class FrontProdController {
 	@GetMapping("/")
 	public String home(ModelMap model) {
 		model.addAttribute("products",frontProdService.getAllProd());
-		return "index";
+		return "/front-end/index";
 	}
 }
