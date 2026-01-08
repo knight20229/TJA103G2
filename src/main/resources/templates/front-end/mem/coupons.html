@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>夢享家 DreamHouse</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Favicon -->
+<link th:href="@{/images/dreamhouseb.ico}" rel="icon">
+<!-- Font Awesome 6 CDN -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+	rel="stylesheet">
+<!-- Vendor CSS -->
+<link th:href="@{/css/custom/vendors.css}" rel="stylesheet">
+<!-- Main CSS -->
+<link th:href="@{/css/custom/style.css}" rel="stylesheet">
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+/* 容器：每列兩張券 */
+.coupon-list {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 20px;
+}
+
+/* 卡片寬度填滿格子 */
+.coupon-ticket {
+	width: 100%;
+	display: flex;
+	background: #ffe6ee;
+	border: 1px solid #f8c4d1;
+	border-radius: 12px;
+	overflow: hidden;
+	min-height: 150px;
+}
+
+.coupon-disabled {
+	background: #f6f6f6;
+	border-color: #e0e0e0;
+	opacity: 0.85;
+}
+
+.ticket-left {
+	flex: 0 0 38%;
+	padding: 18px 16px;
+	border-right: 1px dashed #f1a9bb;
+	text-align: center;
+}
+
+.ticket-right {
+	flex: 1;
+	padding: 16px 16px;
+}
+
+.ticket-value {
+	font-size: 28px;
+	font-weight: 800;
+	color: #c2185b;
+	line-height: 1.2;
+}
+
+.ticket-line {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 8px;
+}
+
+.name-line {
+	justify-content: flex-start;
+}
+
+.ticket-name {
+	font-size: 20px;
+	font-weight: 700;
+	color: #7a3b53;
+}
+
+.ticket-cond, .ticket-expire {
+	font-size: 14px;
+	color: #5a4a52;
+}
+
+.ticket-status-badge {
+	margin-left: 10px;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 700;
+	color: #fff;
+	background: #9e9e9e;
+}
+
+.ticket-status-badge.used {
+	background: #607d8b;
+}
+
+.ticket-status-badge.expired {
+	background: #b0bec5;
+}
+
+/* RWD：手機時變成一欄 */
+@media ( max-width : 576px) {
+	.coupon-list {
+		grid-template-columns: 1fr;
+	}
+	.coupon-ticket {
+		flex-direction: column;
+	}
+	.ticket-left {
+		border-right: 0;
+		border-bottom: 1px dashed #f1a9bb;
+	}
+}
+</style>
+</head>
+
+
+<body>
+
+	<!--====================  header area ====================-->
+	<div
+		class="header-area header-area--default header-area--default--white header-sticky">
+		<div class="header-logo">
+			<a th:href="@{/}"> <img th:src="@{/img/logo.png}"
+				class="img-fluid" alt="Logo">
+			</a>
+		</div>
+
+		<!-- header navigation -->
+		<div class="header-navigation-area d-none d-lg-block">
+			<div class="container wide">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="header-info-wrapper">
+							<div class="header-navigation-wrapper">
+								<nav>
+									<ul>
+										<li><a th:href="@{/products}">商品瀏覽</a></li>
+										<li><a th:href="@{/compare}">商品比較</a></li>
+										<li><a th:href="@{/custom}">客製化商品</a></li>
+										<li><a th:href="@{/knowledge}">好眠知識</a></li>
+									</ul>
+								</nav>
+							</div>
+
+							<!-- search bar -->
+							<nav class="navbar navbar-expand-lg navbar-light bg-light">
+								<div class="container-fluid">
+									<div class="collapse navbar-collapse">
+										<form class="d-flex" th:action="@{/search}" method="get">
+											<input class="form-control me-2" type="search" name="q"
+												placeholder="搜尋商品">
+											<button class="btn btn-outline-success" type="submit">Search</button>
+										</form>
+									</div>
+								</div>
+							</nav>
+
+							<!-- header icons -->
+							<div class="header-icon-area">
+								<ul class="header-icon__list">
+									<!-- 訊息 -->
+									<li><a th:href="@{/messages}"> <i
+											class="fa-solid fa-message" style="color: #B197FC;"></i>
+									</a></li>
+									<!-- 會員 -->
+
+									<li class="nav-item"><a th:href="@{/mem/login}"
+										th:if="${session.memberId == null}" data-bs-toggle="tooltip"
+										data-bs-placement="bottom" title="登入/註冊"> <i
+											class="fa-solid fa-user" style="color: #B197FC;"></i>
+									</a> <!-- 已登入 → 顯示會員下拉選單 -->
+									<li class="nav-item dropdown"
+										th:if="${session.memberId != null}">
+										<!-- 會員 icon --> <a class="dropdown-toggle" href="#"
+										id="memberMenu" role="button" data-bs-toggle="dropdown"
+										aria-expanded="false"> <i class="fa-solid fa-user"
+											style="color: #B197FC;"></i>
+									</a> <!-- 下拉選單內容 -->
+										<ul class="dropdown-menu" aria-labelledby="memberMenu">
+											<li><a class="dropdown-item"
+												th:href="@{/mem/my-account}">我的帳戶</a></li>
+											<li><a class="dropdown-item" th:href="@{/mem/my-coupon}">我的優惠券</a></li>
+											<li><a class="dropdown-item" th:href="@{/mem/orders}">我的訂單</a></li>
+											<li><a class="dropdown-item" th:href="@{/mem/logout}">登出</a></li>
+										</ul>
+									</li>
+
+									<!-- 通知 -->
+									<li><a th:href="@{/notifications}"> <i
+											class="fa-solid fa-bell" style="color: #B197FC;"></i>
+									</a></li>
+									<!-- 購物車 -->
+									<li><a th:href="@{/cart}"> <i
+											class="fa-solid fa-cart-shopping" style="color: #B197FC;"></i>
+									</a>
+										<div class="minicart-wrapper">
+											<p class="minicart-wrapper__title">購物車</p>
+											<div class="minicart-wrapper__items ps-scroll">
+												<div class="minicart-wrapper__items__single">
+													<a href="javascript:void(0)" class="close-icon"> <i
+														class="pe-7s-close"></i>
+													</a>
+													<div class="image">
+														<a th:href="@{/products}"> <img
+															th:src="@{/img/products/product-2-90x100.jpg}"
+															class="img-fluid" alt="">
+														</a>
+													</div>
+													<div class="content">
+														<p class="product-title">
+															<a th:href="@{/products}">Jane Lauren Rebel Sofa</a>
+														</p>
+														<p class="product-calculation">
+															<span class="count">1</span> x <span class="price">$900</span>
+														</p>
+													</div>
+												</div>
+											</div>
+											<p class="minicart-wrapper__subtotal">
+												總計: <span>$1800</span>
+											</p>
+											<div class="minicart-wrapper__buttons">
+												<a th:href="@{/cart}"
+													class="theme-button theme-button--minicart-button">查看購物車</a>
+											</div>
+										</div></li>
+								</ul>
+							</div>
+							<!-- end of header icons -->
+
+						</div>
+						<!-- header-info-wrapper -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--====================  End of header area  ====================-->
+
+	<!--======= mobile navigation area =======-->
+	<div class="header-mobile-navigation d-block d-lg-none">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-6 col-md-6">
+					<div class="header-logo">
+						<a href="index.html"> <img src="assets/img/logo.png"
+							class="img-fluid" alt="">
+						</a>
+					</div>
+				</div>
+				<div class="col-6 col-md-6">
+					<div class="mobile-navigation text-end">
+						<ul class="header-icon__list">
+							<li><a href="wishlist.html"><i class="fa fa-heart-o"></i><span
+									class="item-count">1</span></a></li>
+							<li><a href="cart.html"><i class="fa fa-shopping-basket"></i><span
+									class="item-count">3</span></a></li>
+							<li><a href="javascript:void(0)" class="mobile-menu-icon"
+								id="mobile-menu-trigger"><i class="fa fa-bars"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--======= End of mobile navigation area =======-->
+
+	<!--==================== End of header area ====================-->
+	<!--==================== 會員優惠券 ====================-->
+
+	<section class="coupon-section">
+		<div class="container py-5">
+
+			<h2 class="h4 mb-3">優惠券專區</h2>
+
+			<!-- 左：歷史紀錄；右：可使用（預設顯示可使用） -->
+			<ul class="nav nav-tabs mb-4" id="couponTabs">
+				<li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
+					href="#history">歷史紀錄</a></li>
+				<li class="nav-item"><a class="nav-link active"
+					data-bs-toggle="tab" href="#available">可使用</a></li>
+			</ul>
+
+			<div class="tab-content">
+				<!-- 可使用 -->
+				<div class="tab-pane fade show active" id="available">
+					<div class="coupon-list">
+						<div class="coupon-ticket" th:each="mc : ${availableCoupons}">
+							<div class="ticket-left">
+								<div class="ticket-value"
+									th:text="${mc.couponVO.type == 'AMOUNT' ? 'NT$' + mc.couponVO.couponValue
+                            : mc.couponVO.couponValue + '% OFF'}"></div>
+							</div>
+							<div class="ticket-right">
+								<div class="ticket-line name-line">
+									<span class="ticket-name" th:text="${mc.couponVO.name}"></span>
+								</div>
+								<div class="ticket-line">
+									<span class="ticket-cond"
+										th:text="'滿 NT$' + ${mc.couponVO.standard} + ' 可使用'"></span>
+								</div>
+								<div class="ticket-line">
+									<span class="ticket-expire"
+										th:text="'使用期限至 ' + ${#temporals.format(mc.couponVO.endDt, 'yyyy/MM/dd')}"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 歷史紀錄 -->
+				<div class="tab-pane fade" id="history">
+					<div class="coupon-list">
+						<div class="coupon-ticket coupon-disabled"
+							th:each="mc : ${usedOrExpiredCoupons}">
+							<div class="ticket-left">
+								<div class="ticket-value"
+									th:text="${mc.couponVO.type == 'AMOUNT' ? 'NT$' + mc.couponVO.couponValue
+                            : mc.couponVO.couponValue + '% OFF'}"></div>
+							</div>
+							<div class="ticket-right">
+								<div class="ticket-line name-line">
+									<span class="ticket-name" th:text="${mc.couponVO.name}"></span>
+								</div>
+								<div class="ticket-line">
+									<span class="ticket-cond"
+										th:text="'滿 NT$' + ${mc.couponVO.standard} + ' 可使用'"></span>
+								</div>
+								<div class="ticket-line">
+									<span class="ticket-expire"
+										th:text="'使用期限至 ' + ${#temporals.format(mc.couponVO.endDt, 'yyyy/MM/dd')}"></span>
+									<span class="ticket-status-badge"
+										th:classappend="${mc.useStatus == 1 ? ' used' : ' expired'}"
+										th:text="${mc.useStatus == 1 ? '已使用' : '已過期'}"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</section>
+
+
+
+	<!-- JS files -->
+	<script th:src="@{/js/vendors.js}"></script>
+	<script th:src="@{/js/active.js}"></script>
+
+
+</body>
+</html>

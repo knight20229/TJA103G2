@@ -163,6 +163,4 @@ public class MemVO implements Serializable {
 		this.memCoup = memCoup;
 	}
     
-    
-    
 }

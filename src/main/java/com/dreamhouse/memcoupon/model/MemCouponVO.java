@@ -3,6 +3,7 @@ package com.dreamhouse.memcoupon.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Optional;
 
 import com.dreamhouse.coupon.model.CouponVO;
 import com.dreamhouse.mem.model.MemVO;
@@ -26,6 +27,10 @@ public class MemCouponVO {
 	private LocalDateTime couponUpdateTime;
 	private CouponVO couponVO;
 	private MemVO memVO;
+	private String displayValue;
+	public static final int STATUS_UNUSED = 0;
+	public static final int STATUS_USED = 1;
+	public static final int STATUS_EXPIRED = 2;
 	
 	@EmbeddedId
 	public MemCouponCompositeKey getMemCouponKey() {
@@ -77,7 +82,8 @@ public class MemCouponVO {
 	public void setMemVO(MemVO memVO) {
 		this.memVO = memVO;
 	}
-	
-	
-	
+
+
 }
+
+
