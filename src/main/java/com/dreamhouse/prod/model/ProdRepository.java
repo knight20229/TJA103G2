@@ -24,4 +24,10 @@ public interface ProdRepository extends JpaRepository<ProdVO, Integer> {
            "AND p.offDate IS NOT NULL " + 
            "AND p.offDate <= CURRENT_TIMESTAMP") // 改用資料庫時間
     int updateStatusToInactive();
+    
+    // 新增商品：檢查名稱是否存在
+    boolean existsByProductName(String productName);
+
+    // 編輯商品：檢查名稱是否存在，但排除目前這筆 ID
+    boolean existsByProductNameAndProductIdNot(String productName, Integer productId);
 }

@@ -96,9 +96,12 @@ public class ProdController {
 	            result.rejectValue("offDate", "error.prodVO", "下架日期必須晚於上架日期！");
 	        }
 	    }
+	    // 2. 商品名稱重複驗證
+	    if (prodSvc.isProductNameDuplicate(prodVO.getProductName())) {
+	        result.rejectValue("productName", "error.productName", "商品名稱已經存在。");
+	    }
 		
-		
-		// 上稿器空白時不會跳出訊息，有空標籤：<p><br></p>
+		// 3. 上稿器空白時不會跳出訊息，有空標籤：<p><br></p>
 	    if (prodVO.getDescription() != null) {
 	        String desc = prodVO.getDescription();
 
@@ -272,7 +275,14 @@ public class ProdController {
 	            result.rejectValue("offDate", "error.prodVO", "下架日期必須晚於上架日期！");
 	        }
 	    }
-	    // 上稿器空白時不會跳出訊息，有空標籤：<p><br></p>
+	    // 2. 商品名稱重複驗證，排除本身ID
+	    if (prodVO.getProductName() != null && !prodVO.getProductName().isBlank()) {
+	        if (prodSvc.isProductNameDuplicateForUpdate(prodVO.getProductName(), prodVO.getProductId())) {
+	            result.rejectValue("productName", "error.productName", "此商品名稱已被其他商品使用。");
+	        }
+	    }
+	    
+	    // 3. 上稿器空白時不會跳出訊息，有空標籤：<p><br></p>
 	    if (prodVO.getDescription() != null) {
 	        String desc = prodVO.getDescription();
 
