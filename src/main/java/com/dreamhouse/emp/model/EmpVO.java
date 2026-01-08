@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.dreamhouse.coupon.model.CouponVO;
 import com.dreamhouse.promotions.model.PromotionsVO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -118,6 +119,7 @@ public class EmpVO implements Serializable {
     }
     
     @OneToMany(mappedBy = "empVO")
+    @JsonIgnore
 	public Set<CouponVO> getCouponVO() {
 		return couponVO;
 	}
@@ -127,6 +129,7 @@ public class EmpVO implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "empVO")
+	@JsonIgnore
 	public Set<PromotionsVO> getPromotionsVO() {
 		return promotionsVO;
 	}
