@@ -24,7 +24,7 @@ public class CouponScheduler {
 	@Autowired
 	MemService memSer;
 
-	@Scheduled(cron = "0 21 19 * * ?")
+	@Scheduled(cron = "0 0 0 * * ?")
 	void sendCouponToMember() {
 		// ●取得member
 		List<MemVO> activeMemList = memSer.findActiveMem();
@@ -37,7 +37,7 @@ public class CouponScheduler {
 	}
 	
 	// 結束日期=當下日期，將狀態更新為停用
-	@Scheduled(cron = "0 23 19 * * ?")
+	@Scheduled(cron = "0 5 0 * * ?")
 	void updateState() {
 		coupSer.updateState();
 		System.out.println("更新成功");
