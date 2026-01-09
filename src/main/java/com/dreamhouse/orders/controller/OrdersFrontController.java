@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.dreamhouse.orderproductsize.model.OrderProductSizeService;
+import com.dreamhouse.orderproductsize.model.OrderProductSizeVO;
 import com.dreamhouse.orders.model.OrderStatus;
 import com.dreamhouse.orders.model.OrdersService;
 import com.dreamhouse.orders.model.OrdersVO;
 import com.dreamhouse.orders.model.ReturnReason;
 import com.dreamhouse.orders.model.ReturnStatus;
+import com.dreamhouse.prod.model.ProdVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -30,6 +34,9 @@ public class OrdersFrontController {
 
 	@Autowired
 	private OrdersService ordersSvc;
+	
+	@Autowired
+	OrderProductSizeService orderProductSizeSvc;
 
 	// =========================
 	// 前台：我的訂單列表
@@ -44,6 +51,28 @@ public class OrdersFrontController {
 
 		List<OrdersVO> ordersList = ordersSvc.getOrdersByMemberId(memberId);
 
+		for (OrdersVO order : ordersList) {
+
+	        if (order.getOrderproductsize() == null) continue;
+
+	        for (OrderProductSizeVO ops : order.getOrderproductsize()) {
+
+	            if (ops.getProdSizeConnect() == null) continue;
+	            if (ops.getProdSizeConnect().getProdVO() == null) continue;
+
+	            ProdVO prod = ops.getProdSizeConnect().getProdVO();
+
+	            byte[] imageData = prod.getImageData();
+	            if (imageData != null && imageData.length > 0) {
+
+	                String base64 = "data:image/jpeg;base64," +
+	                        Base64.getEncoder().encodeToString(imageData);
+
+	                prod.setBase64Image(base64);
+	            }
+	        }
+	    }
+		
 		model.addAttribute("ordersList", ordersList);
 		return "front-end/orders/myOrders";
 	}
@@ -152,6 +181,16 @@ public class OrdersFrontController {
 		}
 
 		return "redirect:/front/orders/myOrders";
+	}
+	
+	/**
+	 * 將 BLOB 圖片轉換為 Base64 字串
+	 */
+	private String convertBlobToBase64(byte[] imageData) {
+		if (imageData == null || imageData.length == 0) {
+			return null;
+		}
+		return "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageData);
 	}
 
 }
