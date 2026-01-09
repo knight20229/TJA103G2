@@ -20,7 +20,7 @@ public class CaptchaController {
     @GetMapping("/captcha")
     public void captcha(HttpServletResponse response, HttpSession session) throws IOException {
         // 1. 生成隨機字串
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789";
         StringBuilder code = new StringBuilder();
         for (int i = 0; i < 6; i++) {
             code.append(chars.charAt((int) (Math.random() * chars.length())));
@@ -46,7 +46,7 @@ public class CaptchaController {
 
         // 干擾線
         g.setColor(Color.GRAY);
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             int x1 = (int) (Math.random() * width);
             int y1 = (int) (Math.random() * height);
             int x2 = (int) (Math.random() * width);

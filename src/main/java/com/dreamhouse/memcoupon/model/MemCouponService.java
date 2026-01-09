@@ -1,7 +1,9 @@
 package com.dreamhouse.memcoupon.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,4 +69,30 @@ public class MemCouponService {
 	public List<MemCouponVO> getAll(){
 		return memCoupRepo.findAll();
 	}
+	
+    // 查詢會員所有優惠券
+    public List<MemCouponVO> findByMember(MemVO member) {
+        return memCoupRepo.findByMemVO(member);
+    }
+
+    // 查詢可使用的券（未使用 + 未過期）
+    public List<MemCouponVO> findAvailableCoupons(MemVO member) {
+        return memCoupRepo.findByMemVO(member).stream()
+                .filter(mc -> mc.getUseStatus() == MemCouponVO.STATUS_UNUSED)
+                .filter(mc -> mc.getCouponVO().getEndDt().isAfter(LocalDate.now()))
+                .collect(Collectors.toList());
+        
+    }
+    
+
+    // 查詢已使用或已過期的券（同一區塊顯示）
+    public List<MemCouponVO> findUsedOrExpiredCoupons(MemVO member) {
+        return memCoupRepo.findByMemVO(member).stream()
+                .filter(mc -> mc.getUseStatus() == MemCouponVO.STATUS_USED
+                           || mc.getUseStatus() == MemCouponVO.STATUS_EXPIRED
+                           || mc.getCouponVO().getEndDt().isBefore(LocalDate.now()))
+                .collect(Collectors.toList());
+        
+    }
+
 }

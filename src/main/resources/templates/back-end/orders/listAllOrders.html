@@ -104,6 +104,21 @@
 
 		<div class="container-fluid">
 
+			<!-- ================= 訊息提示區域 ================= -->
+			<div th:if="${successMessage}"
+				class="alert alert-success alert-dismissible fade show" role="alert">
+				<i class="bi bi-check-circle-fill"></i> <span
+					th:text="${successMessage}"></span>
+				<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+			</div>
+
+			<div th:if="${errorMessage}"
+				class="alert alert-danger alert-dismissible fade show" role="alert">
+				<i class="bi bi-exclamation-circle-fill"></i> <span
+					th:text="${errorMessage}"></span>
+				<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+			</div>
+
 			<!-- ================= 訂單表格 ================= -->
 			<table class="table table-hover align-middle">
 				<thead class="order-thead text-center">
@@ -149,10 +164,9 @@
 
 							<!-- 操作 -->
 							<td>
-								<button type="button"
-										class="btn btn-sm btn-primary"
-										data-bs-toggle="collapse"
-										th:data-bs-target="'#orderDetail-' + ${orderData.order.orderId}">
+								<button type="button" class="btn btn-sm btn-primary"
+									data-bs-toggle="collapse"
+									th:data-bs-target="'#orderDetail-' + ${orderData.order.orderId}">
 									<i class="bi bi-eye"></i> 查看
 								</button>
 							</td>
@@ -162,15 +176,15 @@
 						<!-- 展開區域：訂單明細（伺服器端渲染，初始隱藏） -->
 						<tr class="collapse-row">
 							<td colspan="12" class="p-0">
-								<div th:id="'orderDetail-' + ${orderData.order.orderId}" class="collapse">
+								<div th:id="'orderDetail-' + ${orderData.order.orderId}"
+									class="collapse">
 									<div class="p-3 bg-light">
 										<!-- 判斷是否有明細 -->
-										<div th:if="${#lists.isEmpty(orderData.details)}" class="text-center text-muted py-3">
-											此訂單無商品明細資料
-										</div>
+										<div th:if="${#lists.isEmpty(orderData.details)}"
+											class="text-center text-muted py-3">此訂單無商品明細資料</div>
 										<!-- 訂單明細表格 -->
 										<table th:unless="${#lists.isEmpty(orderData.details)}"
-											   class="table table-sm table-bordered mb-0 align-middle">
+											class="table table-sm table-bordered mb-0 align-middle">
 											<thead class="table-light text-center">
 												<tr>
 													<th style="width: 100px;">商品圖片</th>
@@ -186,51 +200,101 @@
 												<!-- Thymeleaf 迴圈：訂單明細 -->
 												<tr th:each="detail : ${orderData.details}">
 													<!-- 商品圖片 -->
-													<td class="text-center">
-														<img th:if="${detail.productImageBase64 != null and detail.isCustom == false}"
-															 th:src="${detail.productImageBase64}"
-															 alt="商品圖片"
-															 style="width: 80px; height: 80px; object-fit: cover;"
-															 onerror="this.src='/images/no-image.png';">
-														<i th:if="${detail.isCustom == true}"
-														   class="bi bi-palette fs-1 text-info"></i>
-														<img th:if="${detail.productImageBase64 == null and detail.isCustom == false}"
-															 src="/images/no-image.png"
-															 alt="無圖片"
-															 style="width: 80px; height: 80px; object-fit: cover;">
+													<td class="text-center"><img
+														th:if="${detail.productImageBase64 != null and detail.isCustom == false}"
+														th:src="${detail.productImageBase64}" alt="商品圖片"
+														style="width: 80px; height: 80px; object-fit: cover;"
+														onerror="this.src='/images/no-image.png';"> <i
+														th:if="${detail.isCustom == true}"
+														class="bi bi-palette fs-1 text-info"></i> <img
+														th:if="${detail.productImageBase64 == null and detail.isCustom == false}"
+														src="/images/no-image.png" alt="無圖片"
+														style="width: 80px; height: 80px; object-fit: cover;">
 													</td>
 
 													<!-- 商品名稱 -->
 													<td th:text="${detail.productName}"></td>
 
 													<!-- 尺寸 -->
-													<td class="text-center">
-														<span th:if="${detail.width != null and detail.length != null}"
-															  th:text="${detail.width + ' x ' + detail.length + ' cm'}"></span>
-														<span th:if="${detail.width == null or detail.length == null}">-</span>
+													<td class="text-center"><span
+														th:if="${detail.width != null and detail.length != null}"
+														th:text="${detail.width + ' x ' + detail.length + ' cm'}"></span>
+														<span
+														th:if="${detail.width == null or detail.length == null}">-</span>
 													</td>
 
 													<!-- 數量 -->
 													<td class="text-center" th:text="${detail.quantity}"></td>
 
 													<!-- 單價 -->
-													<td class="text-end">
-														<span th:text="'$' + ${#numbers.formatDecimal(detail.price, 1, 2)}"></span>
+													<td class="text-end"><span
+														th:text="'$' + ${#numbers.formatDecimal(detail.price, 1, 2)}"></span>
 													</td>
 
 													<!-- 小計 -->
-													<td class="text-end fw-bold">
-														<span th:text="'$' + ${#numbers.formatDecimal(detail.price * detail.quantity, 1, 2)}"></span>
+													<td class="text-end fw-bold"><span
+														th:text="'$' + ${#numbers.formatDecimal(detail.price * detail.quantity, 1, 2)}"></span>
 													</td>
 
 													<!-- 類型 -->
-													<td class="text-center">
-														<span th:if="${detail.isCustom == false}" class="badge bg-primary">一般商品</span>
-														<span th:if="${detail.isCustom == true}" class="badge bg-success">客製化</span>
-													</td>
+													<td class="text-center"><span
+														th:if="${detail.isCustom == false}"
+														class="badge bg-primary">一般商品</span> <span
+														th:if="${detail.isCustom == true}"
+														class="badge bg-success">客製化</span></td>
 												</tr>
 											</tbody>
 										</table>
+
+										<!-- ================= 出貨確認按鈕區域 ================= -->
+										<div th:if="${orderData.order.orderStatus == '待出貨'}"
+											class="d-flex justify-content-end mt-3">
+											<button type="button" class="btn btn-success"
+												data-bs-toggle="modal"
+												th:data-bs-target="'#shipConfirmModal-' + ${orderData.order.orderId}">
+												<i class="bi bi-truck"></i> 確認出貨
+											</button>
+										</div>
+
+										<!-- ================= 出貨確認 Modal ================= -->
+										<div th:if="${orderData.order.orderStatus == '待出貨'}"
+											class="modal fade"
+											th:id="'shipConfirmModal-' + ${orderData.order.orderId}"
+											tabindex="-1" aria-labelledby="shipConfirmModalLabel"
+											aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="shipConfirmModalLabel">
+															<i class="bi bi-exclamation-triangle-fill text-warning"></i>
+															出貨確認
+														</h5>
+														<button type="button" class="btn-close"
+															data-bs-dismiss="modal" aria-label="Close"></button>
+													</div>
+													<div class="modal-body">
+														<p class="mb-2">
+															確定要將訂單編號 <strong th:text="${orderData.order.orderId}"></strong>
+															的狀態更改為「已出貨」嗎？
+														</p>
+														<small class="text-muted">此操作將無法復原</small>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary"
+															data-bs-dismiss="modal">取消</button>
+														<!-- 表單提交 -->
+														<form th:action="@{/orders/confirmShipment}" method="post"
+															class="d-inline">
+															<input type="hidden" name="orderId"
+																th:value="${orderData.order.orderId}" />
+															<button type="submit" class="btn btn-success">
+																<i class="bi bi-check-circle"></i> 確認出貨
+															</button>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</td>

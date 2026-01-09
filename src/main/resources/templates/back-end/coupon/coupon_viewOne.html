@@ -108,8 +108,8 @@
             <div class="col-md-6">
                 <label for="inputType" class="form-label">折扣方式</label>
                 <select id="inputType" class="form-select" th:value="${couponVO.type}" disabled>
-                    <option value="固定金額" th:selected="${couponVO.type} == '固定金額'">固定金額</option>
-                    <option value="百分比" th:selected="${couponVO.type} == '百分比'">百分比</option>
+                    <option value="AMOUNT" th:selected="${couponVO.type} == 'AMOUNT'">固定金額</option>
+                    <option value="PERCENT" th:selected="${couponVO.type} == 'PERCENT'">百分比</option>
                 </select>
             </div>
             <div class="col-md-6">

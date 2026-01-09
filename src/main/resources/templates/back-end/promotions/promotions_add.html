@@ -105,8 +105,8 @@
             <div class="col-md-6">
                 <label for="inputType" class="form-label">折扣方式</label>
                 <select id="inputType" class="form-select" th:field="*{type}">
-                    <option value="固定金額">固定金額</option>
-                    <option value="百分比">百分比</option>
+                    <option value="AMOUNT">固定金額</option>
+                    <option value="PERCENT">百分比</option>
                 </select>
                 <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="text-danger"></span>
             </div>

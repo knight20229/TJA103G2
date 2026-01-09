@@ -9,6 +9,7 @@ import java.util.Set;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.dreamhouse.memcoupon.model.MemCouponVO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -155,6 +156,7 @@ public class MemVO implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "memVO")
+	@JsonIgnore
 	public Set<MemCouponVO> getMemCoup() {
 		return memCoup;
 	}
@@ -162,7 +164,5 @@ public class MemVO implements Serializable {
 	public void setMemCoup(Set<MemCouponVO> memCoup) {
 		this.memCoup = memCoup;
 	}
-    
-    
     
 }

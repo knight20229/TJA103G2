@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.dreamhouse.coupon.model.CouponService;
 import com.dreamhouse.mem.model.MemService;
+import com.dreamhouse.orders.model.OrdersService;
 import com.dreamhouse.prod.model.ProdService;
-
+import com.dreamhouse.promotions.model.PromotionsService;
 
 import java.util.*;
 
@@ -25,6 +27,13 @@ public class IndexController_inSpringBoot {
 	MemService memSvc;
 	@Autowired
 	ProdService prodSvc;
+	@Autowired
+	OrdersService ordersSvc;
+	
+	@Autowired
+	CouponService coupSer;
+	@Autowired
+	PromotionsService proSer;
 	
 	
     @GetMapping("/back-end")
@@ -33,11 +42,14 @@ public class IndexController_inSpringBoot {
     	model.addAttribute("prodCount", prodSvc.getAll().size());
     	
     	// 尚未開發的部分，先給固定數值或 0
-        model.addAttribute("orderCount", 0);
-        model.addAttribute("actCount", 0);
+        model.addAttribute("orderCount", ordersSvc.getAll().size());
+        model.addAttribute("returnCount", 0);
+
+        model.addAttribute("CouponCount", coupSer.getAll().size());
+        model.addAttribute("PromotionCount", proSer.getAll().size());
+
         model.addAttribute("unreadCount", 0);
         
     	return "back-end/index"; 
     }
 }
-

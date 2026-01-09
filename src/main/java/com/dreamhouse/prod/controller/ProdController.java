@@ -1,10 +1,8 @@
 package com.dreamhouse.prod.controller;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.dreamhouse.prod.model.*;
 import com.dreamhouse.feat.model.*;
 import com.dreamhouse.size.model.*;
@@ -38,12 +35,26 @@ public class ProdController {
 	protected List<ProdVO> referenceListData() {
 		return prodSvc.getAll();
 	}
+	
 
 	// --- 商品清單頁面 ---
 	@GetMapping("listAllProd")
 	public String listAllProd(ModelMap model) {
 		return "back-end/prod/product_listAll";
 	}
+	// --- 前台商品清單頁面(測試) ---
+	@GetMapping("listAllProduct")
+	public String listAllProduct(ModelMap model) {
+		return "front-end/product_front_listAll";
+	}
+	// --- 前台商品清單頁面(測試) ---
+	@GetMapping("getOne_For_Display_front") 
+	public String getOneForDisplayFront(@RequestParam("productId") Integer productId, ModelMap model) {
+	    ProdVO prodVO = prodSvc.getOneProd(productId);
+	    model.addAttribute("prodVO", prodVO);
+	    return "front-end/product_front_listOne";
+	}
+	
 
 	@GetMapping("getOne_For_Display")
 	public String getOneForDisplay(@RequestParam("productId") Integer productId, ModelMap model) {
@@ -96,9 +107,12 @@ public class ProdController {
 	            result.rejectValue("offDate", "error.prodVO", "下架日期必須晚於上架日期！");
 	        }
 	    }
+	    // 2. 商品名稱重複驗證
+	    if (prodSvc.isProductNameDuplicate(prodVO.getProductName())) {
+	        result.rejectValue("productName", "error.productName", "商品名稱已經存在。");
+	    }
 		
-		
-		// 上稿器空白時不會跳出訊息，有空標籤：<p><br></p>
+		// 3. 上稿器空白時不會跳出訊息，有空標籤：<p><br></p>
 	    if (prodVO.getDescription() != null) {
 	        String desc = prodVO.getDescription();
 
@@ -272,7 +286,14 @@ public class ProdController {
 	            result.rejectValue("offDate", "error.prodVO", "下架日期必須晚於上架日期！");
 	        }
 	    }
-	    // 上稿器空白時不會跳出訊息，有空標籤：<p><br></p>
+	    // 2. 商品名稱重複驗證，排除本身ID
+	    if (prodVO.getProductName() != null && !prodVO.getProductName().isBlank()) {
+	        if (prodSvc.isProductNameDuplicateForUpdate(prodVO.getProductName(), prodVO.getProductId())) {
+	            result.rejectValue("productName", "error.productName", "此商品名稱已被其他商品使用。");
+	        }
+	    }
+	    
+	    // 3. 上稿器空白時不會跳出訊息，有空標籤：<p><br></p>
 	    if (prodVO.getDescription() != null) {
 	        String desc = prodVO.getDescription();
 

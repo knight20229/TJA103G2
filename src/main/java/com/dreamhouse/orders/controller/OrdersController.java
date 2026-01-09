@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dreamhouse.orderproductsize.model.OrderProductSizeService;
 import com.dreamhouse.orderproductsize.model.OrderProductSizeVO;
@@ -34,7 +35,7 @@ public class OrdersController {
 
 	@Autowired
 	OrderProductSizeService orderProductSizeSvc;
-
+	
 	// 訂單列表頁面（含訂單明細）
 	@GetMapping("/list")
 	public String listAllOrders(ModelMap model) {
@@ -99,7 +100,10 @@ public class OrdersController {
 		model.addAttribute("orderListWithDetails", orderListWithDetails);
 		return "back-end/orders/listAllOrders";
 	}
-
+	
+	// =========================
+	// 後台：新增訂單頁
+	// =========================
 	@GetMapping("addOrders")
 	public String addOrdersPage(ModelMap model) {
 		OrdersVO ordersVO = new OrdersVO();
@@ -107,6 +111,9 @@ public class OrdersController {
 		return "back-end/orders/addOrders";
 	}
 
+	// =========================
+	// 後台：新增訂單
+	// =========================
 	@PostMapping("insert")
 	public String insert(@Valid OrdersVO ordersVO, BindingResult result, ModelMap model) throws IOException {
 		if (result.hasErrors()) {
@@ -119,24 +126,43 @@ public class OrdersController {
 		return "redirect:/orders/listAllOrder"; // 新增成功後重導至IndexController_inSpringBoot.java
 	}
 	
+	
+	// =========================
+	// 後台：取得單筆（修改用）
+	// =========================
 	@PostMapping("getOne_For_Update")
 	public String getOne_For_Update(@RequestParam("ordersId") String ordersId, Model model) {
 		OrdersVO ordersVO = ordersSvc.getByOrderID(Integer.valueOf(ordersId));
 		model.addAttribute("OrdersVO", ordersVO);
 		return "back-end/orders/update_order_input";
 	}
-	
-	@PostMapping("update")
-	public String update(@Valid OrdersVO ordersVO,BindingResult result, ModelMap model) throws IOException{
-		if (result.hasErrors()) {
-			return "back-end/orders/update_order_input";
-		}
-		ordersSvc.updateOrder(ordersVO);
 
-		model.addAttribute("success", "- (修改成功)");
-		ordersVO = ordersSvc.getByOrderID(Integer.valueOf(ordersVO.getOrderId()));
-		model.addAttribute("ordersVO", ordersVO);
-		return "back-end/orders/listOneOrder";
+	/**
+	 * 處理訂單出貨確認
+	 * @param orderId 訂單ID
+	 * @param redirectAttributes 用於傳遞重定向後的訊息
+	 * @return 重定向到訂單列表頁
+	 */
+	@PostMapping("/confirmShipment")
+	public String confirmShipment(@RequestParam("orderId") Integer orderId,
+	                              RedirectAttributes redirectAttributes) {
+		try {
+			boolean success = ordersSvc.confirmShipment(orderId);
+
+			if (success) {
+				redirectAttributes.addFlashAttribute("successMessage",
+					"訂單 #" + orderId + " 已成功確認出貨！");
+			} else {
+				redirectAttributes.addFlashAttribute("errorMessage",
+					"訂單 #" + orderId + " 出貨確認失敗，請確認訂單狀態是否為「待出貨」。");
+			}
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("errorMessage",
+				"系統錯誤，請稍後再試。");
+			e.printStackTrace();
+		}
+
+		return "redirect:/orders/list";
 	}
 
 	/**

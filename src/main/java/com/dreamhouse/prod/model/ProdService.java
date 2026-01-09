@@ -15,35 +15,43 @@ import jakarta.servlet.ServletContext;
 public class ProdService {
 
     @Autowired
-    private ProdRepository repository;
+    private ProdRepository prodRepository;
 
     @Transactional
     public ProdVO addProd(ProdVO prodVO) {
-        return repository.save(prodVO);
+        return prodRepository.save(prodVO);
     }
 
     @Transactional
     public void updateProd(ProdVO prodVO) {
-        repository.save(prodVO);
+        prodRepository.save(prodVO);
     }
 
     public void deleteProd(Integer productId) {
-        if (repository.existsById(productId)) {
-            repository.deleteById(productId);
+        if (prodRepository.existsById(productId)) {
+            prodRepository.deleteById(productId);
         }
     }
 
     public ProdVO getOneProd(Integer productId) {
-        Optional<ProdVO> optional = repository.findById(productId);
+        Optional<ProdVO> optional = prodRepository.findById(productId);
         return optional.orElse(null); 
     }
 
     public List<ProdVO> getAll() {
-        return repository.findAll();
+        return prodRepository.findAll();
     }
     
     public List<String> getAllExistingMaterials() {
-        return repository.findDistinctMaterials();
+        return prodRepository.findDistinctMaterials();
+    }
+    // 新增商品時，已存在的名稱
+    public boolean isProductNameDuplicate(String name) {
+        return prodRepository.existsByProductName(name);
+    }
+    // 編輯商品時，排除本身的已存在名稱
+    public boolean isProductNameDuplicateForUpdate(String name, Integer productId) {
+        return prodRepository.existsByProductNameAndProductIdNot(name, productId);
     }
     
     // 每分鐘執行一次：0秒 開始，每分鐘執行
@@ -54,8 +62,8 @@ public class ProdService {
     @Scheduled(cron = "0 * * * * *")
     @Transactional
     public void autoUpdateProductStatus() {
-        int activatedCount = repository.updateStatusToActive();
-        int deactivatedCount = repository.updateStatusToInactive();
+        int activatedCount = prodRepository.updateStatusToActive();
+        int deactivatedCount = prodRepository.updateStatusToInactive();
 
         if (activatedCount > 0 || deactivatedCount > 0) {
             String timeStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
