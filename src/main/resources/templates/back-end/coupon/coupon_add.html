@@ -168,10 +168,8 @@
 				</div>
 			</div>
 			<div>
-				<span>員工編號</span> <input type="text" th:field="*{empVO.employeeId}"
-					class="form-control" id="inputEmployeeId"> <span
-					th:if="${#fields.hasErrors('empVO.employeeId')}"
-					th:errors="*{empVO.employeeId}" class="text-danger"></span>
+				<span>員工編號</span> <input type="text" th:value="${session.employeeId}"
+					class="form-control" id="inputEmployeeId" readonly> 
 			</div>
 
 
