@@ -761,7 +761,22 @@ function updateButtons() {
     =            nice select activation            =
     =============================================*/
     
-    $('.nice-select').niceSelect();
+	$(window).on('load', function () {
+
+	    // 確保 select 已由 Thymeleaf 完整 render
+	    const $selects = $('select.nice-select');
+
+	    if ($selects.length > 0) {
+
+	        // 若已初始化過，先銷毀
+	        if ($selects.next('.nice-select').length > 0) {
+	            $selects.niceSelect('destroy');
+	        }
+
+	        // 重新初始化
+	        $selects.niceSelect();
+	    }
+	});
     
     /*=====  End of nice select activation  ======*/
 
@@ -841,65 +856,6 @@ function updateButtons() {
     
     /*=====  End of shipping form active  ======*/
     /*=============================================
-=            product sort by price            =
-=============================================*/
-
-$("#sort-by").on("change", function () {
-
-    var sortValue = $(this).val();
-    var $productContainer = $(".shop-product-wrap");
-    var $products = $productContainer.children(".col-lg-4, .col-md-6, .col-sm-6, .col-12");
-    
-    // 第一次啟動排序時，保存原始商品順序
-    if (!$productContainer.data("original-order")) {
-        var originalOrder = $products.toArray();
-        $productContainer.data("original-order", originalOrder);
-    }
-
-    // 取得商品價格
-    function getPrice($product) {
-        var discounted = $product.find(".discounted-price").first();
-        var main = $product.find(".main-price").first();
-
-        if (discounted.length) {
-            return parseFloat(discounted.text().replace("$", ""));
-        } else if (main.length) {
-            return parseFloat(main.text().replace("$", ""));
-        }
-        return 0;
-    }
-
-    // 排序 : 預設排序
-    if (sortValue === "0") {
-    var originalOrder = $productContainer.data("original-order");
-    $.each(originalOrder, function (_, product) {
-        $productContainer.append(product);
-    });
-    return;
-    }
-
-    // 排序：價格低到高
-    if (sortValue === "1") {
-        $products.sort(function (a, b) {
-            return getPrice($(a)) - getPrice($(b));
-        });
-    }
-
-    // 排序：價格高到低
-    if (sortValue === "2") {
-        $products.sort(function (a, b) {
-            return getPrice($(b)) - getPrice($(a));
-        });
-    }
-
-    // 排序後重新放入
-    $.each($products, function (_, product) {
-        $productContainer.append(product);
-    });
-
-    });
-
-    /*=====  End of product sort by price  ======*/
 
     
 /*=============================================

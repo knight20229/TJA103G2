@@ -2,10 +2,12 @@ package com.dreamhouse.prod.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.dreamhouse.prod.dto.FrontProd;
 import com.dreamhouse.prod.model.FrontProdService;
 
 @Controller
@@ -16,27 +18,26 @@ public class FrontProdController {
 
     // 首頁，顯示全部商品
     @GetMapping("/")
-    public String home(ModelMap model) {
-        model.addAttribute(
-            "products",
-            frontProdService.getAllProd(null, null)
-        );
+    public String home(Model model) {
+        model.addAttribute("products", frontProdService.getAllProd());
         return "front-end/index"; 
-        
     }
-
-    // 價格篩選
-    @GetMapping("/price")
-    public String price(
-            @RequestParam(required=false) Integer minPrice,
-            @RequestParam(required=false) Integer maxPrice,
-            ModelMap model) {
-
-        model.addAttribute(
-            "products",
-            frontProdService.getAllProd(minPrice, maxPrice)
-        );
-
-        return "front-end/index"; 
+    
+    // 首頁，搜尋商品
+    @GetMapping("/search")
+    public String searchProds(@RequestParam("product") String prodName, Model model) {
+        model.addAttribute("products", frontProdService.searchProd(prodName));
+        return "front-end/index";
+    }
+    
+    //商品頁面
+    @GetMapping("/product/{id}")
+    public String oneProd(@PathVariable("id")Integer productId, Model model) {
+    	FrontProd product = frontProdService.getOneProdWithSizes(productId);
+    	if(product == null) {
+    		return "front-end/index";
+    	}
+    	model.addAttribute("product", product);
+    	return "front-end/prod/prod";
     }
 }
