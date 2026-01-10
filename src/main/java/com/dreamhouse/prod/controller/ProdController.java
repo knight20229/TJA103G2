@@ -51,9 +51,18 @@ public class ProdController {
 	@GetMapping("getOne_For_Display_front") 
 	public String getOneForDisplayFront(@RequestParam("productId") Integer productId, ModelMap model) {
 	    ProdVO prodVO = prodSvc.getOneProd(productId);
+	    
+	    List<ProdSizeConnectVO> currentConfigs = prodSizeConnectSvc.findByProductId(productId);
+	    Map<Integer, ProdSizeConnectVO> configMap = currentConfigs.stream()
+	            .collect(java.util.stream.Collectors.toMap(
+	                c -> c.getSizeVO().getSizeId(), 
+	                c -> c, 
+	                (existing, replacement) -> existing));
+	    
 	    model.addAttribute("prodVO", prodVO);
+	    model.addAttribute("configMap", configMap);
 	    return "front-end/product_front_listOne";
-	}
+	}	
 	
 
 	@GetMapping("getOne_For_Display")

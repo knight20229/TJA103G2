@@ -84,6 +84,20 @@
 							</th:block>
 						</div>
 					</div>
+					<!-- 測試用商品庫存價格 -->
+					<div class="row">
+						<th:block th:each="entry : ${configMap}">
+							<th:block th:if="${entry.key == 1 or entry.key == 10}">
+								<div class="col-6 border p-3">
+									<p>
+										<strong>尺寸 ID: <span th:text="${entry.key}"></span></strong><br>
+										商品價格: <span th:text="${entry.value.price}"></span><br>
+										剩餘庫存: <span th:text="${entry.value.stock}"></span>
+									</p>
+								</div>
+							</th:block>
+						</th:block>
+					</div>
 					<a th:href="@{/prod/listAllProduct}"
 						class="btn btn-outline-secondary px-4 fw-bold"> <i
 						class="bi bi-arrow-left me-1"></i>返回列表
