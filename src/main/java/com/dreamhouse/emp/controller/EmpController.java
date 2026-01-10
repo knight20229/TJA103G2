@@ -53,7 +53,7 @@ public class EmpController {
 			return "redirect:" + location;
 		}
 
-		return "redirect:/bacl-end";
+		return "redirect:/back-end";
 	}
 
 	// 處理登出

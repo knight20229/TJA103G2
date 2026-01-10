@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.dreamhouse.prod.model.*;
 import com.dreamhouse.feat.model.*;
 import com.dreamhouse.size.model.*;
+import com.dreamhouse.prod.model.ProdSizeConnectVO;
+import com.dreamhouse.prod.model.ProdVO;
 
 @Controller
 @RequestMapping("/prod")
@@ -50,7 +52,33 @@ public class ProdController {
 	// --- 前台商品清單頁面(測試) ---
 	@GetMapping("getOne_For_Display_front") 
 	public String getOneForDisplayFront(@RequestParam("productId") Integer productId, ModelMap model) {
-	    ProdVO prodVO = prodSvc.getOneProd(productId);
+		
+		// 有尺寸下拉選單版，但因為取得尺寸清單所以取不到所選擇的尺寸及相對應的價錢
+//		ProdVO prodVO = prodSvc.getOneProd(productId);
+//
+//		List<ProdSizeConnectVO> configs = prodSizeConnectSvc.findByProductId(productId);
+//
+//		Map<Integer, ProdSizeConnectVO> configMap = configs.stream()
+//				.collect(Collectors.toMap(c -> c.getSizeVO().getSizeId(), // 取得關聯的尺寸ID
+//						c -> c // 放進 Value
+//				));
+//
+//		List<SizeVO> allSizes = sizeSvc.getAll();
+//
+//		List<Integer> distinctWidths = allSizes.stream().map(s -> s.getWidth()) // 取得 SizeVO 裡的寬度
+//				.distinct().sorted().collect(Collectors.toList());
+//
+//		if (distinctWidths.isEmpty()) {
+//			distinctWidths = allSizes.stream().map(SizeVO::getWidth).distinct().sorted().collect(Collectors.toList());
+//		}
+//
+//		model.addAttribute("prodVO", prodVO);
+//		model.addAttribute("configMap", configMap);
+//		model.addAttribute("allSizes", allSizes);
+//		model.addAttribute("distinctWidths", distinctWidths);
+		
+		// 尺寸固定但有價錢版
+		ProdVO prodVO = prodSvc.getOneProd(productId);
 	    
 	    List<ProdSizeConnectVO> currentConfigs = prodSizeConnectSvc.findByProductId(productId);
 	    Map<Integer, ProdSizeConnectVO> configMap = currentConfigs.stream()
@@ -61,7 +89,7 @@ public class ProdController {
 	    
 	    model.addAttribute("prodVO", prodVO);
 	    model.addAttribute("configMap", configMap);
-	    return "front-end/product_front_listOne";
+	    return "front-end/product_front_viewOne";
 	}	
 	
 
