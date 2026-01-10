@@ -44,7 +44,7 @@
 						</span>
 					</a></li>
 
-					<li><a href="cart.html"
+					<li><a th:href="@{/cart/getCart(memberId=${session.memberId})}"
 						class="btn btn-lg btn-outline-success d-flex flex-column align-items-center p-4"
 						style="min-width: 140px;"> <i
 							class="fa-solid fa-cart-shopping fs-1 mb-2"></i> <span>購物車測試</span>
