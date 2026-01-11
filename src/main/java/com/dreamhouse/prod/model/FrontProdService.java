@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dreamhouse.prod.dto.FrontProd;
+import com.dreamhouse.prod.dto.FrontProdSize;
 
 @Service
 public class FrontProdService {
@@ -43,12 +44,17 @@ public class FrontProdService {
         FrontProd dto = FrontDTO(prod);
 
         // 再取得尺寸列表
-        List<String> sizes = prod.getProdSizeConnects().stream()
+        List<FrontProdSize> sizes = prod.getProdSizeConnects().stream()
                 .filter(connect -> connect.getSizeVO() != null
                                    && connect.getSizeVO().getWidth() != null
                                    && connect.getSizeVO().getLength() != null)
-                .map(connect -> connect.getSizeVO().getWidth() + "x" + connect.getSizeVO().getLength() + " 公分")
-                .toList();
+                .map(connect -> {
+                	FrontProdSize size = new FrontProdSize();
+                	size.setSizeText("長:" + connect.getSizeVO().getWidth() + "公分" + " \t " + "寬:" + connect.getSizeVO().getLength() + " 公分 ");
+                	size.setPrice(connect.getPrice());
+                	size.setStock(connect.getStock());
+                	return size;
+                }).toList();
 
         dto.setSizes(sizes);
 
@@ -104,3 +110,4 @@ public class FrontProdService {
         return dto;
     }
 }
+

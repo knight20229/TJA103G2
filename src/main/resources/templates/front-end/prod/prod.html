@@ -2,266 +2,275 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>夢享家 DreamHouse</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Favicon -->
-    <link th:href="@{/images/dreamhouseb.ico}" rel="icon">
-    <!-- Font Awesome 6 CDN -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-    <!-- Vendor CSS -->
-    <link rel="stylesheet" th:href="@{/css/prod/vendors.css}">
-    <!-- Main CSS -->
-    <link rel="stylesheet" th:href="@{/css/prod/style.css}">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>夢享家 DreamHouse</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Favicon -->
+<link th:href="@{/images/dreamhouseb.ico}" rel="icon">
+<!-- Font Awesome 6 CDN -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+	rel="stylesheet">
+<!-- Vendor CSS -->
+<link rel="stylesheet" th:href="@{/css/prod/vendors.css}">
+<!-- Main CSS -->
+<link rel="stylesheet" th:href="@{/css/prod/style.css}">
 
 
 </head>
 
 <body>
 
-    <!--====================  header area ====================-->
+	<div
+		class="header-area header-area--default header-area--default--white header-sticky">
 
-    <div class="header-area header-area--default header-area--default--white header-sticky">
+		<div
+			class="header-navigation-area header-navigation-area--white header-navigation-area--extra-space d-none d-lg-block">
+			<div class="container wide">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="header-info-wrapper header-info-wrapper--alt-style">
 
-        <div class="header-navigation-area header-navigation-area--white header-navigation-area--extra-space d-none d-lg-block">
-            <div class="container wide">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="header-info-wrapper header-info-wrapper--alt-style">
+							<div class="header-logo">
+								<a href="首頁.html"> <img th:src="@{/images/headlogo.png}"
+									class="img-fluid" alt="">
+								</a>
+							</div>
 
-                            <div class="header-logo">
-                                <a href="首頁.html">
-                                    <img th:src="@{/images/headlogo.png}" class="img-fluid" alt="">
-                                </a>
-                            </div>
+							<div class="header-navigation-wrapper">
+								<nav>
+									<ul>
 
-                            <div class="header-navigation-wrapper">
-                                <nav>
-                                    <ul>
+										<li class="has-children"><a href="首頁.html">商品瀏覽</a></li>
+										<li class="has-children"><a href="商品比較.html">商品比較</a></li>
+										<li class="has-children"><a href="客製化商品.html">客製化商品</a></li>
+										<li class="has-children"><a href="關於我們.html">關於我們</a></li>
+									</ul>
+								</nav>
+							</div>
 
-                                        <li class="has-children">
-                                            <a href="首頁.html">商品瀏覽</a>
-                                        </li>
-                                        <li class="has-children">
-                                            <a href="商品比較.html">商品比較</a>
-                                        </li>    
-                                        <li class="has-children">
-                                            <a href="客製化商品.html">客製化商品</a>
-                                        </li>                                       
-                                        <li class="has-children">
-                                            <a href="關於我們.html">關於我們</a>
-                                        </li>                                     
-                                    </ul>
-                                </nav>
-                            </div>
-                            
-<!--                             <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
+							<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-<!--                             <div class="container-fluid"> -->
-<!--                                 <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
-<!--                                 <form id="searchForm"  class="d-flex" th:action="@{/search}" method="get"> -->
-<!--                                     <input id="searchInput" class="form-control me-2" type="search" name ="product" placeholder="搜尋商品" aria-label="Search"> -->
-<!--                                     <button id="searchBtn" type="button" class="btn btn-outline-success">Search</button> -->
-<!--                                 </form> -->
-<!--                                 </div> -->
-<!--                             </div> -->
-<!--                             </nav> -->
+								<div class="container-fluid">
+									<div class="collapse navbar-collapse"
+										id="navbarSupportedContent">
+										<form id="searchForm" class="d-flex" th:action="@{/search}"
+											method="get">
+											<input id="searchInput" class="form-control me-2"
+												type="search" name="product" placeholder="搜尋商品">
+											<button id="searchBtn" type="submit"
+												class="btn btn-outline-success">Search</button>
+										</form>
+									</div>
+								</div>
+							</nav>
 
-                            <div class="header-icon-area">
+							<div class="header-icon-area">
 
-                                <div class="header-icon d-flex align-items-center">
-                                    <ul class="header-icon__list">
-                                        <li><a href="javascript:void(0)" id="fa-solid fa-message"><i class="fa-solid fa-message" style="color: #B197FC;"></i></i></a></li>
-                                        <li><a href="javascript:void(0)" id="fa-solid fa-user"><i class="fa-solid fa-user" style="color: #B197FC;"></i></a></li>
-                                        <li><a href="javascript:void(0)" id="fa-solid fa-bell"><i class="fa-solid fa-bell" style="color: #B197FC"></i></a></li>
-                                        
-                                        <li>
-                                            <a href="cart.html"><i class="fa-solid fa-cart-shopping" style="color: #B197FC;"></i></span></a>
-                                            <div class="minicart-wrapper">
-                                                <p class="minicart-wrapper__title">購物車</p>
+								<div class="header-icon d-flex align-items-center">
+									<ul class="header-icon__list">
+										<li><a href="javascript:void(0)" id="fa-solid fa-message"><i
+												class="fa-solid fa-message" style="color: #B197FC;"></i></a></li>
+										<li><a href="javascript:void(0)" id="fa-solid fa-user"><i
+												class="fa-solid fa-user" style="color: #B197FC;"></i></a></li>
+										<li><a href="javascript:void(0)" id="fa-solid fa-bell"><i
+												class="fa-solid fa-bell" style="color: #B197FC"></i></a></li>
 
-                                                <div class="minicart-wrapper__items ps-scroll">
-                                                    <div class="minicart-wrapper__items__single">
-                                                        <a href="javascript:void(0)" class="close-icon"><i class="pe-7s-close"></i></a>
-                                                        <div class="image">
-                                                            <a href="商品瀏覽.html">
-                                                                <img src="assets/img/products/product-2-90x100.jpg" class="img-fluid" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <div class="content">
-                                                            <p class="product-title"><a href="商品瀏覽.html">Jane Lauren Rebel Sofa</a></p>
-                                                            <p class="product-calculation"><span class="count">1</span> x <span class="price">$900</span></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
+										<li><a href="cart.html"><i
+												class="fa-solid fa-cart-shopping" style="color: #B197FC;"></i></a>
+											<div class="minicart-wrapper">
+												<p class="minicart-wrapper__title">購物車</p>
 
-                                                <p class="minicart-wrapper__subtotal">總計:<span> </span></p>
+												<div class="minicart-wrapper__items ps-scroll">
+													<div class="minicart-wrapper__items__single">
+														<a href="javascript:void(0)" class="close-icon"><i
+															class="pe-7s-close"></i></a>
+														<div class="image">
+															<a href="商品瀏覽.html"> <img
+																src="assets/img/products/product-2-90x100.jpg"
+																class="img-fluid" alt="">
+															</a>
+														</div>
+														<div class="content">
+															<p class="product-title">
+																<a href="商品瀏覽.html">Jane Lauren Rebel Sofa</a>
+															</p>
+															<p class="product-calculation">
+																<span class="count">1</span> x <span class="price">$900</span>
+															</p>
+														</div>
+													</div>
+												</div>
 
-                                                <div class="minicart-wrapper__buttons">
-                                                    <a href="cart.html" class="theme-button theme-button--minicart-button">查看購物車</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+												<p class="minicart-wrapper__subtotal">
+													總計:<span> </span>
+												</p>
 
-        <!--=======  End of header navigation wrapper  =======-->
+												<div class="minicart-wrapper__buttons">
+													<a href="cart.html"
+														class="theme-button theme-button--minicart-button">查看購物車</a>
+												</div>
+											</div></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <!--=======  mobile navigation area  =======-->
+		<div class="header-mobile-navigation d-block d-lg-none">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-6 col-md-6">
+						<div class="header-logo">
+							<a href="index.html"> <img src="assets/img/logo.png"
+								class="img-fluid" alt="">
+							</a>
+						</div>
+					</div>
+					<div class="col-6 col-md-6">
+						<div class="mobile-navigation text-end">
+							<ul class="header-icon__list header-icon__list">
+								<li><a href="wishlist.html"><i class="fa fa-heart-o"></i><span
+										class="item-count">1</span></a></li>
+								<li><a href="cart.html"><i
+										class="fa fa-shopping-basket"></i><span class="item-count">3</span></a>
+								</li>
+								<li><a href="javascript:void(0)" class="mobile-menu-icon"
+									id="mobile-menu-trigger"><i class="fa fa-bars"></i></a></li>
+							</ul>
 
-        <div class="header-mobile-navigation d-block d-lg-none">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-6 col-md-6">
-                        <div class="header-logo">
-                            <a href="index.html">
-                                <img src="assets/img/logo.png" class="img-fluid" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-6">
-                        <div class="mobile-navigation text-end">
-                            <ul class="header-icon__list header-icon__list">
-                                <li>
-                                    <a href="wishlist.html"><i class="fa fa-heart-o"></i><span class="item-count">1</span></a>
-                                </li>
-                                <li>
-                                    <a href="cart.html"><i class="fa fa-shopping-basket"></i><span class="item-count">3</span></a>
-                                </li>
-                                <li><a href="javascript:void(0)" class="mobile-menu-icon" id="mobile-menu-trigger"><i class="fa fa-bars"></i></a></li>
-                            </ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+	</div>
 
-        <!--=======  End of mobile navigation area  =======-->
-    </div>
+	<div class="breadcrumb-area section-space--breadcrumb">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 offset-lg-3"></div>
+			</div>
+		</div>
+	</div>
 
-    <!--====================  End of header area  ====================-->
-    <!--====================  breadcrumb area ====================-->
+	<div class="page-content-wrapper">
 
-    <div class="breadcrumb-area section-space--breadcrumb">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 offset-lg-3">
-                    <!--=======  breadcrumb wrapper  =======-->
+		<div class="single-product-slider-details-area">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6">
 
-                    <!--=======  End of breadcrumb wrapper  =======-->
-                </div>
-            </div>
-        </div>
-    </div>
+						<div
+							class="product-details-slider-area product-details-slider-area--side-move">
 
-    <!--====================  End of breadcrumb area  ====================-->
+							<div class="row row-5">
+								<div class="col-md-9 order-1 order-md-2">
+									<div class="big-image-wrapper">
+										<div
+											class="product-details-big-image-slider-wrapper product-details-big-image-slider-wrapper--side-space theme-slick-slider"
+											data-slick-setting='{
+                        "slidesToShow": 1,
+                        "slidesToScroll": 1,
+                        "arrows": false,
+                        "autoplay": false,
+                        "autoplaySpeed": 5000,
+                        "fade": true,
+                        "speed": 500,
+                        "prevArrow": {"buttonClass": "slick-prev", "iconClass": "fa fa-angle-left" },
+                        "nextArrow": {"buttonClass": "slick-next", "iconClass": "fa fa-angle-right" }
+                    }'
+											data-slick-responsive='[
+                        {"breakpoint":1501, "settings": {"slidesToShow": 1, "arrows": false} },
+                        {"breakpoint":1199, "settings": {"slidesToShow": 1, "arrows": false} },
+                        {"breakpoint":991, "settings": {"slidesToShow": 1, "arrows": false, "slidesToScroll": 1} },
+                        {"breakpoint":767, "settings": {"slidesToShow": 1, "arrows": false, "slidesToScroll": 1} },
+                        {"breakpoint":575, "settings": {"slidesToShow": 1, "arrows": false, "slidesToScroll": 1} },
+                        {"breakpoint":479, "settings": {"slidesToShow": 1, "arrows": false, "slidesToScroll": 1} }
+                    ]'>
+											<div class="single-image">
+												<img th:src="${product.imageBase64}" class="img-fluid"
+													alt="商品圖片">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 
-    <!--====================  page content wrapper ====================-->
+						</div>
 
-    <div class="page-content-wrapper">
-        <!--=======  single product slider details area  =======-->
+					</div>
+					<div class="col-lg-6">
 
-        <div class="single-product-slider-details-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <!--=======  product details slider area  =======-->
+						<div class="product-details-description-wrapper">
+							<h2 class="item-title" th:text="${product.productName}">商品名稱</h2>
 
-                        <div class="product-details-slider-area product-details-slider-area--side-move">
-                            
-                            <div class="row row-5">
-                                <div class="col-md-9 order-1 order-md-2">
-                                    <div class="big-image-wrapper">
-                                        <div class="product-details-big-image-slider-wrapper product-details-big-image-slider-wrapper--side-space theme-slick-slider" data-slick-setting='{
-                                            "slidesToShow": 1,
-                                            "slidesToScroll": 1,
-                                            "arrows": false,
-                                            "autoplay": false,
-                                            "autoplaySpeed": 5000,
-                                            "fade": true,
-                                            "speed": 500,
-                                            "prevArrow": {"buttonClass": "slick-prev", "iconClass": "fa fa-angle-left" },
-                                            "nextArrow": {"buttonClass": "slick-next", "iconClass": "fa fa-angle-right" }
-                                        }' data-slick-responsive='[
-                                            {"breakpoint":1501, "settings": {"slidesToShow": 1, "arrows": false} },
-                                            {"breakpoint":1199, "settings": {"slidesToShow": 1, "arrows": false} },
-                                            {"breakpoint":991, "settings": {"slidesToShow": 1, "arrows": false, "slidesToScroll": 1} },
-                                            {"breakpoint":767, "settings": {"slidesToShow": 1, "arrows": false, "slidesToScroll": 1} },
-                                            {"breakpoint":575, "settings": {"slidesToShow": 1, "arrows": false, "slidesToScroll": 1} },
-                                            {"breakpoint":479, "settings": {"slidesToShow": 1, "arrows": false, "slidesToScroll": 1} }
-                                        ]'>
-                                            <div class="single-image">
-                                            	<img th:src="${product.imageBase64}" class="img-fluid" alt="商品圖片">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+							<div class="特色群組">
+								<p class="產品特色標題" th:text="${product.description}">商品描述</p>
+							</div>
+							<br>
 
-                        </div>
+							<div class="product-size">
+								<span class="product-details-title"><strong>尺寸:</strong></span>
+								<select class="nice-select" name="size">
+									<option th:each="size : ${product.sizes}"
+										th:value="${size.price}" 
+										th:text="${size.sizeText}"
+										th:data-stock="${size.stock}" >
+									</option>
+								</select>
+							</div>
 
-                    </div>
-                    <div class="col-lg-6">
-                        <!--=======  product details description area  =======-->
+							<p class="price">
+								<span class="discounted-price"
+									th:text="'$' + ${product.displayPrice}"></span>
+							</p>
 
-                        <div class="product-details-description-wrapper">
-                            <h2 class="item-title" th:text="${product.productName}">商品名稱</h2>
-                            
-                            <div class = "特色群組">
-                            <p class="產品特色標題" th:text="${product.description}">商品描述</p>
-                            </div>
-                            <br>
-                            
-                            <div class="product-size">
-                                <span class="product-details-title"><strong>尺寸:</strong></span>
-                                <select class="nice-select" name="size">
-                                    <option th:each="size : ${product.sizes}"
-                                    		th:text="${size}"
-                                    		th:value="${size}">
-                                    </option>
-                                </select>
-                            </div>
+							<div class="product-quantity-cart d-flex align-items-center">
+								<div class="quantity-selector">
+									<button type="button" class="qty-btn minus">-</button>
+									<input type="text" class="qty-input" value="1" readonly>
+									<button type="button" class="qty-btn plus">+</button>
+								</div>
 
-                            <p class="price">
-                                <span class="discounted-price" th:text="'$' + ${product.displayPrice}"></span>
-                            </p>
+								<div class="add-to-cart-btn ms-3">
+									<button class="theme-button theme-button--alt">加入購物車</button>
+								</div>
+							</div>
 
-                            <div class="add-to-cart-btn d-inline-block">
-                                <button class="theme-button theme-button--alt">加入購物車</button>
-                            </div>
-                           
-                            <div class="quick-view-other-info">
 
-                                <table>
-                                    <tr class="single-info">
-                                        <td class="quickview-title">編號:</td>
-                                        <td class="quickview-value" th:text="${product.productId}">商品ID</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+							<div class="quick-view-other-info">
 
-                        <!--=======  End of product details description area  =======-->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <script th:src="@{/js/frontprod/vendors.js}"></script>
+								<table>
+									<tr class="single-info">
+										<td class="quickview-title">商品編號:</td>
+										<td class="quickview-value" th:text="${product.productId}">商品ID</td>
+									</tr>
+								</table>
+							</div>
+						</div>
 
-    <script th:src="@{/js/frontprod/active.js}"></script>
-    
-    <!--=====  End of JS files ======-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script th:src="@{/js/frontprod/vendors.js}"></script>
+
+	<script th:src="@{/js/frontprod/active.js}"></script>
+
+	<script th:src="@{/js/frontprod/prod.js}"></script>
+
+	<script th:src="@{/js/search.js}"></script>
+
+	<!--=====  End of JS files ======-->
 
 </body>
 

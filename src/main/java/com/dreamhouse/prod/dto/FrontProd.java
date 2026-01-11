@@ -11,7 +11,7 @@ public class FrontProd {
     private String material;
     private Boolean productType;
     private String description;
-    private List<String> sizes;
+    private List<FrontProdSize> sizes;
     
 	public Integer getProductId() {
 		return productId;
@@ -61,10 +61,10 @@ public class FrontProd {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public List<String> getSizes() {
+	public List<FrontProdSize> getSizes() {
 		return sizes;
 	}
-	public void setSizes(List<String> sizes) {
+	public void setSizes(List<FrontProdSize> sizes) {
 		this.sizes = sizes;
 	}
 }

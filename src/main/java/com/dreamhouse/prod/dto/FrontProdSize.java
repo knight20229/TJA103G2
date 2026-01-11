@@ -6,7 +6,6 @@ public class FrontProdSize {
     private String sizeText;   // 例：90x188
     private Integer price;     
     private Integer stock;     // 庫存
-    private Boolean enabled;   // 是否可售
 
 
     public Integer getSizeId() {
@@ -39,13 +38,5 @@ public class FrontProdSize {
 
     public void setStock(Integer stock) {
         this.stock = stock;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
     }
 }

@@ -2,354 +2,337 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>夢享家 DreamHouse</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Favicon -->
-    <link th:href="@{/images/dreamhouseb.ico}" rel="icon">
-    <!-- Font Awesome 6 CDN -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-    <!-- Vendor CSS -->
-    <link rel="stylesheet" th:href="@{/css/prod/vendors.css}">
-    <!-- Main CSS -->
-    <link rel="stylesheet" th:href="@{/css/prod/style.css}">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>夢享家 DreamHouse</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Favicon -->
+<link th:href="@{/images/dreamhouseb.ico}" rel="icon">
+<!-- Font Awesome 6 CDN -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+	rel="stylesheet">
+<!-- Vendor CSS -->
+<link rel="stylesheet" th:href="@{/css/prod/vendors.css}">
+<!-- Main CSS -->
+<link rel="stylesheet" th:href="@{/css/prod/style.css}">
 
 
 </head>
 
 <body>
 
-    <!--====================  header area ====================-->
+	<div
+		class="header-area header-area--default header-area--default--white header-sticky">
 
-    <div class="header-area header-area--default header-area--default--white header-sticky">
+		<div
+			class="header-navigation-area header-navigation-area--white header-navigation-area--extra-space d-none d-lg-block">
+			<div class="container wide">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="header-info-wrapper header-info-wrapper--alt-style">
 
-        <div class="header-navigation-area header-navigation-area--white header-navigation-area--extra-space d-none d-lg-block">
-            <div class="container wide">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="header-info-wrapper header-info-wrapper--alt-style">
+							<div class="header-logo">
+								<a href="首頁.html"> <img th:src="@{/images/headlogo.png}"
+									class="img-fluid" alt="">
+								</a>
+							</div>
 
-                            <div class="header-logo">
-                                <a href="首頁.html">
-                                    <img th:src="@{/images/headlogo.png}" class="img-fluid" alt="">
-                                </a>
-                            </div>
+							<div class="header-navigation-wrapper">
+								<nav>
+									<ul>
 
-                            <div class="header-navigation-wrapper">
-                                <nav>
-                                    <ul>
+										<li class="has-children"><a href="首頁.html">商品瀏覽</a></li>
+										<li class="has-children"><a href="商品比較.html">商品比較</a></li>
+										<li class="has-children"><a href="客製化商品.html">客製化商品</a></li>
+										<li class="has-children"><a href="關於我們.html">關於我們</a></li>
+									</ul>
+								</nav>
+							</div>
 
-                                        <li class="has-children">
-                                            <a href="首頁.html">商品瀏覽</a>
-                                        </li>
-                                        <li class="has-children">
-                                            <a href="商品比較.html">商品比較</a>
-                                        </li>    
-                                        <li class="has-children">
-                                            <a href="客製化商品.html">客製化商品</a>
-                                        </li>                                       
-                                        <li class="has-children">
-                                            <a href="關於我們.html">關於我們</a>
-                                        </li>                                     
-                                    </ul>
-                                </nav>
-                            </div>
-                            
-                            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+							<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-                            <div class="container-fluid">
-                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <form id="searchForm"  class="d-flex" th:action="@{/search}" method="get">
-                                    <input id="searchInput" class="form-control me-2" type="search" name ="product" placeholder="搜尋商品" aria-label="Search">
-                                    <button id="searchBtn" type="button" class="btn btn-outline-success">Search</button>
-                                </form>
-                                </div>
-                            </div>
-                            </nav>
+								<div class="container-fluid">
+									<div class="collapse navbar-collapse"
+										id="navbarSupportedContent">
+										<form id="searchForm" class="d-flex" th:action="@{/search}"
+											method="get">
+											<input id="searchInput" class="form-control me-2"
+												type="search" name="product" placeholder="搜尋商品">
+											<button id="searchBtn" type="submit"
+												class="btn btn-outline-success">Search</button>
+										</form>
+									</div>
+								</div>
+							</nav>
 
-                            <div class="header-icon-area">
+							<div class="header-icon-area">
 
-                                <div class="header-icon d-flex align-items-center">
-                                    <ul class="header-icon__list">
-                                        <li><a href="javascript:void(0)" id="fa-solid fa-message"><i class="fa-solid fa-message" style="color: #B197FC;"></i></i></a></li>
-                                        <li><a href="javascript:void(0)" id="fa-solid fa-user"><i class="fa-solid fa-user" style="color: #B197FC;"></i></a></li>
-                                        <li><a href="javascript:void(0)" id="fa-solid fa-bell"><i class="fa-solid fa-bell" style="color: #B197FC"></i></a></li>
-                                        
-                                        <li>
-                                            <a href="cart.html"><i class="fa-solid fa-cart-shopping" style="color: #B197FC;"></i></span></a>
-                                            <div class="minicart-wrapper">
-                                                <p class="minicart-wrapper__title">購物車</p>
+								<div class="header-icon d-flex align-items-center">
+									<ul class="header-icon__list">
+										<li><a href="javascript:void(0)" id="fa-solid fa-message"><i
+												class="fa-solid fa-message" style="color: #B197FC;"></i></a></li>
+										<li><a href="javascript:void(0)" id="fa-solid fa-user"><i
+												class="fa-solid fa-user" style="color: #B197FC;"></i></a></li>
+										<li><a href="javascript:void(0)" id="fa-solid fa-bell"><i
+												class="fa-solid fa-bell" style="color: #B197FC"></i></a></li>
 
-                                                <div class="minicart-wrapper__items ps-scroll">
-                                                    <div class="minicart-wrapper__items__single">
-                                                        <a href="javascript:void(0)" class="close-icon"><i class="pe-7s-close"></i></a>
-                                                        <div class="image">
-                                                            <a href="商品瀏覽.html">
-                                                                <img src="assets/img/products/product-2-90x100.jpg" class="img-fluid" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <div class="content">
-                                                            <p class="product-title"><a href="商品瀏覽.html">Jane Lauren Rebel Sofa</a></p>
-                                                            <p class="product-calculation"><span class="count">1</span> x <span class="price">$900</span></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
+										<li><a href="cart.html"><i
+												class="fa-solid fa-cart-shopping" style="color: #B197FC;"></i></a>
+											<div class="minicart-wrapper">
+												<p class="minicart-wrapper__title">購物車</p>
 
-                                                <p class="minicart-wrapper__subtotal">總計:<span> </span></p>
+												<div class="minicart-wrapper__items ps-scroll">
+													<div class="minicart-wrapper__items__single">
+														<a href="javascript:void(0)" class="close-icon"><i
+															class="pe-7s-close"></i></a>
+														<div class="image">
+															<a href="商品瀏覽.html"> <img
+																src="assets/img/products/product-2-90x100.jpg"
+																class="img-fluid" alt="">
+															</a>
+														</div>
+														<div class="content">
+															<p class="product-title">
+																<a href="商品瀏覽.html">Jane Lauren Rebel Sofa</a>
+															</p>
+															<p class="product-calculation">
+																<span class="count">1</span> x <span class="price">$900</span>
+															</p>
+														</div>
+													</div>
+												</div>
 
-                                                <div class="minicart-wrapper__buttons">
-                                                    <a href="cart.html" class="theme-button theme-button--minicart-button">查看購物車</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+												<p class="minicart-wrapper__subtotal">
+													總計:<span> </span>
+												</p>
 
-        <!--=======  End of header navigation wrapper  =======-->
+												<div class="minicart-wrapper__buttons">
+													<a href="cart.html"
+														class="theme-button theme-button--minicart-button">查看購物車</a>
+												</div>
+											</div></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <!--=======  mobile navigation area  =======-->
+		<div class="header-mobile-navigation d-block d-lg-none">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-6 col-md-6">
+						<div class="header-logo">
+							<a href="index.html"> <img src="assets/img/logo2.png"
+								class="img-fluid" alt="">
+							</a>
+						</div>
+					</div>
+					<div class="col-6 col-md-6">
+						<div class="mobile-navigation text-end"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <div class="header-mobile-navigation d-block d-lg-none">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-6 col-md-6">
-                        <div class="header-logo">
-                            <a href="index.html">
-                                <img src="assets/img/logo2.png" class="img-fluid" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-6">
-                        <div class="mobile-navigation text-end">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+	</div>
 
-        <!--=======  End of mobile navigation area  =======-->
-    </div>
+	<div class="breadcrumb-area section-space--breadcrumb">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 offset-lg-3"></div>
+			</div>
+		</div>
+	</div>
 
-    <div class="breadcrumb-area section-space--breadcrumb">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 offset-lg-3">
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="page-content-wrapper">
 
-    <div class="page-content-wrapper">
-        <!--=======  shop page area  =======-->
+		<div class="shop-page-area">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 order-2 order-lg-1">
 
-        <div class="shop-page-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 order-2 order-lg-1">
+						<div class="shop-sidebar-wrapper">
 
-                        <div class="shop-sidebar-wrapper">
+							<div class="single-sidebar-widget">
+								<h2 class="single-sidebar-widget__title">價格篩選</h2>
+								<ul class="sub-menu">
+									<li><button class="filter-btn" data-min="5000"
+											data-max="10000">$5000 - $10000</button></li>
+									<br>
 
-                            <div class="single-sidebar-widget">
-                                <h2 class="single-sidebar-widget__title">價格篩選</h2>
-                                            <ul class="sub-menu">
-<li><button class="filter-btn" data-min="5000" data-max="10000">$5000 - $10000</button></li>
-<br>
+									<li><button class="filter-btn" data-min="10001"
+											data-max="20000">$10001 - $20000</button></li>
+									<br>
 
-<li><button class="filter-btn" data-min="10001" data-max="20000">$10001 - $20000</button></li>
-<br>
+									<li><button class="filter-btn" data-min="20001"
+											data-max="30000">$20001 - $30000</button></li>
+								</ul>
+							</div>
 
-<li><button class="filter-btn" data-min="20001" data-max="30000">$20001 - $30000</button></li>
-                                            </ul>
-                            </div>
+							<br>
 
-<br>
+							<div class="single-sidebar-widget">
 
-                            <div class="single-sidebar-widget">
+								<!-- <li class="has-children"><a href="shop-left-sidebar.html">軟硬度</a> -->
+								<h2 class="single-sidebar-widget__title">軟硬度</h2>
+								<ul class="sub-menu">
+									<li><button class="filter-btn" data-hardness="soft">偏軟</button></li>
+									<br>
 
-                                        <!-- <li class="has-children"><a href="shop-left-sidebar.html">軟硬度</a> -->
-                                    <h2 class="single-sidebar-widget__title">軟硬度</h2>
-                                        <ul class="sub-menu">
-<li><button class="filter-btn" data-hardness="soft">偏軟</button></li>
-<br>
+									<li><button class="filter-btn" data-hardness="medium">適中</button></li>
+									<br>
 
-<li><button class="filter-btn" data-hardness="medium">適中</button></li>
-<br>
+									<li><button class="filter-btn" data-hardness="hard">較硬</button></li>
+								</ul>
 
-<li><button class="filter-btn" data-hardness="hard">較硬</button></li>
-                                        </ul>
+								<br>
 
-<br>
+								<h2 class="single-sidebar-widget__title">材質</h2>
+								<ul class="sub-menu">
 
-                                    <h2 class="single-sidebar-widget__title">材質</h2>
-                                        <ul class="sub-menu">
-                                                                             
-<li><button class="filter-btn" data-material="乳膠">乳膠</button></li>
-<br>
+									<li><button class="filter-btn" data-material="乳膠">乳膠</button></li>
+									<br>
 
-<li><button class="filter-btn" data-material="彈簧">彈簧</button></li>
-<br>
+									<li><button class="filter-btn" data-material="彈簧">彈簧</button></li>
+									<br>
 
-<li><button class="filter-btn" data-material="棉">棉</button></li>
-                                        </ul>  
+									<li><button class="filter-btn" data-material="棉">棉</button></li>
+								</ul>
 
-<br>
+								<br>
 
-                                     <h2 class="single-sidebar-widget__title">類型</h2>
-                                        <ul class="sub-menu">
-<li><button class="filter-btn" data-type="mattress">床墊</button></li>
-<br>
+								<h2 class="single-sidebar-widget__title">類型</h2>
+								<ul class="sub-menu">
+									<li><button class="filter-btn" data-type="mattress">床墊</button></li>
+									<br>
 
-<li><button class="filter-btn" data-type="frame">床架</button></li>
-                                        </ul>  
-                            </div>
+									<li><button class="filter-btn" data-type="frame">床架</button></li>
+								</ul>
+							</div>
 
-                        </div>
+						</div>
 
-                    </div>
+					</div>
 
-                    <div class="col-lg-9 order-1 order-lg-2">
-                        <!--=======  shop content wrapper  =======-->
+					<div class="col-lg-9 order-1 order-lg-2">
 
-                        <div class="shop-content-wrapper">
+						<div class="shop-content-wrapper">
 
-                            <!--=======  shop header wrapper  =======-->
+							<div class="shop-header">
+								<div class="row align-items-center">
+									<div class="col-sm-6 col-12">
 
-                            <div class="shop-header">
-                                <div class="row align-items-center">
-                                    <div class="col-sm-6 col-12">
-                                        <!--=======  header left content  =======-->
+										<div class="shop-header__left">
+											<p class="result-text d-inline-block mb-0">商品展示</p>
+										</div>
 
-                                        <div class="shop-header__left">
-                                            <p class="result-text d-inline-block mb-0">商品展示</p>
-                                        </div>
+									</div>
 
-                                        <!--=======  End of header left content  =======-->
-                                    </div>
+									<div class="col-sm-6 col-12">
 
-                                    <div class="col-sm-6 col-12">
+										<div
+											class="shop-header__right d-flex justify-content-start justify-content-sm-end align-items-center">
+											<div class="grid-view-changer" id="grid-view-changer">
+												<a href="javascript:void(0)" id="grid-view-change-trigger"
+													data-tippy="排列組合" data-target="grid"
+													data-tippy-inertia="true" data-tippy-animation="shift-away"
+													data-tippy-delay="50" data-tippy-arrow="true"
+													data-tippy-theme="sharpborder"> <i class="fa fa-eye"></i>
+												</a>
+												<div class="grid-view-changer__menu"
+													id="grid-view-changer__menu">
+													<a href="javascript:void(0)" data-target="two-column">2</a>
+													<a href="javascript:void(0)" data-target="three-column">3</a>
+													<a href="javascript:void(0)" data-target="four-column">4</a>
+													<a href="javascript:void(0)" id="grid-view-close-trigger"><i
+														class="fa fa-angle-right"></i></a>
+												</div>
+											</div>
+											<div class="sort-by-dropdown">
+												<select name="sort-by" id="sort-by" class="nice-select">
+													<option value="0">預設排序</option>
+													<option value="1">價格排序: 低到高</option>
+													<option value="2">價格排序: 高到低</option>
+												</select>
+											</div>
+										</div>
 
-                                        <!--=======  header right content  =======-->
+									</div>
+								</div>
+							</div>
 
-                                        <div class="shop-header__right d-flex justify-content-start justify-content-sm-end align-items-center">
-                                            <div class="grid-view-changer" id="grid-view-changer">
-                                                <a href="javascript:void(0)" id="grid-view-change-trigger" data-tippy="排列組合" data-target="grid" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
-                                                    <i class="fa fa-eye"></i>
-                                                </a>
-                                                <div class="grid-view-changer__menu" id="grid-view-changer__menu">
-                                                    <a href="javascript:void(0)" data-target="two-column">2</a>
-                                                    <a href="javascript:void(0)" data-target="three-column">3</a>
-                                                    <a href="javascript:void(0)" data-target="four-column">4</a>
-                                                    <a href="javascript:void(0)" id="grid-view-close-trigger"><i class="fa fa-angle-right"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="sort-by-dropdown">
-                                                <select name="sort-by" id="sort-by" class="nice-select">
-                                                    <option value="0">預設排序</option>
-                                                    <option value="1">價格排序: 低到高</option>
-                                                    <option value="2">價格排序: 高到低</option>                                                   
-                                                </select>
-                                            </div>
-                                        </div>
+							<div
+								class="shop-product-wrap shop-product-wrap--with-sidebar row grid">
 
-                                        <!--=======  End of header right content  =======-->
+								<div class="col-lg-4 col-md-6 col-sm-6 col-custom-sm-6 col-12"
+									th:each="p : ${products}">
 
-                                    </div>
-                                </div>
-                            </div>
+									<div class="single-grid-product"
+										th:data-price="${p.displayPrice}"
+										th:data-hardness="${p.hardness}"
+										th:data-material="${p.material}"
+										th:data-type="${p.productType ? 'frame' : 'mattress'}">
 
-                            <!--=======  End of shop header wrapper  =======-->
 
-                            <!--=======  shop product wrapper  =======-->
+										<div class="single-grid-product__image">
 
-                            <div class="shop-product-wrap shop-product-wrap--with-sidebar row grid">
+											<a th:href="@{/product/{id}(id=${p.productId})}"
+												class="image-wrap"> <img
+												th:if="${p.imageBase64 != null}" th:src="${p.imageBase64}"
+												class="img-fluid" alt="商品圖片"> <img
+												th:if="${p.imageBase64 == null}"
+												th:src="@{/images/no-image.png}" class="img-fluid" alt="無圖片">
+											</a>
 
-                                <div class="col-lg-4 col-md-6 col-sm-6 col-custom-sm-6 col-12"
-								     th:each="p : ${products}">
-								     								
-								    <div class="single-grid-product"
-								    
-								    th:data-price="${p.displayPrice}"
-								    th:data-hardness="${p.hardness}"
-								    th:data-material="${p.material}"
-								    th:data-type="${p.productType ? 'frame' : 'mattress'}">
-								    
-								    
-								        <div class="single-grid-product__image">
-								
-								            <a th:href="@{/product/{id}(id=${p.productId})}"class="image-wrap">
-								               
-								                <img th:if="${p.imageBase64 != null}"
-								                     th:src="${p.imageBase64}"
-								                     class="img-fluid"
-								                     alt="商品圖片">
-								                     
-								                <img th:if="${p.imageBase64 == null}"
-								                     th:src="@{/images/no-image.png}"
-								                     class="img-fluid"
-								                     alt="無圖片">
-								            </a>
-								
-								        </div>
-								
-								        <div class="single-grid-product__content">
-								            <h3 class="title">
-								                <a th:href="@{/product/{id}(id=${p.productId})}"
-								                   th:text="${p.productName}">
-								                    商品名稱
-								                </a>
-								            </h3>
-								
-								            <div class="price">
-								                <span class="main-price"th:text="'$' + ${p.displayPrice}">$0</span>
-								            </div>
-								        </div>
-								    </div>
-								
+										</div>
+
+										<div class="single-grid-product__content">
+											<h3 class="title">
+												<a th:href="@{/product/{id}(id=${p.productId})}"
+													th:text="${p.productName}"> 商品名稱 </a>
+											</h3>
+
+											<div class="price">
+												<span class="main-price" th:text="'$' + ${p.displayPrice}">$0</span>
+											</div>
+										</div>
+									</div>
+
 								</div>
 
-                                </div>
-                                
-                            </div>
+							</div>
 
-                            <!--=======  End of shop product wrapper  =======-->
+						</div>
 
-                            <!--=======  pagination wrapper  =======-->
+						<div class="pagination-wrapper">
+							<ul>
+								<li class="active"><a href="#">1</a></li>
+							</ul>
+						</div>
 
-                            <div class="pagination-wrapper">
-                                <ul>
-                                    <li class="active"><a href="#">1</a></li>
-                                </ul>
-                            </div>
+					</div>
 
-                            <!--=======  End of pagination wrapper  =======-->
+				</div>
+			</div>
+		</div>
+	</div>
 
-                        </div>
+	<!--=======  End of shop page area  =======-->
 
-                        <!--=======  End of shop content wrapper  =======-->
-                    </div>
-                </div>
-            </div>
-        </div>
+	<script th:src="@{/js/frontprod/vendors.js}"></script>
 
-        <!--=======  End of shop page area  =======-->
+	<!-- Active JS -->
+	<script th:src="@{/js/frontprod/active.js}"></script>
 
-    <script th:src="@{/js/frontprod/vendors.js}"></script>
 
-    <!-- Active JS -->
-    <script th:src="@{/js/frontprod/active.js}"></script>
-    
-    
-    <script th:src="@{/js/frontprod/prod.js}"></script>
+	<script th:src="@{/js/frontprod/home.js}"></script>
 
-    <!--=====  End of JS files ======-->
+	<!--=====  End of JS files ======-->
 
 </body>
 
