@@ -23,7 +23,7 @@ public class FrontProdController {
         return "front-end/index"; 
     }
     
-    // 首頁，搜尋商品
+    //搜尋商品
     @GetMapping("/search")
     public String searchProds(@RequestParam("product") String prodName, Model model) {
         model.addAttribute("products", frontProdService.searchProd(prodName));
