@@ -1,9 +1,11 @@
 package com.dreamhouse.custommaterial.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class CustomMaterialService {
@@ -22,5 +24,11 @@ public class CustomMaterialService {
 	
 	public List<CustomMaterialVO> getAll(){
 		return repository.findAll();
+	}
+	
+	public CustomMaterialVO getOneById(Integer customMaterialId) {
+		Optional<CustomMaterialVO> optional = repository.findById(customMaterialId);
+		return optional.orElse(null);
+		
 	}
 }

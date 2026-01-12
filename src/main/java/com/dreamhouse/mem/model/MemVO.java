@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.dreamhouse.memcoupon.model.MemCouponVO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.dreamhouse.customprod.model.CustomProductVO;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -27,6 +28,7 @@ public class MemVO implements Serializable {
     private String address;
     private String phone;
     private Set<MemCouponVO> memCoup;
+    private Set<CustomProductVO> customProduct;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
@@ -181,6 +183,15 @@ public class MemVO implements Serializable {
 
 	public void setMemCoup(Set<MemCouponVO> memCoup) {
 		this.memCoup = memCoup;
+	}
+	
+	@OneToMany(mappedBy = "memVO")
+	public Set<CustomProductVO> getCustomProduct() {
+		return customProduct;
+	}
+
+	public void setCustomProduct(Set<CustomProductVO> customProduct) {
+		this.customProduct = customProduct;
 	}
     
 }

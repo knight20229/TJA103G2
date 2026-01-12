@@ -7,6 +7,7 @@ import com.dreamhouse.customcloth.model.CustomClothVO;
 import com.dreamhouse.customfeature.model.CustomFeatureVO;
 import com.dreamhouse.custommaterial.model.CustomMaterialVO;
 import com.dreamhouse.customsize.model.CustomSizeVO;
+import com.dreamhouse.mem.model.MemVO;
 
 import jakarta.persistence.*;
 
@@ -44,6 +45,10 @@ public class CustomProductVO implements Serializable{
 	@ManyToOne
 	@JoinColumn(name ="CUSTOM_SIZE_ID")
 	private CustomSizeVO sizeVO;
+	
+	@ManyToOne
+	@JoinColumn(name ="member_id")
+	private MemVO memVO;
 
 	public Integer getCustomProductId() {
 		return customProductId;
@@ -109,4 +114,11 @@ public class CustomProductVO implements Serializable{
 		this.sizeVO = sizeVO;
 	}
 	
+	public MemVO getMemVO() {
+		return memVO;
+	}
+
+	public void setMemVO(MemVO memVO) {
+		this.memVO = memVO;
+	}
 }

@@ -13,7 +13,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dreamhouse.cart.model.CartItemDTO;
 import com.dreamhouse.cart.model.CartService;
+import com.dreamhouse.cart.model.CustomProdCartService;
 import com.dreamhouse.cart.model.StandardProdCartService;
+import com.dreamhouse.customcloth.model.CustomClothService;
+import com.dreamhouse.customcloth.model.CustomClothVO;
+import com.dreamhouse.customfeature.model.CustomFeatureService;
+import com.dreamhouse.customfeature.model.CustomFeatureVO;
+import com.dreamhouse.custommaterial.model.CustomMaterialService;
+import com.dreamhouse.custommaterial.model.CustomMaterialVO;
+import com.dreamhouse.customprod.model.CustomProductService;
+import com.dreamhouse.customprod.model.CustomProductVO;
+import com.dreamhouse.customsize.model.CustomSizeService;
+import com.dreamhouse.customsize.model.CustomSizeVO;
+import com.dreamhouse.mem.model.MemService;
+import com.dreamhouse.mem.model.MemVO;
 
 @Controller
 @RequestMapping("/cart")
@@ -23,15 +36,34 @@ public class CartController {
 	@Autowired
     private StandardProdCartService stdSer;
 	
-    
+	@Autowired
+	private CustomProdCartService custSer;
+	
     @Autowired
     private CartService cartSer;
     
+    @Autowired
+	private CustomProductService customProdSer;
+
+	@Autowired
+	private CustomClothService customClothSer;
+
+	@Autowired
+	private CustomFeatureService customFeatSer;
+
+	@Autowired
+	private CustomSizeService customSizeSer;
+
+	@Autowired
+	private CustomMaterialService customMaterSer;
+
+	@Autowired
+	private MemService memSer;
+    
 	
 	@PostMapping("addSTD")
-	public String addSTD(@RequestParam("productId") Integer productId, @RequestParam("sizeId") Integer sizeId, @RequestParam("memberId") Integer memberId, @RequestParam("quantity") Integer quantity,@RequestParam("price") Integer price, RedirectAttributes ra, ModelMap model) {
-		// sizeId先寫死，之後串祥陞那邊頁面的資料再改
-		stdSer.addToCart(productId, sizeId, quantity, price, memberId);
+	public String addSTD(@RequestParam("productId") Integer productId, @RequestParam("quantity") Integer quantity, @RequestParam("price") Integer price, @RequestParam("memberId") Integer memberId, RedirectAttributes ra, ModelMap model) {
+		stdSer.addToCart(productId, quantity, price, memberId);
 		
 		
 		ra.addFlashAttribute("message", "商品已成功加入購物車！");
@@ -39,9 +71,30 @@ public class CartController {
 	}
 	
 	@PostMapping("addCustom")
-	public String addCustom(@RequestParam("productId") Integer productId, @RequestParam("sizeId") Integer sizeId, @RequestParam("productSizeId") Integer productSizeId, @RequestParam("memberId") Integer memberId, ModelMap model) {
-		// 待補客製化商品方法
-		return "redirect:/prod/getOne_For_Display_front" + "?productId=" + productId;
+	public String addCustom(@RequestParam("customProductId") Integer customProductId, @RequestParam("quantity") Integer quantity, @RequestParam("price") Integer price, @RequestParam("memberId") Integer memberId, @RequestParam("cloth") Integer customClothId, @RequestParam("size") Integer customSizeId, @RequestParam("material") Integer customMaterialId, @RequestParam("feature") Integer customFeatureId, @RequestParam("bed_frame") Boolean hasBedFrame, ModelMap model) {
+		
+		
+		// 在mysql新增一筆客製化商品
+		CustomClothVO customClothVO = customClothSer.getOneById(customClothId);
+		CustomFeatureVO customFeatureVO = customFeatSer.getOneById(customFeatureId);
+		CustomSizeVO customSizeVO = customSizeSer.getOneById(customSizeId);
+		CustomMaterialVO customMaterialVO = customMaterSer.getOneById(customMaterialId);
+		MemVO memVO = memSer.findById(memberId);
+		
+		CustomProductVO customProd = new CustomProductVO();
+		customProd.setHasBedFrame(hasBedFrame);
+		customProd.setClothVO(customClothVO);
+		customProd.setFeatureVO(customFeatureVO);
+		customProd.setMaterialVO(customMaterialVO);
+		customProd.setSizeVO(customSizeVO);
+		customProd.setCustomPrice(price);
+		customProd.setMemVO(memVO);
+		
+		customProdSer.addCustomProd(customProd);
+		
+		//  加入購物車
+		custSer.addToCart(customProductId, quantity, price, memberId);
+		return "redirect:/cart/getCart" + "?memberId=" + memberId;
 	}
 	
 	@GetMapping("getCart")
