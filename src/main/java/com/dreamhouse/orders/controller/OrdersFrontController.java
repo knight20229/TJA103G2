@@ -83,11 +83,6 @@ public class OrdersFrontController {
 	@GetMapping("/detail")
 	public String orderDetail(@RequestParam("orderId") Integer orderId, HttpSession session, Model model) {
 
-		// ===== 開發測試用：可以直接在這裡改 memberId =====
-		Integer testMemberId = 2; // 改成測試的會員ID
-		session.setAttribute("memberId", testMemberId);
-		// ========================================
-
 		Integer memberId = (Integer) session.getAttribute("memberId");
 		if (memberId == null) {
 			return "redirect:/front/mem/login";
@@ -99,8 +94,8 @@ public class OrdersFrontController {
 			return "redirect:/front/orders/myOrders";
 		}
 
-		model.addAttribute("ordersList", Arrays.asList(order));
-		return "front-end/orders/myOrders";
+		model.addAttribute("order", order);
+		return "front-end/orders/orderDetail";
 	}
 
 	@GetMapping("/front/orders/myOrders")
@@ -108,12 +103,6 @@ public class OrdersFrontController {
 			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
 			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
 			@RequestParam(required = false) String orderStatus, Model model) {
-
-		// 開發測試用會員===================
-		if (memberId == null) {
-			memberId = 2;
-		}
-		// =============================
 
 		List<OrdersVO> ordersList = ordersSvc.findOrdersByConditions(memberId, startDate, endDate, orderStatus);
 

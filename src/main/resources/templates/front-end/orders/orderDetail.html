@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>訂單明細 - 夢享家 DreamHouse</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="icon" th:href="@{/images/dreamhouseb.ico}">
+<link rel="stylesheet"
+	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css}">
+<link rel="stylesheet" th:href="@{/css/vendors.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/cart.css}">
+</head>
+
+<body>
+
+	<!--  連接 Header  -->
+	<div th:replace="front-end/layout :: header"></div>
+
+	<div class="page-content-wrapper">
+		<!-- ================= Main ================= -->
+		<div class="container mt-5">
+
+			<h2 class="mb-4">訂單明細</h2>
+
+			<!-- ================= 綠界返回訊息 ================= -->
+			<div th:if="${successMessage}"
+				class="alert alert-success alert-dismissible fade show">
+				<i class="fa-solid fa-check-circle"></i> <span
+					th:text="${successMessage}"></span>
+				<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+			</div>
+
+			<div th:if="${errorMessage}"
+				class="alert alert-danger alert-dismissible fade show">
+				<i class="fa-solid fa-exclamation-circle"></i> <span
+					th:text="${errorMessage}"></span>
+				<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+			</div>
+
+			<!-- ================= 付款狀態提示 ================= -->
+			<div th:if="${order.paymentStatus == '已付款'}"
+				class="alert alert-success alert-dismissible fade show">
+				<i class="fa-solid fa-check-circle"></i> <strong>付款成功！</strong>您的訂單已進入待出貨狀態
+				<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+			</div>
+			<div th:if="${order.paymentStatus == '付款失敗'}"
+				class="alert alert-danger alert-dismissible fade show">
+				<i class="fa-solid fa-exclamation-circle"></i> <strong>付款失敗</strong>，請重新下單或聯繫客服
+				<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+			</div>
+			<div th:if="${order.paymentStatus == '未付款'}"
+				class="alert alert-warning alert-dismissible fade show">
+				<i class="fa-solid fa-exclamation-triangle"></i> <strong>訂單待付款中</strong>，請儘速完成付款
+				<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+			</div>
+
+			<!-- ================= 訂單基本資訊 ================= -->
+			<div class="card mb-4">
+				<div class="card-body">
+					<p>
+						<strong>訂單編號：</strong> <span th:text="${order.orderId}"></span>
+					</p>
+					<p>
+						<strong>訂單狀態：</strong> <span th:text="${order.orderStatus}"></span>
+					</p>
+					<p>
+						<strong>付款方式：</strong> <span th:text="${order.paymentMethod}"></span>
+					</p>
+					<p>
+						<strong>付款狀態：</strong> <span th:text="${order.paymentStatus}"></span>
+					</p>
+					<p>
+						<strong>下單時間：</strong> <span
+							th:text="${#dates.format(order.orderCreateTime,
+                            'yyyy-MM-dd HH:mm')}"></span>
+					</p>
+				</div>
+			</div>
+
+			<!-- ================= 收件資訊 ================= -->
+			<div class="card mb-4">
+				<div class="card-header">收件資訊</div>
+				<div class="card-body">
+					<p>
+						<strong>收件人：</strong> <span th:text="${order.receivingName}"></span>
+					</p>
+					<p>
+						<strong>收件人地址：</strong> <span th:text="${order.receivingAddress}"></span>
+					</p>
+					<p>
+						<strong>收件人電話：</strong> <span th:text="${order.receivingPhone}"></span>
+					</p>
+				</div>
+			</div>
+
+			<!-- ================= 商品明細 ================= -->
+			<h4 class="mb-3">商品清單</h4>
+
+			<table class="table table-bordered">
+				<thead class="table-light">
+					<tr>
+						<th>商品</th>
+						<th>尺寸</th>
+						<th>數量</th>
+						<th>單價</th>
+						<th>小計</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="item : ${items}">
+						<td><span th:if="${item.isCustom}">客製化商品</span> <span
+							th:if="${!item.isCustom}"
+							th:text="${item.prodSizeConnect.prodVO.productName}"> </span></td>
+
+						<td><span th:if="${item.isCustom}">—</span> <span
+							th:if="${!item.isCustom}"
+							th:text="${item.prodSizeConnect.sizeVO.width + ' x ' +
+                                item.prodSizeConnect.sizeVO.length}">
+						</span></td>
+
+						<td th:text="${item.quantity}"></td>
+						<td th:text="${item.price}"></td>
+						<td th:text="${item.price * item.quantity}"></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<!-- ================= 金額資訊 ================= -->
+			<div class="card mt-4">
+				<div class="card-body">
+					<p>
+						<strong>商品總額：</strong> <span th:text="${order.amount}"></span>
+					</p>
+					<p>
+						<strong>折扣金額：</strong> <span th:text="${order.discount}"></span>
+					</p>
+					<p class="fs-5">
+						<strong>實付金額：</strong> <span th:text="${order.payment}"></span>
+					</p>
+				</div>
+			</div>
+
+			<a th:href="@{/front/orders/myOrders}" class="btn btn-secondary mt-4">
+				返回我的訂單 </a>
+
+		</div>
+	</div>
+</body>
+</html>

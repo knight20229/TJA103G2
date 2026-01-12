@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-
 @Service("cartService")
 public class CartService {
 	
@@ -29,9 +28,17 @@ public class CartService {
 	public void removeItem(String itemKey, Integer memberId) {
 		String cartKey = new StringBuilder().append("cart").append(":").append(memberId).toString();
 		redisTemp.opsForHash().delete(cartKey, itemKey);
-		
+
 	}
-	
+
+	/**
+	 * 清空購物車（用於付款成功後）
+	 */
+	public void clearCart(Integer memberId) {
+		String cartKey = "cart:" + memberId;
+		redisTemp.delete(cartKey);
+	}
+
 //	public void updateQuantity(Integer memberId, String itemKey, Integer newQty) {
 //        String cartKey = new StringBuilder().append("cart").append(":").append(memberId).toString();
 //        CartItemDTO item = (CartItemDTO) redisTemp.opsForHash().get(cartKey, itemKey);
@@ -40,6 +47,6 @@ public class CartService {
 //            redisTemp.opsForHash().put(cartKey, itemKey, item);
 //        }
 //    }
-	
+
 
 }

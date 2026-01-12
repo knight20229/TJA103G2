@@ -13,365 +13,313 @@
 <link rel="stylesheet" th:href="@{/css/vendors.css}">
 <link rel="stylesheet" th:href="@{/css/style.css}">
 <link rel="stylesheet" th:href="@{/css/cart.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 
 <body>
 
-	<!-- ================= Header ================= -->
-	<div
-		class="header-area header-area--default header-area--default--white header-sticky">
+	<!--  連接 Header  -->
+	<div th:replace="front-end/layout :: header"></div>
+	
+	<div class="page-content-wrapper">
 
-		<div
-			class="header-navigation-area header-navigation-area--white header-navigation-area--extra-space d-none d-lg-block">
-			<div class="container wide">
-				<div class="row">
-					<div class="col-lg-12">
+		<!-- ================= Main ================= -->
+		<main class="p-4">
 
-						<div class="header-info-wrapper header-info-wrapper--alt-style">
+			<h2 class="mb-4">我的訂單</h2>
+			<hr class="border border-primary border-2" />
 
-							<div class="header-logo">
-								<a th:href="@{/}"> <img th:src="@{/images/logo.png}"
-									class="img-fluid" alt="">
-								</a>
-							</div>
+			<div class="container-fluid">
+				<!-- 成功或錯誤訊息 -->
+				<div th:if="${successMessage}"
+					class="alert alert-success alert-dismissible fade show"
+					role="alert">
+					<span th:text="${successMessage}"></span>
+					<button type="button" class="btn-close" data-bs-dismiss="alert"
+						aria-label="Close"></button>
+				</div>
 
-							<div class="header-navigation-wrapper">
-								<nav>
-									<ul>
-										<li><a th:href="@{/product/list}">商品瀏覽</a></li>
-										<li><a th:href="@{/compare}">商品比較</a></li>
-										<li><a th:href="@{/custom}">客製化商品</a></li>
-										<li><a th:href="@{/article}">好眠知識</a></li>
-									</ul>
-								</nav>
-							</div>
-
-							<nav class="navbar navbar-expand-lg navbar-light bg-light">
-								<div class="container-fluid">
-									<form class="d-flex" th:action="@{/product/search}"
-										method="get">
-										<input class="form-control me-2" type="search" name="keyword"
-											placeholder="搜尋商品">
-										<button class="btn btn-outline-success" type="submit">Search</button>
-									</form>
-								</div>
-							</nav>
-
-							<div class="header-icon-area">
-								<ul class="header-icon__list">
-									<li><i class="fa-solid fa-message" style="color: #B197FC"></i></li>
-									<li><i class="fa-solid fa-user" style="color: #B197FC"></i></li>
-									<li><i class="fa-solid fa-bell" style="color: #B197FC"></i></li>
-									<li><a th:href="@{/cart}"> <i
-											class="fa-solid fa-cart-shopping" style="color: #B197FC"></i>
-									</a></li>
-								</ul>
-							</div>
+				<div th:if="${errorMessage}"
+					class="alert alert-danger alert-dismissible fade show" role="alert">
+					<span th:text="${errorMessage}"></span>
+					<button type="button" class="btn-close" data-bs-dismiss="alert"
+						aria-label="Close"></button>
+				</div>
+				<!-- ===== 查詢條件 ===== -->
+				<form method="get" th:action="@{/front/orders/myOrders}"
+					class="row g-3 mb-4">
+					<div
+						class="search-box d-flex flex-wrap align-items-end col-auto d-grid gap-2 mb-3">
+						<div>
+							<label class="form-label mb-1">關鍵字</label> <input
+								id="search_input" type="text" class="form-control me-3"
+								placeholder="搜尋訂單編號">
+						</div>
+						<!-- 訂單狀態 -->
+						<div class="form-label mb-1">
+							<label class="form-label">訂單狀態</label> <select
+								class="form-select" name="orderStatus">
+								<option value="">全部</option>
+								<option value="PENDING_PAYMENT"
+									th:selected="${orderStatus == 'PENDING_PAYMENT'}">待付款</option>
+								<option value="PENDING_SHIPMENT"
+									th:selected="${orderStatus == 'PENDING_SHIPMENT'}">待出貨
+								</option>
+								<option value="SHIPPED"
+									th:selected="${orderStatus == 'SHIPPED'}">已出貨</option>
+								<option value="COMPLETED"
+									th:selected="${orderStatus == 'COMPLETED'}">訂單完成</option>
+								<option value="CANCELLED"
+									th:selected="${orderStatus == 'CANCELLED'}">訂單取消</option>
+							</select>
 
 						</div>
+						<!-- 起始日期 -->
+						<div class="form-label mb-1">
+							<label class="form-label">開始日期</label> <input type="date"
+								class="form-control" name="startDate" th:value="${startDate}">
+						</div>
 
+						<!-- 結束日期 -->
+						<div class="form-label mb-1">
+							<label class="form-label">結束日期</label> <input type="date"
+								class="form-control" name="endDate" th:value="${endDate}">
+						</div>
+
+
+						<!-- 查詢按鈕 -->
+						<div class="form-label mb-1 d-flex align-items-end">
+							<button type="submit" class="btn btn-primary">
+								<i class="fa-solid fa-magnifying-glass"></i> 查詢
+							</button>
+						</div>
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- ================= Main ================= -->
-	<main class="p-4">
-
-		<h2 class="mb-4">我的訂單</h2>
-		<hr class="border border-primary border-2" />
-
-		<div class="container-fluid">
-			<!-- 成功或錯誤訊息 -->
-			<div th:if="${successMessage}"
-				class="alert alert-success alert-dismissible fade show" role="alert">
-				<span th:text="${successMessage}"></span>
-				<button type="button" class="btn-close" data-bs-dismiss="alert"
-					aria-label="Close"></button>
-			</div>
-
-			<div th:if="${errorMessage}"
-				class="alert alert-danger alert-dismissible fade show" role="alert">
-				<span th:text="${errorMessage}"></span>
-				<button type="button" class="btn-close" data-bs-dismiss="alert"
-					aria-label="Close"></button>
-			</div>
-			<!-- ===== 查詢條件 ===== -->
-			<form method="get" th:action="@{/front/orders/myOrders}"
-				class="row g-3 mb-4">
-				<div
-					class="search-box d-flex flex-wrap align-items-end col-auto d-grid gap-2 mb-3">
-					<div>
-						<label class="form-label mb-1">關鍵字</label> <input
-							id="search_input" type="text" class="form-control me-3"
-							placeholder="搜尋訂單編號">
-					</div>
-					<!-- 訂單狀態 -->
-					<div class="form-label mb-1">
-						<label class="form-label">訂單狀態</label> <select class="form-select"
-							name="orderStatus">
-							<option value="">全部</option>
-							<option value="PENDING_PAYMENT"
-								th:selected="${orderStatus == 'PENDING_PAYMENT'}">待付款</option>
-							<option value="PENDING_SHIPMENT"
-								th:selected="${orderStatus == 'PENDING_SHIPMENT'}">待出貨
-							</option>
-							<option value="SHIPPED" th:selected="${orderStatus == 'SHIPPED'}">已出貨</option>
-							<option value="COMPLETED"
-								th:selected="${orderStatus == 'COMPLETED'}">訂單完成</option>
-							<option value="CANCELLED"
-								th:selected="${orderStatus == 'CANCELLED'}">訂單取消</option>
-						</select>
-
-					</div>
-					<!-- 起始日期 -->
-					<div class="form-label mb-1">
-						<label class="form-label">開始日期</label> <input type="date"
-							class="form-control" name="startDate" th:value="${startDate}">
-					</div>
-
-					<!-- 結束日期 -->
-					<div class="form-label mb-1">
-						<label class="form-label">結束日期</label> <input type="date"
-							class="form-control" name="endDate" th:value="${endDate}">
-					</div>
+				</form>
 
 
-					<!-- 查詢按鈕 -->
-					<div class="form-label mb-1 d-flex align-items-end">
-						<button type="submit" class="btn btn-primary">
-							<i class="fa-solid fa-magnifying-glass"></i> 查詢
-						</button>
-					</div>
-				</div>
-			</form>
+				<!-- ================= 訂單表格 ================= -->
 
+				<div th:if="${#lists.isEmpty(ordersList)}" class="alert alert-info">
+					目前尚無訂單紀錄</div>
 
-			<!-- ================= 訂單表格 ================= -->
+				<table class="table table-hover"
+					th:if="${!#lists.isEmpty(ordersList)}">
 
-			<div th:if="${#lists.isEmpty(ordersList)}" class="alert alert-info">
-				目前尚無訂單紀錄</div>
-
-			<table class="table table-hover"
-				th:if="${!#lists.isEmpty(ordersList)}">
-
-				<thead class="table-light text-center">
-					<tr>
-						<th>訂單編號</th>
-						<th>會員編號</th>
-						<th>原始金額</th>
-						<th>折扣金額</th>
-						<th>付款金額</th>
-						<th>訂單狀態</th>
-						<th>付款方式</th>
-						<th>付款狀態</th>
-						<th>訂單建立時間</th>
-						<th>訂單更新時間</th>
-						<th>付款建立時間</th>
-						<th>操作</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					<th:block th:each="order : ${ordersList}">
-						<tr class="text-center">
-
-							<td th:text="${order.orderId}"></td>
-							<td th:text="${order.memberId}"></td>
-							<td th:text="'$' + ${#numbers.formatDecimal(order.amount, 1, 2)}"></td>
-							<td
-								th:text="'$' + ${#numbers.formatDecimal(order.discount != null ? order.discount : 0, 1, 2)}"></td>
-							<td
-								th:text="'$' + ${#numbers.formatDecimal(order.payment, 1, 2)}"></td>
-							<td><span th:text="${order.orderStatus}"></span> <span
-								th:if="${order.returnStatus != null}"
-								th:text="' / ' + ${order.returnStatus}"></span></td>
-							<td th:text="${order.paymentMethod}"></td>
-							<td th:text="${order.paymentStatus}"></td>
-							<td
-								th:text="${order.orderCreateTime != null ? #dates.format(order.orderCreateTime,'yyyy-MM-dd HH:mm') : '-'}"></td>
-							<td
-								th:text="${order.orderUpdateTime != null ? #dates.format(order.orderUpdateTime,'yyyy-MM-dd HH:mm') : '-'}"></td>
-							<td
-								th:text="${order.paymentCreateTime != null ? #dates.format(order.paymentCreateTime,'yyyy-MM-dd HH:mm') : '-'}"></td>
-							<td>
-								<button type="button" class="btn btn-sm btn-primary"
-									data-bs-toggle="collapse"
-									th:data-bs-target="'#orderId-' + ${order.orderId}">
-									查看明細</button>
-							</td>
+					<thead class="table-light text-center">
+						<tr>
+							<th>訂單編號</th>
+							<th>會員編號</th>
+							<th>原始金額</th>
+							<th>折扣金額</th>
+							<th>付款金額</th>
+							<th>訂單狀態</th>
+							<th>付款方式</th>
+							<th>付款狀態</th>
+							<th>訂單建立時間</th>
+							<th>訂單更新時間</th>
+							<th>付款建立時間</th>
+							<th>操作</th>
 						</tr>
+					</thead>
 
-						<!-- 展開區域：訂單明細 (同一個 order）-->
-						<tr class="collapse-row">
-							<td colspan="12" class="p-0">
-								<div th:id="${'orderId-' + order.orderId}" class="collapse">
-									<div class="p-3 bg-light">
+					<tbody>
+						<th:block th:each="order : ${ordersList}">
+							<tr class="text-center">
 
-										<!-- 收件人資訊 -->
-										<div class="mb-3">
-											<div class="fs-6">
-												<strong>收件人姓名：</strong><span
-													th:text="${order.receivingName}">姓名</span><br>
-												<strong>收件人地址：</strong><span
-													th:text="${order.receivingAddress}">地址</span><br>
-												<strong>收件人電話：</strong><span
-													th:text="${order.receivingPhone}">電話</span>
+								<td th:text="${order.orderId}"></td>
+								<td th:text="${order.memberId}"></td>
+								<td
+									th:text="'$' + ${#numbers.formatDecimal(order.amount, 1, 2)}"></td>
+								<td
+									th:text="'$' + ${#numbers.formatDecimal(order.discount != null ? order.discount : 0, 1, 2)}"></td>
+								<td
+									th:text="'$' + ${#numbers.formatDecimal(order.payment, 1, 2)}"></td>
+								<td><span th:text="${order.orderStatus}"></span> <span
+									th:if="${order.returnStatus != null}"
+									th:text="' / ' + ${order.returnStatus}"></span></td>
+								<td th:text="${order.paymentMethod}"></td>
+								<td th:text="${order.paymentStatus}"></td>
+								<td
+									th:text="${order.orderCreateTime != null ? #dates.format(order.orderCreateTime,'yyyy-MM-dd HH:mm') : '-'}"></td>
+								<td
+									th:text="${order.orderUpdateTime != null ? #dates.format(order.orderUpdateTime,'yyyy-MM-dd HH:mm') : '-'}"></td>
+								<td
+									th:text="${order.paymentCreateTime != null ? #dates.format(order.paymentCreateTime,'yyyy-MM-dd HH:mm') : '-'}"></td>
+								<td>
+									<button type="button" class="btn btn-sm btn-primary"
+										data-bs-toggle="collapse"
+										th:data-bs-target="'#orderId-' + ${order.orderId}">
+										查看明細</button>
+								</td>
+							</tr>
+
+							<!-- 展開區域：訂單明細 (同一個 order）-->
+							<tr class="collapse-row">
+								<td colspan="12" class="p-0">
+									<div th:id="${'orderId-' + order.orderId}" class="collapse">
+										<div class="p-3 bg-light">
+
+											<!-- 收件人資訊 -->
+											<div class="mb-3">
+												<div class="fs-6">
+													<strong>收件人姓名：</strong><span
+														th:text="${order.receivingName}">姓名</span><br> <strong>收件人地址：</strong><span
+														th:text="${order.receivingAddress}">地址</span><br> <strong>收件人電話：</strong><span
+														th:text="${order.receivingPhone}">電話</span>
+												</div>
 											</div>
-										</div>
-										<!-- 判斷是否有明細 -->
-										<div th:if="${#lists.isEmpty(order.orderproductsize)}"
-											class="text-center text-muted py-3">此訂單無商品明細資料</div>
-										<!-- 訂單明細表格 -->
-										<table th:unless="${#lists.isEmpty(order.orderproductsize)}"
-											class="table table-sm table-bordered mb-0 align-middle">
-											<thead class="table-light text-center">
-												<tr>
-													<th style="width: 100px;">商品圖片</th>
-													<th>商品名稱</th>
-													<th style="width: 80px;">數量</th>
-													<th style="width: 100px;">單價</th>
-													<th style="width: 100px;">優惠券編號</th>
-													<th style="width: 100px;">促銷活動編號</th>
-													<th style="width: 150px;">客製商品名稱</th>
-													<th style="width: 100px;">是否客製</th>
+											<!-- 判斷是否有明細 -->
+											<div th:if="${#lists.isEmpty(order.orderproductsize)}"
+												class="text-center text-muted py-3">此訂單無商品明細資料</div>
+											<!-- 訂單明細表格 -->
+											<table th:unless="${#lists.isEmpty(order.orderproductsize)}"
+												class="table table-sm table-bordered mb-0 align-middle">
+												<thead class="table-light text-center">
+													<tr>
+														<th style="width: 100px;">商品圖片</th>
+														<th>商品名稱</th>
+														<th style="width: 80px;">數量</th>
+														<th style="width: 100px;">單價</th>
+														<th style="width: 100px;">優惠券編號</th>
+														<th style="width: 100px;">促銷活動編號</th>
+														<th style="width: 150px;">客製商品名稱</th>
+														<th style="width: 100px;">是否客製</th>
 
-												</tr>
-											</thead>
-											<tbody>
-												<!-- Thymeleaf 迴圈：訂單明細 -->
-												<tr th:each="detail : ${order.orderproductsize}"
-													th:with="
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Thymeleaf 迴圈：訂單明細 -->
+													<tr th:each="detail : ${order.orderproductsize}"
+														th:with="
         psc=${detail.prodSizeConnect},
         p=${psc != null ? psc.prodVO : null},
         s=${psc != null ? psc.sizeVO : null}
       ">
 
-													<!-- 商品圖片 -->
-													<td class="text-center">
-														<!-- 一般商品且有圖片 --> <img
-														th:if="${detail.isCustom != true and p != null and p.base64Image != null}"
-														th:src="${p.base64Image}" alt="商品圖片"
-														style="width: 80px; height: 80px; object-fit: cover;"
-														onerror="this.src='/images/no-image.png';"> <!-- 客製化 icon -->
-														<i th:if="${detail.isCustom == true}"
-														class="bi bi-palette fs-1 text-info"></i> <!-- 一般商品但沒圖片（或 p 為 null） -->
-														<img
-														th:if="${detail.isCustom != true and (p == null or p.base64Image == null)}"
-														src="/images/no-image.png" alt="無圖片"
-														style="width: 80px; height: 80px; object-fit: cover;">
-													</td>
+														<!-- 商品圖片 -->
+														<td class="text-center">
+															<!-- 一般商品且有圖片 --> <img
+															th:if="${detail.isCustom != true and p != null and p.base64Image != null}"
+															th:src="${p.base64Image}" alt="商品圖片"
+															style="width: 80px; height: 80px; object-fit: cover;"
+															onerror="this.src='/images/no-image.png';"> <!-- 客製化 icon -->
+															<i th:if="${detail.isCustom == true}"
+															class="bi bi-palette fs-1 text-info"></i> <!-- 一般商品但沒圖片（或 p 為 null） -->
+															<img
+															th:if="${detail.isCustom != true and (p == null or p.base64Image == null)}"
+															src="/images/no-image.png" alt="無圖片"
+															style="width: 80px; height: 80px; object-fit: cover;">
+														</td>
 
-													<!-- 商品名稱 -->
-													<td
-														th:text="${p != null ? p.productName : (detail.isCustom == true ? '客製化商品' : '-')}"></td>
+														<!-- 商品名稱 -->
+														<td
+															th:text="${p != null ? p.productName : (detail.isCustom == true ? '客製化商品' : '-')}"></td>
 
-													<!-- 數量 -->
-													<td class="text-center" th:text="${detail.quantity}"></td>
+														<!-- 數量 -->
+														<td class="text-center" th:text="${detail.quantity}"></td>
 
-													<!-- 單價（使用訂單明細的價格） -->
-													<td class="text-end"><span
-														th:text="'$' + ${#numbers.formatDecimal(detail.price, 1, 2)}"></span>
-													</td>
+														<!-- 單價（使用訂單明細的價格） -->
+														<td class="text-end"><span
+															th:text="'$' + ${#numbers.formatDecimal(detail.price, 1, 2)}"></span>
+														</td>
 
-													<!-- 優惠券編號（從訂單層級取得） -->
-													<td class="text-center"><span
-														th:text="${order.couponId != null ? order.couponId : '-'}"></span>
-													</td>
+														<!-- 優惠券編號（從訂單層級取得） -->
+														<td class="text-center"><span
+															th:text="${order.couponId != null ? order.couponId : '-'}"></span>
+														</td>
 
-													<!-- 促銷活動編號（從訂單層級取得） -->
-													<td class="text-center"><span
-														th:text="${order.promotionId != null ? order.promotionId : '-'}"></span>
-													</td>
+														<!-- 促銷活動編號（從訂單層級取得） -->
+														<td class="text-center"><span
+															th:text="${order.promotionId != null ? order.promotionId : '-'}"></span>
+														</td>
 
-													<!-- 客製商品名稱（顯示 customProductId） -->
-													<td class="text-center"><span
-														th:if="${detail.isCustom == true and detail.customProductId != null}"
-														th:text="'客製商品 #' + ${detail.customProductId}"></span> <span
-														th:if="${detail.isCustom != true or detail.customProductId == null}">-</span>
-													</td>
+														<!-- 客製商品名稱（顯示 customProductId） -->
+														<td class="text-center"><span
+															th:if="${detail.isCustom == true and detail.customProductId != null}"
+															th:text="'客製商品 #' + ${detail.customProductId}"></span> <span
+															th:if="${detail.isCustom != true or detail.customProductId == null}">-</span>
+														</td>
 
-													<!-- 是否客製 -->
-													<td class="text-center"><span
-														th:if="${detail.isCustom == true}"
-														class="badge bg-success">是</span> <span
-														th:if="${detail.isCustom != true}"
-														class="badge bg-secondary">否</span></td>
+														<!-- 是否客製 -->
+														<td class="text-center"><span
+															th:if="${detail.isCustom == true}"
+															class="badge bg-success">是</span> <span
+															th:if="${detail.isCustom != true}"
+															class="badge bg-secondary">否</span></td>
 
 
 
-												</tr>
-											</tbody>
+													</tr>
+												</tbody>
 
-										</table>
-										<!-- ================== 訂單操作按鈕 ================== -->
-										<div class="d-flex gap-2 mt-2">
-											<form th:action="@{/front/orders/cancel}" method="post">
-												<input type="hidden" th:name="orderId"
-													th:value="${order.orderId}" />
-												<button type="submit" class="btn btn-sm btn-danger">取消訂單</button>
-											</form>
+											</table>
+											<!-- ================== 訂單操作按鈕 ================== -->
+											<div class="d-flex gap-2 mt-2">
+												<form th:action="@{/front/orders/cancel}" method="post">
+													<input type="hidden" th:name="orderId"
+														th:value="${order.orderId}" />
+													<button type="submit" class="btn btn-sm btn-danger">取消訂單</button>
+												</form>
 
-											<button type="button" class="btn btn-sm btn-warning"
-												data-bs-toggle="modal"
-												th:data-bs-target="${'#returnModal-' + order.orderId}">
-												退貨申請</button>
-										</div>
-										<!-- ================== 退貨申請 Modal ================== -->
-										<div class="modal fade"
-											th:id="${'returnModal-' + order.orderId}" tabindex="-1"
-											aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<form th:action="@{/front/orders/return}" method="post">
-														<div class="modal-header">
-															<h5 class="modal-title">
-																退貨申請 - 訂單編號: <span th:text="${order.orderId}"></span>
-															</h5>
-															<button type="button" class="btn-close"
-																data-bs-dismiss="modal" aria-label="Close"></button>
-														</div>
-														<div class="modal-body">
-															<input type="hidden" th:name="orderId"
-																th:value="${order.orderId}" />
-															<div class="mb-3">
-																<label class="form-label">退貨原因</label> <select
-																	class="form-select" name="returnReason" required>
-																	<option value="DEFECTIVE">商品瑕疵</option>
-																	<option value="WRONG_SIZE">尺寸不合</option>
-																	<option value="WRONG_ITEM">寄錯商品</option>
-																	<option value="OTHER">其他</option>
-																</select>
+												<button type="button" class="btn btn-sm btn-warning"
+													data-bs-toggle="modal"
+													th:data-bs-target="${'#returnModal-' + order.orderId}">
+													退貨申請</button>
+											</div>
+											<!-- ================== 退貨申請 Modal ================== -->
+											<div class="modal fade"
+												th:id="${'returnModal-' + order.orderId}" tabindex="-1"
+												aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<form th:action="@{/front/orders/return}" method="post">
+															<div class="modal-header">
+																<h5 class="modal-title">
+																	退貨申請 - 訂單編號: <span th:text="${order.orderId}"></span>
+																</h5>
+																<button type="button" class="btn-close"
+																	data-bs-dismiss="modal" aria-label="Close"></button>
 															</div>
-															<div class="mb-3">
-																<label class="form-label">退貨理由</label>
-																<textarea class="form-control" name="returnText"
-																	rows="3" placeholder="請輸入退貨說明" required></textarea>
+															<div class="modal-body">
+																<input type="hidden" th:name="orderId"
+																	th:value="${order.orderId}" />
+																<div class="mb-3">
+																	<label class="form-label">退貨原因</label> <select
+																		class="form-select" name="returnReason" required>
+																		<option value="DEFECTIVE">商品瑕疵</option>
+																		<option value="WRONG_SIZE">尺寸不合</option>
+																		<option value="WRONG_ITEM">寄錯商品</option>
+																		<option value="OTHER">其他</option>
+																	</select>
+																</div>
+																<div class="mb-3">
+																	<label class="form-label">退貨理由</label>
+																	<textarea class="form-control" name="returnText"
+																		rows="3" placeholder="請輸入退貨說明" required></textarea>
+																</div>
 															</div>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-secondary"
-																data-bs-dismiss="modal">取消</button>
-															<button type="submit" class="btn btn-primary">送出退貨申請</button>
-														</div>
-													</form>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary"
+																	data-bs-dismiss="modal">取消</button>
+																<button type="submit" class="btn btn-primary">送出退貨申請</button>
+															</div>
+														</form>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</td>
-						</tr>
-					</th:block>
-				</tbody>
-			</table>
-		</div>
-	</main>
+								</td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+			</div>
+		</main>
 
-	<script
-		th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
-
+		<script
+			th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
+	</div>
 </body>
 
 </html>

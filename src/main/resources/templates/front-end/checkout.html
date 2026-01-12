@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>結帳 - 夢享家 DreamHouse</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="icon" th:href="@{/images/dreamhouseb.ico}">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+	rel="stylesheet">
+
+<link th:href="@{/css/vendors.css}" rel="stylesheet">
+<link th:href="@{/css/style.css}" rel="stylesheet">
+<link th:href="@{/css/checkout.css}" rel="stylesheet">
+</head>
+
+<body>
+
+	<!-- ================= Header ================= -->
+	<div
+		class="header-area header-area--default header-area--default--white header-sticky">
+
+		<div
+			class="header-navigation-area header-navigation-area--white header-navigation-area--extra-space d-none d-lg-block">
+			<div class="container wide">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="header-info-wrapper header-info-wrapper--alt-style">
+
+							<div class="header-logo">
+								<a th:href="@{/}"> <img th:src="@{/images/logo.png}"
+									class="img-fluid" alt="">
+								</a>
+							</div>
+
+							<div class="header-navigation-wrapper">
+								<nav>
+									<ul>
+										<li class="has-children"><a th:href="@{/products}">商品瀏覽</a></li>
+										<li class="has-children"><a href="#">商品比較</a></li>
+										<li class="has-children"><a href="#">客製化商品</a></li>
+										<li class="has-children"><a href="#">好眠知識</a></li>
+									</ul>
+								</nav>
+							</div>
+
+							<div class="header-icon-area">
+								<div class="header-icon d-flex align-items-center">
+									<ul class="header-icon__list">
+										<li><a th:href="@{/cart}"> <i
+												class="fa-solid fa-cart-shopping" style="color: #B197FC;"></i>
+										</a></li>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ================= Main ================= -->
+	<main class="p-4"></main>
+
+	<div class="container">
+		<h1 class="mb-3">結帳</h1>
+
+		<!-- ================= 商品資訊 ================= -->
+		<div class="card mb-4">
+			<div class="card-header">
+				<h5 class="mb-0">購買商品</h5>
+			</div>
+			<div class="card-body">
+				<!-- 循環顯示購物車中的所有商品 -->
+				<div class="row mb-3 pb-3" th:each="item, iterStat : ${cartItems}" th:classappend="${!iterStat.last} ? 'border-bottom' : ''">
+					<div class="col-md-8">
+						<h6 th:text="${item.productName}"></h6>
+						<p class="text-muted">尺寸：<span th:text="${item.sizeName}"></span></p>
+					</div>
+					<div class="col-md-4 text-end">
+						<p>單價：$<span th:text="${item.price}"></span></p>
+						<p>數量：<span th:text="${item.quantity}"></span></p>
+						<p class="fw-bold">小計：$<span th:text="${item.price * item.quantity}"></span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<form class="checkout-form" th:action="@{/checkout}" method="post">
+
+			<!-- 隱藏欄位：商品資訊 -->
+			<!-- productSizeId 不需要，從購物車讀取 -->
+			<!-- quantity 不需要，從購物車讀取 -->
+
+			<div class="row g-3">
+
+				<div class="col-md-6">
+					<label class="form-label">收件人姓名</label> <input type="text"
+						class="form-control" name="receivingName" th:value="${member.name}"
+						required>
+				</div>
+
+				<div class="col-md-6">
+					<label class="form-label">電子郵件</label> <input type="email"
+						class="form-control readonly-input" name="email"
+						th:value="${member.email}" readonly>
+				</div>
+
+				<div class="col-md-6">
+					<label class="form-label">收件人電話</label> <input type="tel"
+						class="form-control" name="receivingPhone" th:value="${member.phone}"
+						required>
+				</div>
+
+				<div class="col-md-6">
+					<label class="form-label">收件人地址</label> <input type="text"
+						class="form-control" name="receivingAddress" th:value="${member.address}"
+						required>
+				</div>
+
+				<div class="col-md-6">
+					<label class="form-label">付款方式</label> <select class="form-select"
+						name="paymentMethod" required>
+						<option value="">請選擇</option>
+						<option value="信用卡">信用卡</option>
+						<option value="匯款">匯款</option>
+					</select>
+				</div>
+
+				<div class="col-md-6">
+					<label class="form-label">優惠券</label> <select class="form-select"
+						name="couponId">
+						<option value="">不使用優惠券</option>
+						<option th:each="coupon : ${coupons}"
+								th:value="${coupon.memCouponKey.couponId}"
+								th:text="${coupon.couponId.name + ' (折扣: $' + coupon.couponId.couponValue + ')'}">
+						</option>
+					</select>
+				</div>
+
+			</div>
+
+			<!-- 促銷活動 -->
+			<div class="promotion-box mt-4">
+				<h3>目前促銷活動</h3>
+				<ul class="mb-0">
+					<li>滿 $2000 免運費</li>
+					<li>床墊類商品 95 折</li>
+				</ul>
+			</div>
+
+			<!-- 金額摘要 -->
+			<div class="order-summary mt-4 text-end">
+				<p>
+					商品小計：$<span th:text="${subtotal}">0</span>
+				</p>
+				<p>
+					優惠折抵：- $<span th:text="${discount}">0</span>
+				</p>
+				<p class="order-total">
+					應付金額：$<span th:text="${finalTotal}">0</span>
+				</p>
+			</div>
+
+			<div class="text-end mt-4">
+				<button type="submit" class="btn btn-warning px-4">確認下單</button>
+			</div>
+
+		</form>
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script th:src="@{/js/checkout.js}"></script>
+
+</body>
+</html>

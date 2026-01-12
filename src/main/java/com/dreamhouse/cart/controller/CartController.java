@@ -62,8 +62,9 @@ public class CartController {
     
 	
 	@PostMapping("addSTD")
-	public String addSTD(@RequestParam("productId") Integer productId, @RequestParam("quantity") Integer quantity, @RequestParam("size") Integer sizePrice, @RequestParam("memberId") Integer memberId, RedirectAttributes ra, ModelMap model) {
-		stdSer.addToCart(productId, quantity, sizePrice, memberId);
+	public String addSTD(@RequestParam("productId") Integer productId, @RequestParam("sizeId") Integer sizeId, @RequestParam("quantity") Integer quantity, @RequestParam("size") Integer sizePrice, @RequestParam("memberId") Integer memberId, RedirectAttributes ra, ModelMap model) {
+	
+		stdSer.addToCart(productId, sizeId, quantity, sizePrice, memberId);
 		
 		
 		ra.addFlashAttribute("message", "商品已成功加入購物車！");
@@ -83,9 +84,9 @@ public class CartController {
 		MemVO memVO = memSer.findById(memberId);
 		
 		
-		Integer price = customClothVO.getCustomClothPrice() + customFeatureVO.getCustomFeaturePrice() + customSizeVO.getCustomSizePrice() + customMaterialVO.getCustomMaterialPrice();
-		if (hasBedFrame == true) {
-			price = price + 5000;
+		Integer totalPrice = customClothVO.getCustomClothPrice() + customFeatureVO.getCustomFeaturePrice() + customSizeVO.getCustomSizePrice() + customMaterialVO.getCustomMaterialPrice();
+		if (bed_frame == true) {
+			totalPrice = totalPrice + 5000;
 		}
 		
 		
@@ -95,23 +96,30 @@ public class CartController {
 		customProd.setFeatureVO(customFeatureVO);
 		customProd.setMaterialVO(customMaterialVO);
 		customProd.setSizeVO(customSizeVO);
-		customProd.setCustomPrice(price);
+		customProd.setCustomPrice(totalPrice);
 		customProd.setMemVO(memVO);
 		
 		customProdSer.addCustomProd(customProd);
-		
-		model.addAttribute("customProdPrice", customProdSer.getOneById(customProductId).getCustomPrice());
-		
+
+		model.addAttribute("customProdPrice", customProd.getCustomPrice());
+
 		//  加入購物車
-		custSer.addToCart(customProductId, quantity, price, memberId);
+		custSer.addToCart(customProd.getCustomProductId(), customSizeId, quantity, totalPrice, memberId);
 		return "redirect:/cart/getCart" + "?memberId=" + memberId;
 	}
 	
 	@GetMapping("getCart")
 	public String getAllCartItem(@RequestParam("memberId") String memberId, ModelMap model) {
 		List<CartItemDTO> cartItems = cartSer.getAllCartItems(Integer.valueOf(memberId));
+
+		// 計算購物車總計
+		double cartTotal = cartItems.stream()
+			.mapToDouble(item -> item.getPrice() * item.getQuantity())
+			.sum();
+
 		model.addAttribute("cartItems", cartItems);
-		
+		model.addAttribute("cartTotal", cartTotal);
+
 		return "front-end/cart/cart";
 	}
 	
