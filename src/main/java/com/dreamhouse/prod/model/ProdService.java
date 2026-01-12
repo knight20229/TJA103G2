@@ -59,7 +59,8 @@ public class ProdService {
     @Autowired
     private ServletContext servletContext;
     
-    @Scheduled(cron = "0 * * * * *")
+//    @Scheduled(cron = "0/30 * * * * *")
+    @Scheduled(fixedRate = 20000)
     @Transactional
     public void autoUpdateProductStatus() {
         int activatedCount = prodRepository.updateStatusToActive();
