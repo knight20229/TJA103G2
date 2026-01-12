@@ -46,13 +46,6 @@ public class EmpController {
 		// 存入 Session（只存必要資訊）
 		session.setAttribute("employeeId", employee.getEmployeeId());
 
-		// 檢查是否有來源頁面
-		String location = (String) session.getAttribute("location");
-		if (location != null) {
-			session.removeAttribute("location");
-			return "redirect:" + location;
-		}
-
 		return "redirect:/back-end";
 	}
 
@@ -93,7 +86,7 @@ public class EmpController {
 //	    @Override
 //	    public void addInterceptors(InterceptorRegistry registry) {
 //	        registry.addInterceptor(loginInterceptor)
-//	                .addPathPatterns("/admin/**", "/back-end/**", "/prod/**") // 後台路徑都要檢查
+//	                .addPathPatterns("/admin/**", "/back-end/**", "/prod/**", "/orders/**", "/returns/**", "/coupon/**", "/promotions/**") // 後台路徑都要檢查
 //	                .excludePathPatterns("/emp/login", "/emp/logout", "/css/**", "/js/**", "/images/**");
 //	    }
 //	}
