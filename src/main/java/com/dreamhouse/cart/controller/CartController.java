@@ -62,12 +62,12 @@ public class CartController {
     
 	
 	@PostMapping("addSTD")
-	public String addSTD(@RequestParam("productId") Integer productId, @RequestParam("quantity") Integer quantity, @RequestParam("price") Integer price, @RequestParam("memberId") Integer memberId, RedirectAttributes ra, ModelMap model) {
-		stdSer.addToCart(productId, quantity, price, memberId);
+	public String addSTD(@RequestParam("productId") Integer productId, @RequestParam("quantity") Integer quantity, @RequestParam("size") Integer sizePrice, @RequestParam("memberId") Integer memberId, RedirectAttributes ra, ModelMap model) {
+		stdSer.addToCart(productId, quantity, sizePrice, memberId);
 		
 		
 		ra.addFlashAttribute("message", "商品已成功加入購物車！");
-		return "redirect:/prod/getOne_For_Display_front" + "?productId=" + productId;
+		return "redirect:/product/" + productId;
 	}
 	
 	@PostMapping("addCustom")

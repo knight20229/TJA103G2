@@ -27,7 +27,7 @@ public class CustomProductVO implements Serializable{
 	@Column(name ="CUSTOM_PRICE")
 	private Integer customPrice;
 		
-	@Column(name ="CREATE_TIME")
+	@Column(name ="CREATE_TIME", insertable = false)
 	private LocalDateTime createTime;
 	
 	@ManyToOne
