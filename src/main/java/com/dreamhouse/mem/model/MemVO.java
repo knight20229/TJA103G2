@@ -35,6 +35,11 @@ public class MemVO implements Serializable {
     private Timestamp updatedTime;
     private Timestamp lastlogin;
 
+    // 新增欄位：驗證信相關
+    private Boolean emailVerified = false;      // 是否已驗證
+    private String verificationToken;           // 驗證用 Token
+    private Timestamp tokenExpireTime;          // Token 有效期限
+
     public MemVO() {}
 
     @Id
@@ -146,6 +151,19 @@ public class MemVO implements Serializable {
     public void setLastLogin(Timestamp lastlogin) {
         this.lastlogin = lastlogin;
     }
+ // 新增欄位 Getter/Setter
+    @Column(name = "email_verified", nullable = false)
+    public Boolean getEmailVerified() { return emailVerified; }
+    public void setEmailVerified(Boolean emailVerified) { this.emailVerified = emailVerified; }
+
+    @Column(name = "verification_token", length = 100)
+    public String getVerificationToken() { return verificationToken; }
+    public void setVerificationToken(String verificationToken) { this.verificationToken = verificationToken; }
+
+    @Column(name = "token_expire_time")
+    public Timestamp getTokenExpireTime() { return tokenExpireTime; }
+    public void setTokenExpireTime(Timestamp tokenExpireTime) { this.tokenExpireTime = tokenExpireTime; }
+
 
 	@Override
 	public String toString() {
