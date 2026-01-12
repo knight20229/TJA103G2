@@ -183,3 +183,20 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 });
+
+//登入時儲存當前頁面
+function loginWithLocation(element) {
+    const loginUrl = element.getAttribute('data-login-url') || '/emp/login';
+    const currentPath = window.location.pathname;
+	let searchParams = window.location.search;    
+	let redirectPath = currentPath + searchParams;    
+	if (currentPath.includes('getOne_For_Update') || currentPath.includes('addProd')) {
+	        if (searchParams) {
+	            redirectPath = '/prod/getOne_For_Display' + searchParams;
+	        } else {
+	            redirectPath = '/prod/listAllProd';
+	        }
+	    }
+    
+    window.location.href = loginUrl + '?location=' + encodeURIComponent(redirectPath);
+}

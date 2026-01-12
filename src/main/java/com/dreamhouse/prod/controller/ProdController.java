@@ -94,7 +94,12 @@ public class ProdController {
 	
 
 	@GetMapping("getOne_For_Display")
-	public String getOneForDisplay(@RequestParam("productId") Integer productId, ModelMap model) {
+	public String getOneForDisplay(@RequestParam(value = "productId", required = false) Integer productId, ModelMap model) {
+		
+		if (productId == null) {
+	        // 如果沒有 ID，就導回列表頁，不要顯示 400 錯誤
+	        return "redirect:/prod/listAllProd";
+	    }
 
 		ProdVO prodVO = prodSvc.getOneProd(productId);
 
