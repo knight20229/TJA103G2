@@ -43,12 +43,10 @@ public class IndexController_inSpringBoot {
     	
     	// 尚未開發的部分，先給固定數值或 0
         model.addAttribute("orderCount", ordersSvc.getAll().size());
-        model.addAttribute("returnCount", 0);
+        model.addAttribute("returnCount", ordersSvc.getAllReturn().size());
 
         model.addAttribute("CouponCount", coupSer.getAll().size());
         model.addAttribute("PromotionCount", proSer.getAll().size());
-
-        model.addAttribute("unreadCount", 0);
         
     	return "back-end/index"; 
     }
