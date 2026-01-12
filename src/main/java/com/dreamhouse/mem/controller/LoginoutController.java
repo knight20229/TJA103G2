@@ -20,8 +20,11 @@ public class LoginoutController {
     // 顯示登入頁面
     @GetMapping("/login")
     public String showLoginForm(Model model) {
-        model.addAttribute("loginForm", new LoginForm()); // LoginForm 是一個 DTO
-        return "front-end/mem/login"; // 對應 login.html / login.jsp
+        // 如果沒有 loginForm，才新增，避免覆蓋掉 flash attributes
+        if (!model.containsAttribute("loginForm")) {
+            model.addAttribute("loginForm", new LoginForm());
+        }
+        return "front-end/mem/login";
     }
 
     // 處理登入提交
@@ -32,44 +35,44 @@ public class LoginoutController {
                                Model model) {
         String sessionCaptcha = (String) session.getAttribute("captcha");
         if (sessionCaptcha == null || !sessionCaptcha.equalsIgnoreCase(captcha)) {
-            model.addAttribute("errorMsg", "驗證碼錯誤"); // 統一使用 errorMsg
+            model.addAttribute("errorMsg", "驗證碼錯誤");
             return "front-end/mem/login";
         }
 
-        // 呼叫 Service 檢查帳號密碼
-        MemVO member = memService.findByAccountAndPassword(
-                loginForm.getAccount(), loginForm.getPassword());
+        try {
+            MemVO member = memService.findByAccountAndPassword(
+                    loginForm.getAccount(), loginForm.getPassword());
 
-        if (member == null) {
-            model.addAttribute("errorMsg", "帳號或密碼錯誤"); // 同樣使用 errorMsg
+            if (member == null) {
+                model.addAttribute("errorMsg", "帳號或密碼錯誤");
+                return "front-end/mem/login";
+            }
+
+            memService.updateLastLogin(member.getMemberId());
+            session.setAttribute("memberId", member.getMemberId());
+
+            String location = (String) session.getAttribute("location");
+            if (location != null) {
+                session.removeAttribute("location");
+                return "redirect:" + location;
+            }
+
+            return "redirect:/mem/my-account";
+
+        } catch (IllegalStateException e) {
+            if ("UNVERIFIED".equals(e.getMessage())) {
+                model.addAttribute("errorMsg", "UNVERIFIED");
+            } else {
+                model.addAttribute("errorMsg", "登入失敗");
+            }
             return "front-end/mem/login";
         }
-
-        // 登入成功 → 更新最後登入時間
-        memService.updateLastLogin(member.getMemberId());
-
-        // 存入 Session（只存必要資訊）
-        session.setAttribute("memberId", member.getMemberId());
-
-        // 檢查是否有來源頁面
-        String location = (String) session.getAttribute("location");
-        if (location != null) {
-            session.removeAttribute("location");
-            return "redirect:" + location;
-        }
-
-        return "redirect:/mem/my-account";
     }
-    
+
     // 處理登出
- 	@GetMapping("/logout")
- 	public String logout(HttpSession session) {
- 		// 清除所有 Session 資料
- 		session.invalidate();
- 		// 導回登入頁面
- 		return "redirect:/mem/login";
- 	}
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/mem/login";
+    }
 }
-
-
-
