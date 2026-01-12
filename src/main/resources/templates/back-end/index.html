@@ -23,8 +23,9 @@
 <body>
 	<!-- ========== 左側側邊欄 ========== -->
 	<nav class="sidebar">
-		<h5 class="mb-4 fs-4 text-decoration-none fw-bold" th:href="@{/back-end}">後台管理</h5>
-		
+		<h5 class="mb-4 fs-4 text-decoration-none fw-bold"
+			th:href="@{/back-end}">後台管理</h5>
+
 		<div
 			class="mb-4 px-3 py-2 bg-light rounded shadow-sm border-start border-4 border-primary">
 			<div th:if="${session.employeeId != null}">
@@ -58,8 +59,7 @@
 						<li><a class="nav-link" th:href="@{/prod/listAllProd}">商品列表</a></li>
 						<li><a class="nav-link" th:href="@{/prod/addProd}">新增商品</a></li>
 					</ul>
-				</div>
-			</li>
+				</div></li>
 
 			<!-- 訂單管理 -->
 			<li class="nav-item fs-5"><a
@@ -73,8 +73,7 @@
 						<li><a class="nav-link" th:href="@{/orders/list}">訂單紀錄</a></li>
 						<li><a class="nav-link" th:href="@{/returns/list}">退貨處理</a></li>
 					</ul>
-				</div>
-			</li>
+				</div></li>
 			<!-- 活動管理 -->
 			<li class="nav-item fs-5"><a
 				class="nav-link d-flex justify-content-between align-items-center "
@@ -84,13 +83,11 @@
 
 				<div class="collapse fs-6" id="menu_activity">
 					<ul class="nav flex-column ms-3">
-						<li><a class="nav-link"
-							th:href="@{/coupon/getAllCoupon}">優惠券管理</a></li>
+						<li><a class="nav-link" th:href="@{/coupon/getAllCoupon}">優惠券管理</a></li>
 						<li><a class="nav-link"
 							th:href="@{/promotions/getAllPromotions}">促銷管理</a></li>
 					</ul>
-				</div>
-			</li>
+				</div></li>
 		</ul>
 
 		<div class="mt-4 d-flex justify-content-center logout-wrapper">
@@ -120,8 +117,7 @@
 				</div>
 			</div>
 
-			<div class="row g-4">
-				<div class="col-12 col-md-6 col-lg-4">
+			<div class="row g-3 justify-content-center mx-auto" style="max-width: 900px;">				<div class="col-12 col-md-4 col-lg-6">
 					<a th:href="@{/admin/mem/list}" class="text-decoration-none h-100">
 						<div class="card h-100 shadow-sm admin-card">
 							<div
@@ -132,14 +128,15 @@
 								<div class="text-center">
 									<h5 class="mb-2 fw-bold text-dark">會員管理</h5>
 									<small class="text-muted fw-bold">總會員數：<span
-										th:text="${memCount}" class="badge rounded-pill bg-primary text-white fw-bold">0</span></small>
+										th:text="${memCount}"
+										class="badge rounded-pill bg-primary text-white fw-bold">0</span></small>
 								</div>
 							</div>
 						</div>
 					</a>
 				</div>
 
-				<div class="col-12 col-md-6 col-lg-4">
+				<div class="col-12 col-md-4 col-lg-6">
 					<a th:href="@{/prod/listAllProd}"
 						class="text-decoration-none h-100">
 						<div class="card h-100 shadow-sm admin-card">
@@ -151,47 +148,49 @@
 								<div class="text-center">
 									<h5 class="mb-2 fw-bold text-dark">商品管理</h5>
 									<small class="text-muted fw-bold">商品總數：<span
-										th:text="${prodCount}" class="badge rounded-pill bg-success text-white fw-bold">0</span></small>
+										th:text="${prodCount}"
+										class="badge rounded-pill bg-success text-white fw-bold">0</span></small>
 								</div>
 							</div>
 						</div>
 					</a>
 				</div>
 
-				<div class="col-12 col-md-6 col-lg-4">
+				<div class="col-12 col-md-4 col-lg-6">
 					<div class="card h-100 shadow-sm admin-card border-0">
 						<div
 							class="card-body d-flex flex-column align-items-center justify-content-center py-4">
 
 							<div class="d-flex flex-column align-items-center mb-3">
-								<div class="icon-box bg-info bg-opacity-10 mb-3"
-									style="width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+								<div class="icon-box bg-info bg-opacity-10 mb-2">
 									<i class="bi bi-receipt text-info fs-3"></i>
 								</div>
-								<h5 class="mb-2 fw-bold text-dark">訂單管理</h5>
+								<h5 class="mb-0 fw-bold text-dark">訂單管理</h5>
 							</div>
 
 							<div class="row g-2 w-100">
 								<div class="col-6">
-								    <a th:href="@{/orders/list}"
-								       class="btn btn-info w-100 py-3 d-flex flex-column align-items-center shadow-sm border-2">
-								        <i class="bi bi-clipboard-data mb-1 fs-4"></i>
-								        <span class="fw-bold">訂單紀錄</span>
-								        <div class="mt-1">
-								            <span class="small opacity-75 fw-bold">訂單數量：</span>
-								            <span class="badge rounded-pill bg-dark text-white fw-bold" th:text="${orderCount}">0</span>
-								        </div>
-								    </a>
+									<a th:href="@{/orders/list}"
+										class="btn btn-info w-100 py-3 d-flex flex-column align-items-center shadow-sm border-2">
+										<i class="bi bi-clipboard-data mb-1 fs-4"></i> <span
+										class="fw-bold">訂單紀錄</span>
+										<div class="mt-1">
+											<span class="small opacity-75 fw-bold">訂單數量：</span> <span
+												class="badge rounded-pill bg-dark text-white fw-bold"
+												th:text="${orderCount}">0</span>
+										</div>
+									</a>
 								</div>
 								<div class="col-6">
 									<a th:href="@{/returns/list}"
 										class="btn btn-info w-100 py-3 d-flex flex-column align-items-center shadow-sm border-2">
-										<i class="bi bi-box-arrow-left mb-1 fs-4"></i> 
-							        	<span class="fw-bold">退貨處理</span>
-    									<div class="mt-1">
-								            <span class="small opacity-75 fw-bold">退貨訂單：</span>
-								            <span class="badge rounded-pill bg-dark text-white fw-bold" th:text="${returnCount}">0</span>
-								        </div>
+										<i class="bi bi-box-arrow-left mb-1 fs-4"></i> <span
+										class="fw-bold">退貨處理</span>
+										<div class="mt-1">
+											<span class="small opacity-75 fw-bold">退貨訂單：</span> <span
+												class="badge rounded-pill bg-dark text-white fw-bold"
+												th:text="${returnCount}">0</span>
+										</div>
 									</a>
 								</div>
 							</div>
@@ -200,7 +199,7 @@
 					</div>
 				</div>
 
-				<div class="col-12 col-md-6 col-lg-4">
+				<div class="col-12 col-md-4 col-lg-6">
 					<div class="card h-100 shadow-sm admin-card border-0">
 						<div
 							class="card-body d-flex flex-column align-items-center justify-content-center py-4">
@@ -216,23 +215,25 @@
 								<div class="col-6">
 									<a th:href="@{/coupon/getAllCoupon}"
 										class="btn btn-warning w-100 py-3 d-flex flex-column align-items-center shadow-sm sub-management-btn">
-										<i class="bi bi-ticket-perforated-fill mb-1 fs-5"></i> <span
-										class="fw-bold small">優惠券管理</span>
-    									<div class="mt-1">
-								            <span class="small opacity-75 fw-bold">優惠券數量：</span>
-								            <span class="badge rounded-pill bg-dark text-white fw-bold" th:text="${CouponCount}">0</span>
-								        </div>
+										<i class="bi bi-ticket-perforated-fill mb-1 fs-4"></i> <span
+										class="fw-bold">優惠券管理</span>
+										<div class="mt-1">
+											<span class="small opacity-75 fw-bold">優惠券數量：</span> <span
+												class="badge rounded-pill bg-dark text-white fw-bold"
+												th:text="${CouponCount}">0</span>
+										</div>
 									</a>
 								</div>
 								<div class="col-6">
 									<a th:href="@{/promotions/getAllPromotions}"
 										class="btn btn-warning w-100 py-3 d-flex flex-column align-items-center shadow-sm sub-management-btn">
-										<i class="bi bi-megaphone-fill mb-1 fs-5"></i> <span
-										class="fw-bold small">促銷活動管理</span>
-    									<div class="mt-1">
-								            <span class="small opacity-75 fw-bold">活動數量：</span>
-								            <span class="badge rounded-pill bg-dark text-white fw-bold" th:text="${PromotionCount}">0</span>
-								        </div>
+										<i class="bi bi-megaphone-fill mb-1 fs-4"></i> <span
+										class="fw-bold">促銷活動管理</span>
+										<div class="mt-1">
+											<span class="small opacity-75 fw-bold">活動數量：</span> <span
+												class="badge rounded-pill bg-dark text-white fw-bold"
+												th:text="${PromotionCount}">0</span>
+										</div>
 									</a>
 								</div>
 							</div>
@@ -240,30 +241,10 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="col-12 col-md-6 col-lg-4">
-					<a href="#" class="admin-link">
-						<div class="card h-100 shadow-sm admin-card">
-							<div
-								class="card-body d-flex flex-column align-items-center justify-content-center py-4">
-								<div class="icon-box bg-danger bg-opacity-10 mb-3">
-									<i class="bi bi-chat-dots-fill text-danger fs-3"></i>
-								</div>
-								<div class="text-center">
-									<h5 class="mb-2 fw-bold text-dark">客服管理</h5>
-									<p class="mb-0">
-										<small class="text-muted fw-bold">未讀訊息：</small> <span
-											class="badge rounded-pill bg-danger" th:text="${unreadCount}">0</span>
-									</p>
-								</div>
-							</div>
-						</div>
-					</a>
-				</div>
 			</div>
 		</div>
-		
-        <!--登出確認Model -->
+
+		<!--登出確認Model -->
 		<div class="modal fade" id="logoutModal" tabindex="-1"
 			aria-labelledby="logoutModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">

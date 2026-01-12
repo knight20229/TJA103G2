@@ -141,32 +141,8 @@
     font: inherit;
 }
 
-.功能布料{
-  width: 50%;
-}
-.材質功能{
-  display: flex;
-}
-.材質{
-  width: 90%;
-}
-.single-image{
-  display: flex;
-}
-
-.商品數量{
-  margin-top: 10px;
-  line-height: 28px;
-}
-
-.客製化商品總額{
-  margin-bottom: 5px;
-  margin-right: 5px;
-  width: 22%;
-  border: 1px solid #ccc;
-  padding: 5px;
-  border-radius: 6px;
-}
+.shop-product-wrap { display: flex; flex-wrap: wrap; gap: 10px; }
+.shop-product-wrap .col-lg-4 { width: 30%; border: 1px solid #ccc; padding: 10px; }
 
 .focaus-group{
   border:1px solid black;
@@ -184,7 +160,7 @@
   border-radius: 5px;
 }
 
-.特色群組{
+.Featured-groups{
   background-color: #edebebf0;
   letter-spacing: 1px;
   /* border-radius: 5px;
@@ -194,12 +170,9 @@
   margin-bottom: 15px;
   padding :10px;
 }
-.產品特色標題{
+.Product-Featured-Title{
   font-size: 18px;
   font-weight: 700;
-}
-.產品特色{
-  font-size: 18px;
 }
 
 *, *::after, *::before {
@@ -6766,9 +6739,9 @@ Main components
     max-width: 100%;
   }
 }
-.shop-product-wrap .single-grid-product {
-  margin-bottom: 30px;
-}
+/* .shop-product-wrap .single-grid-product { */
+/*   margin-bottom: 10px; */
+/* } */
 .shop-product-wrap.grid .single-list-product {
   display: none;
 }

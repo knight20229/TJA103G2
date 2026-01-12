@@ -23,6 +23,12 @@ public class FrontProdController {
         return "front-end/index"; 
     }
     
+    //
+    @GetMapping("/aboutus")
+    public String aboutUs() {
+    	return "front-end/aboutus";
+    }
+    
     //搜尋商品
     @GetMapping("/search")
     public String searchProds(@RequestParam("product") String prodName, Model model) {
