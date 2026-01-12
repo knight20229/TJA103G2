@@ -109,7 +109,7 @@
 												</p>
 
 												<div class="minicart-wrapper__buttons">
-													<a href="cart.html"
+													<a th:href="@{/cart/getCart(memberId=${session.memberId})}"
 														class="theme-button theme-button--minicart-button">查看購物車</a>
 												</div>
 											</div></li>
@@ -209,13 +209,14 @@
 					<div class="col-lg-6">
 
 						<div class="product-details-description-wrapper">
+							
 							<h2 class="item-title" th:text="${product.productName}">商品名稱</h2>
 
 							<div class="特色群組">
 								<p class="產品特色標題" th:text="${product.description}">商品描述</p>
 							</div>
 							<br>
-
+							<form class="" th:action="@{/cart/addSTD}" method="post">
 							<div class="product-size">
 								<span class="product-details-title"><strong>尺寸:</strong></span>
 								<select class="nice-select" name="size">
@@ -235,12 +236,13 @@
 							<div class="product-quantity-cart d-flex align-items-center">
 								<div class="quantity-selector">
 									<button type="button" class="qty-btn minus">-</button>
-									<input type="text" class="qty-input" value="1" readonly>
+									<input type="text" name="quantity" class="qty-input" value="1" readonly>
 									<button type="button" class="qty-btn plus">+</button>
 								</div>
 
 								<div class="add-to-cart-btn ms-3">
 									<button type="submit" class="theme-button theme-button--alt">加入購物車</button>
+									<span th:text="${message}"></span>
 								</div>
 							</div>
 
@@ -254,6 +256,9 @@
 									</tr>
 								</table>
 							</div>
+							<input type="hidden" name="memberId" th:value="${session.memberId}">
+							<input type="hidden" name="productId" th:value="${product.productId}">
+							</form>
 						</div>
 
 					</div>

@@ -63,5 +63,6 @@ public class CustomProductService {
 	public Integer getCount() {
 		List<CustomProductVO> customProdList = customProdRepo.findAll();
 		return customProdList.size();
+		
 	}
 }

@@ -83,7 +83,7 @@
 	<div id="cart-content" th:if="${not #lists.isEmpty(cartItems)}">
 		<div class="container">
 			<h1 class="mb-3">購物車</h1>
-
+		<form method="post" th:action="@{/checkout}">
 			<table class="cart-table">
 				<thead>
 					<tr>
@@ -113,13 +113,13 @@
 					</tr>
 				</tbody>
 			</table>
-
+			<input type="hidden" name="memberId" th:value="${session.memberId}">
 			<div class="cart-total">
 				總計: $<span th:text="${cartTotal}">0</span>
 			</div>
-
-			<div class="text-end mt-4">
-				<a th:href="@{/checkout}" class="btn btn-warning px-4">前往結帳</a>
+			</form>
+			<div class="add-to-cart-btn d-inline-block">
+				<button type="submit" class="theme-button theme-button--alt">前往結帳</button>
 			</div>
 		</div>
 	</div>
