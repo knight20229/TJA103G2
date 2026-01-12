@@ -51,7 +51,7 @@
 
 
 .length_weight{
-  width: 55%;
+  width: 80%;
 }
 
 .has_bed_frame{
@@ -7273,7 +7273,7 @@ Main components
 .product-details-description-wrapper .product-size .nice-select {
   font-size:16px;
   float: none;
-  width: 85%;
+  width: 100%;
   display: inline-block;
 }
 .product-details-description-wrapper .description {
