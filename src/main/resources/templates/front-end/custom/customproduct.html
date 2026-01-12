@@ -303,7 +303,7 @@
 									id="total-price" style="font-size: 18px;"></span> 
 									<input type="hidden" name="customProductId" th:value="${customProductCount} + 1"> 
 									<input type="hidden" name="quantity" value="1"> 
-									<input type="hidden" name="price" value="2000"> 
+									<input type="hidden" name="price" th:value="${customProdPrice}"> 
 									<input type="hidden" name="memberId" th:value="${session.memberId}">
 							</div>
 

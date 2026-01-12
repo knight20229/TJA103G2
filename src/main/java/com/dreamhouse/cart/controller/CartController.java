@@ -71,7 +71,7 @@ public class CartController {
 	}
 	
 	@PostMapping("addCustom")
-	public String addCustom(@RequestParam("customProductId") Integer customProductId, @RequestParam("quantity") Integer quantity, @RequestParam("price") Integer price, @RequestParam("memberId") Integer memberId, @RequestParam("cloth") Integer customClothId, @RequestParam("size") Integer customSizeId, @RequestParam("material") Integer customMaterialId, @RequestParam("feature") Integer customFeatureId, @RequestParam("bed_frame") Boolean hasBedFrame, ModelMap model) {
+	public String addCustom(@RequestParam("customProductId") Integer customProductId, @RequestParam("quantity") Integer quantity, @RequestParam("memberId") Integer memberId, @RequestParam("cloth") Integer customClothId, @RequestParam("size") Integer customSizeId, @RequestParam("material") Integer customMaterialId, @RequestParam("feature") Integer customFeatureId, @RequestParam("bed_frame") Boolean hasBedFrame, ModelMap model) {
 		
 		
 		// 在mysql新增一筆客製化商品
@@ -80,6 +80,13 @@ public class CartController {
 		CustomSizeVO customSizeVO = customSizeSer.getOneById(customSizeId);
 		CustomMaterialVO customMaterialVO = customMaterSer.getOneById(customMaterialId);
 		MemVO memVO = memSer.findById(memberId);
+		
+		
+		Integer price = customClothVO.getCustomClothPrice() + customFeatureVO.getCustomFeaturePrice() + customSizeVO.getCustomSizePrice() + customMaterialVO.getCustomMaterialPrice();
+		if (hasBedFrame == true) {
+			price = price + 5000;
+		}
+		
 		
 		CustomProductVO customProd = new CustomProductVO();
 		customProd.setHasBedFrame(hasBedFrame);
@@ -91,6 +98,8 @@ public class CartController {
 		customProd.setMemVO(memVO);
 		
 		customProdSer.addCustomProd(customProd);
+		
+		model.addAttribute("customProdPrice", customProdSer.getOneById(customProductId).getCustomPrice());
 		
 		//  加入購物車
 		custSer.addToCart(customProductId, quantity, price, memberId);
