@@ -25,6 +25,24 @@
 	<nav class="sidebar">
 		<a class="mb-4 fs-4 text-decoration-none fw-bold"
 			th:href="@{/back-end}">後台管理</a>
+			
+		<div
+			class="mb-4 px-3 py-2 bg-light rounded shadow-sm border-start border-4 border-primary">
+			<div th:if="${session.employeeId != null}">
+				<div class="d-flex align-items-center mb-1">
+					<i class="bi bi-person-badge-fill text-primary me-2 fs-5"></i> <span
+						class="fw-bold text-dark" th:text="${session.employeeName}">管理員姓名</span>
+				</div>
+				<div class="text-muted" style="font-size: 0.85rem;">
+					ID: <span th:text="${session.employeeId}">0</span>
+				</div>
+			</div>
+
+			<div th:if="${session.employeeId == null}" class="py-1">
+				<i class="bi bi-person-exclamation text-warning me-1"></i> <span
+					class="text-muted small">尚未登入系統</span>
+			</div>
+		</div>
 
 		<ul class="nav flex-column">
 			<li class="nav-item"><a class="nav-link fs-5"
@@ -70,13 +88,22 @@
 							th:href="@{/promotions/getAllPromotions}">促銷管理</a></li>
 					</ul>
 				</div></li>
-			<li class="nav-item fs-5"><a class="nav-link" href="#">客服管理</a></li>
 		</ul>
 
 		<div class="mt-4 d-flex justify-content-center logout-wrapper">
-			<button class="btn btn-outline-primary w-50 fw-bold btn-logout">
+
+			<button th:if="${session.employeeId != null}" type="button"
+				class="btn btn-primary w-50 fw-bold btn-logout"
+				data-bs-toggle="modal" data-bs-target="#logoutModal">
 				<i class="bi bi-box-arrow-right"></i> 登出
 			</button>
+
+			<a th:if="${session.employeeId == null}" href="javascript:void(0)"
+				th:data-login-url="@{/emp/login}" onclick="loginWithLocation(this)"
+				class="btn btn-primary w-50 fw-bold"> <i
+				class="bi bi-box-arrow-in-right"></i> 登入
+			</a>
+
 		</div>
 	</nav>
 
@@ -159,6 +186,27 @@
                 <button type="button" class="btn btn-primary" id="cancel">取消</button>
             </div>
         </form>
+        
+        <!--登出確認Model -->
+		<div class="modal fade" id="logoutModal" tabindex="-1"
+			aria-labelledby="logoutModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="logoutModalLabel">確認登出</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">你確定要登出嗎？</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-danger"
+							th:onclick="|window.location.href='@{/emp/logout}'|">
+							確定登出</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
     </main>
 

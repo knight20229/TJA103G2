@@ -26,9 +26,16 @@ public class EmpController {
 
 	// 顯示登入頁面
 	@GetMapping("/login")
-	public String showLoginForm(Model model) {
-		model.addAttribute("loginForm", new LoginForm()); // LoginForm 是一個 DTO
-		return "back-end/emp/login"; // 對應 login.html / login.jsp
+	public String showLoginPage(@RequestParam(required = false) String location, 
+            HttpSession session, 
+            Model model) {
+	// 儲存當前頁面
+	if (location != null && !location.isEmpty()) {
+	session.setAttribute("location", location);
+	}
+	
+	model.addAttribute("loginForm", new LoginForm());
+	return "back-end/emp/login"; 
 	}
 
 	// 處理登入提交
@@ -45,6 +52,13 @@ public class EmpController {
 
 		// 存入 Session（只存必要資訊）
 		session.setAttribute("employeeId", employee.getEmployeeId());
+		session.setAttribute("employeeName", employee.getName());		
+		// 檢查是否有來源頁面
+		String location = (String) session.getAttribute("location");
+		if (location != null) {
+			session.removeAttribute("location");
+			return "redirect:" + location;
+		}
 
 		return "redirect:/back-end";
 	}
