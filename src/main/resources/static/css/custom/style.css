@@ -51,7 +51,7 @@
 
 
 .length_weight{
-  width: 55%;
+  width: 80%;
 }
 
 .has_bed_frame{
@@ -69,11 +69,8 @@
     text-align: left;
     font: inherit;
 }
-.功能布料{
+.feature-cloth{
   width: 70%;
-}
-.材質功能{
-  display: flex;
 }
 
 .material{
@@ -83,12 +80,7 @@
   display: flex;
 }
 
-.商品數量{
-  margin-top: 10px;
-  line-height: 28px;
-}
-
-.客製化商品總額{
+.custom-total{
   margin-bottom: 5px;
   margin-right: 5px;
   width: 25%;
@@ -111,24 +103,6 @@
 
 .navbar {
   border-radius: 5px;
-}
-
-.特色群組{
-  background-color: #edebebf0;
-  letter-spacing: 1px;
-  /* border-radius: 5px;
-  border:1px solid rgba(164, 116, 116, 0.414); */
-  /* margin: 10px ; */
-  border-radius: 10px;
-  margin-bottom: 15px;
-  padding :10px;
-}
-.產品特色標題{
-  font-size: 18px;
-  font-weight: 700;
-}
-.產品特色{
-  font-size: 18px;
 }
 
 *, *::after, *::before {
@@ -7273,7 +7247,7 @@ Main components
 .product-details-description-wrapper .product-size .nice-select {
   font-size:16px;
   float: none;
-  width: 85%;
+  width: 100%;
   display: inline-block;
 }
 .product-details-description-wrapper .description {
