@@ -98,7 +98,7 @@ public class RegisterController {
     }
 
     // 重寄驗證信
-    @PostMapping("/resend-verification")
+    @PostMapping("/resend-verification") 
     public String resend(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
         boolean resent = memService.resendVerification(email);
         if (resent) {
