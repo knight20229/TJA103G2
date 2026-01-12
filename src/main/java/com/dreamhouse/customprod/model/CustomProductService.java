@@ -1,6 +1,7 @@
 package com.dreamhouse.customprod.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,6 +64,11 @@ public class CustomProductService {
 	public Integer getCount() {
 		List<CustomProductVO> customProdList = customProdRepo.findAll();
 		return customProdList.size();
+	}
+	
+	public CustomProductVO getOneById(Integer customProductId) {
+		Optional<CustomProductVO> optional = customProdRepo.findById(customProductId);
+		return optional.orElse(null);
 		
 	}
 }

@@ -253,12 +253,13 @@
 
 							<div class="custom-total">
 								<span style="font-size: 18px; font-weight: 600;">小計：</span> <span
-									id="total-price" style="font-size: 18px;"></span> <input
-									type="hidden" name="customProductId"
-									th:value="${customProductCount} + 1"> <input
-									type="hidden" name="quantity" value="1"> <input
-									type="hidden" name="price" value="2000"> <input
-									type="hidden" name="memberId" th:value="${session.memberId}">
+                                                                                  
+									id="total-price" style="font-size: 18px;"></span> 
+									<input type="hidden" name="customProductId" th:value="${customProductCount} + 1"> 
+									<input type="hidden" name="quantity" value="1"> 
+									<input type="hidden" name="price" th:value="${customProdPrice}"> 
+									<input type="hidden" name="memberId" th:value="${session.memberId}">
+
 							</div>
 
 							<div class="add-to-cart-btn d-inline-block">
