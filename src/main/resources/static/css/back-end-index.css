@@ -112,3 +112,28 @@ main {
 	padding: 5px;
 	margin-left: -10px;
 }
+
+/* 後台首頁卡片 */
+.admin-card {
+    /* 1. 使用長方形比例 (寬 1.6 : 高 1) */
+    aspect-ratio: 1.6 / 1; 
+    
+    /* 2. 限制最大寬度，避免在寬螢幕上無限變大 */
+    max-width: 400px;
+    margin: 0 auto; /* 置中 */
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+/* 縮小 Icon 大小 */
+.icon-box {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.icon-box i {
+    font-size: 1.5rem !important;
+}

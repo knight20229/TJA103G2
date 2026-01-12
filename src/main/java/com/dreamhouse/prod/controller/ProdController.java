@@ -97,7 +97,6 @@ public class ProdController {
 	public String getOneForDisplay(@RequestParam(value = "productId", required = false) Integer productId, ModelMap model) {
 		
 		if (productId == null) {
-	        // 如果沒有 ID，就導回列表頁，不要顯示 400 錯誤
 	        return "redirect:/prod/listAllProd";
 	    }
 
@@ -422,7 +421,6 @@ public class ProdController {
 				new org.springframework.beans.propertyeditors.CustomCollectionEditor(java.util.List.class) {
 					@Override
 					protected Object convertElement(Object element) {
-						// 這裡就是關鍵：Spring 會把每一個勾選的 ID 丟進來
 						if (element instanceof String text) {
 							FeatVO feat = new FeatVO();
 							feat.setFeatureId(Integer.parseInt(text));
