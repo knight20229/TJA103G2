@@ -1,9 +1,11 @@
 package com.dreamhouse.customsize.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class CustomSizeService {
@@ -22,5 +24,11 @@ public class CustomSizeService {
 	
 	public List<CustomSizeVO> getAll(){
 		return repository.findAll();
+	}
+	
+	public CustomSizeVO getOneById(Integer customSizeId) {
+		Optional<CustomSizeVO> optional = repository.findById(customSizeId);
+		return optional.orElse(null);
+		
 	}
 }

@@ -8,30 +8,27 @@ import org.springframework.stereotype.Service;
 
 import com.dreamhouse.prod.model.ProdService;
 import com.dreamhouse.prod.model.ProdSizeConnectService;
-import com.dreamhouse.prod.model.ProdSizeConnectVO;
 import com.dreamhouse.prod.model.ProdVO;
 import com.dreamhouse.size.model.SizeService;
-import com.dreamhouse.size.model.SizeVO;
 
 @Service("standardProdCartService")
 public class StandardProdCartService implements CartStrategy{
 	@Autowired
-	ProdService prodSer;
+	private ProdService prodSer;
 	@Autowired
-	ProdSizeConnectService prodSizeConnSer;
+	private ProdSizeConnectService prodSizeConnSer;
 	@Autowired
 	SizeService sizeSer;
 	@Autowired
-	RedisTemplate<String, Object> redisTemp;
+	private RedisTemplate<String, Object> redisTemp;
+	
 
 	@Override
-	public void addToCart(Integer productId, Integer sizeId, Integer quantity, Integer price, Integer memberId) {
+	public void addToCart(Integer productId, Integer quantity, Integer price, Integer memberId) {
 		// 刪除商品、查詢購物車列表等功能請參閱 CartService
 		
 		
 		ProdVO prodVO = prodSer.getOneProd(productId);
-//		SizeVO sizeVO = sizeSer.getOneSize(sizeId);
-//		ProdSizeConnectVO prodSeizeVO = prodSizeConnSer.getOneProdSizeConnVO(productId, sizeId);
 		String cartKey = new StringBuilder("cart").append(":").append(memberId).toString();
 		String itemKey = new StringBuilder("STD").append(":").append(productId).toString();
 		
