@@ -186,6 +186,7 @@ public class MemVO implements Serializable {
 	}
 	
 	@OneToMany(mappedBy = "memVO")
+	@JsonIgnore
 	public Set<CustomProductVO> getCustomProduct() {
 		return customProduct;
 	}
