@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>夢享家 DreamHouse</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Favicon -->
+<link th:href="@{/images/dreamhouseb.ico}" rel="icon">
+<!-- Font Awesome 6 CDN -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+	rel="stylesheet">
+<!-- Vendor CSS -->
+<link rel="stylesheet" th:href="@{/css/prod/vendors.css}">
+<!-- Main CSS -->
+<link rel="stylesheet" th:href="@{/css/prod/style.css}">
+
+
+</head>
+
+<body>
+
+
+	<div
+		class="header-area header-area--default header-area--default--white header-sticky">
+
+		<div
+			class="header-navigation-area header-navigation-area--white header-navigation-area--extra-space d-none d-lg-block">
+			<div class="container wide">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="header-info-wrapper header-info-wrapper--alt-style">
+
+							<div class="header-logo">
+								<a href="首頁.html"> <img src="logo.png" class="img-fluid"
+									alt="">
+								</a>
+							</div>
+
+							<div class="header-navigation-wrapper">
+								<nav>
+									<ul>
+
+										<li class="has-children"><a href="首頁.html">商品瀏覽</a></li>
+										<li class="has-children"><a href="商品比較.html">商品比較</a></li>
+										<li class="has-children"><a href="客製化商品.html">客製化商品</a></li>
+										<li class="has-children"><a href="關於我們.html">關於我們</a></li>
+									</ul>
+								</nav>
+							</div>
+
+							<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+								<div class="container-fluid">
+									<div class="collapse navbar-collapse"
+										id="navbarSupportedContent">
+										<form id="searchForm" class="d-flex" th:action="@{/search}"
+											method="get">
+											<input id="searchInput" class="form-control me-2"
+												type="search" name="product" placeholder="搜尋商品">
+											<button id="searchBtn" type="submit"
+												class="btn btn-outline-success">Search</button>
+										</form>
+									</div>
+								</div>
+							</nav>
+
+							<div class="header-icon-area">
+
+								<div class="header-icon d-flex align-items-center">
+									<ul class="header-icon__list">
+										<li><a href="javascript:void(0)" id="fa-solid fa-message"><i
+												class="fa-solid fa-message" style="color: #B197FC;"></i></i></a></li>
+										<li><a href="javascript:void(0)" id="fa-solid fa-user"><i
+												class="fa-solid fa-user" style="color: #B197FC;"></i></a></li>
+										<li><a href="javascript:void(0)" id="fa-solid fa-bell"><i
+												class="fa-solid fa-bell" style="color: #B197FC"></i></a></li>
+
+										<li><a href="cart.html"><i
+												class="fa-solid fa-cart-shopping" style="color: #B197FC;"></i></span></a>
+											<div class="minicart-wrapper">
+												<p class="minicart-wrapper__title">購物車</p>
+
+												<div class="minicart-wrapper__items ps-scroll">
+													<div class="minicart-wrapper__items__single">
+														<a href="javascript:void(0)" class="close-icon"><i
+															class="pe-7s-close"></i></a>
+														<div class="image">
+															<a href="商品瀏覽.html"> <img
+																src="assets/img/products/product-2-90x100.jpg"
+																class="img-fluid" alt="">
+															</a>
+														</div>
+														<div class="content">
+															<p class="product-title">
+																<a href="商品瀏覽.html">Jane Lauren Rebel Sofa</a>
+															</p>
+															<p class="product-calculation">
+																<span class="count">1</span> x <span class="price">$900</span>
+															</p>
+														</div>
+													</div>
+												</div>
+
+												<p class="minicart-wrapper__subtotal">
+													總計: <span>$1800</span>
+												</p>
+
+												<div class="minicart-wrapper__buttons">
+													<a href="cart.html"
+														class="theme-button theme-button--minicart-button">查看購物車</a>
+												</div>
+											</div></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="breadcrumb-area section-space--breadcrumb">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 offset-lg-3">
+
+						<div class="breadcrumb-wrapper">
+							<h2 class="page-title">關於我們</h2>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="about-us-brief-wrapper section-space--small">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-xl-4 col-lg-5">
+							<h2 class="about-us-brief-title">最佳的床墊購物網站</h2>
+						</div>
+						<div class="col-xl-8 col-lg-7">
+							<div class="about-us-brief-desc">
+								<p>「我們致力打造床墊購物的最佳網站，提供多元品牌選擇、透明價格與快速配送服務，讓每位顧客都能輕鬆找到最適合自己的高品質床墊，享受舒適好眠的購物體驗。」</p>
+
+								<p>「作為專業床墊購物平台，我們整合評比、用戶評論與優惠資訊，幫助顧客做出明智選擇，提供可靠的線上購買環境，確保每次下單都安心、省時又放心。」</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="header-mobile-navigation d-block d-lg-none">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-6 col-md-6">
+						<div class="header-logo">
+							<a href="index.html"> <img src="assets/img/logo2.png"
+								class="img-fluid" alt="">
+							</a>
+						</div>
+					</div>
+					<div class="col-6 col-md-6">
+						<div class="mobile-navigation text-end">
+							<ul class="header-icon__list header-icon__list">
+								<li><a href="wishlist.html"><i class="fa fa-heart-o"></i><span
+										class="item-count">1</span></a></li>
+								<li><a href="cart.html"><i
+										class="fa fa-shopping-basket"></i><span class="item-count">3</span></a>
+								</li>
+								<li><a href="javascript:void(0)" class="mobile-menu-icon"
+									id="mobile-menu-trigger"><i class="fa fa-bars"></i></a></li>
+							</ul>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="breadcrumb-area section-space--breadcrumb">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 offset-lg-3"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="page-content-wrapper">
+		<div class="about-page-top-wrapper section-space">
+
+			<div class="about-us-slider-wrapper section-space--small">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="about-us-slider theme-slick-slider"
+								data-slick-setting='{
+                                "slidesToShow": 1,
+                                "slidesToScroll": 1,
+                                "arrows": false,
+                                "dots": true,
+                                "autoplay": false,
+                                "autoplaySpeed": 5000,
+                                "speed": 500,
+                                "prevArrow": {"buttonClass": "slick-prev", "iconClass": "fa fa-angle-left" },
+                                "nextArrow": {"buttonClass": "slick-next", "iconClass": "fa fa-angle-right" }
+                            }'
+								data-slick-responsive='[
+                                {"breakpoint":1501, "settings": {"slidesToShow": 1, "arrows": false} },
+                                {"breakpoint":1199, "settings": {"slidesToShow": 1, "arrows": false} },
+                                {"breakpoint":991, "settings": {"slidesToShow": 1, "arrows": false, "slidesToScroll": 1} },
+                                {"breakpoint":767, "settings": {"slidesToShow": 1, "arrows": false, "slidesToScroll": 1} },
+                                {"breakpoint":575, "settings": {"slidesToShow": 1, "arrows": false, "slidesToScroll": 1} },
+                                {"breakpoint":479, "settings": {"slidesToShow": 1, "arrows": false, "slidesToScroll": 1} }
+                            ]'>
+
+								<div class="single-image">
+									<img src="assets/產品圖片/關於我們.png" class="img-fluid" alt="">
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="about-us-process-wrapper">
+				<div class="container">
+					<div class="row">
+
+						<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="single-process">
+								<h3 class="title">
+									<span>01.</span>服務
+								</h3>
+								<p class="description">我們的客戶服務團隊可以解答您可能遇到的任何問題，並提供以下方面的個人化協助：日程安排、可用性、大量訂單和客製化訂單。</p>
+							</div>
+						</div>
+
+						<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="single-process">
+								<h3 class="title">
+									<span>02.</span>滿意度
+								</h3>
+								<p class="description">以顧客滿意為首要目標，提供高品質床墊與床架，從挑選到售後全程貼心服務，讓每位顧客都能享受舒適好眠，滿意度始終是我們不變的承諾。</p>
+							</div>
+						</div>
+
+						<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="single-process">
+								<h3 class="title">
+									<span>03.</span>優良產品
+								</h3>
+								<p class="description">專注於打造優質床墊與床架，結合舒適設計與耐用材質，提供多樣化選擇，讓每位顧客都能找到最適合的產品，享受安心與舒適兼具的睡眠體驗。</p>
+							</div>
+						</div>
+
+						<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="single-process">
+								<h3 class="title">
+									<span>04.</span>品質保證
+								</h3>
+								<p class="description">提供安心保證，嚴選材質與精緻工藝，確保每一件床墊與床架的品質可靠，從選購到售後全程照顧，讓顧客無憂享受舒適睡眠。</p>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="offcanvas-mobile-menu" id="offcanvas-mobile-menu">
+		<a href="javascript:void(0)" class="offcanvas-menu-close"
+			id="offcanvas-menu-close-trigger"> <i class="pe-7s-close"></i>
+		</a>
+	</div>
+
+	<div class="search-overlay" id="search-overlay">
+
+		<span class="close-icon search-close-icon"> <a
+			href="javascript:void(0)" id="search-close-icon"> <i
+				class="pe-7s-close"></i>
+		</a>
+		</span>
+
+		<div class="search-overlay-content">
+			<div class="input-box">
+				<form action="index.html">
+					<input type="search" placeholder="Search Products...">
+				</form>
+			</div>
+			<div class="search-hint">
+				<span># Hit enter to search or ESC to close</span>
+			</div>
+		</div>
+
+	</div>
+
+	<button class="scroll-top">
+		<i class="fa fa-angle-up"></i>
+	</button>
+	<!--=============================================
+    =            JS files        =
+    =============================================-->
+
+	<!-- Vendor JS -->
+	<script src="assets/js/vendors.js"></script>
+
+	<!-- Active JS -->
+	<script src="assets/js/active.js"></script>
+
+	<!-- Ajax Mail JS -->
+	<script src="assets/js/ajax-mail.js"></script>
+
+	<!--=====  End of JS files ======-->
+
+</body>
+
+</html>
