@@ -287,8 +287,10 @@
 												</div>
 											</div>
 											<div class="has_bed_frame">
-												<span class="product-details-title">是否加購床架: </span> <select
-													class="nice-select" name="bed_frame" id="bed-frame-select">
+												<span class="product-details-title">是否加購床架: </span> 
+												<input type="hidden" name="bed_frame" id="real_bed_frame" value="true">												
+												<select
+													class="nice-select" id="bed-frame-select">
 													<option value="true">是</option>
 													<option value="false">否</option>
 												</select>
@@ -329,6 +331,14 @@
 	<script th:src="@{/js/custom/active.js}"></script>
 
 	<script th:src="@{/js/custom/custom.js}"></script>
+	<script>
+	$(document).ready(function() {
+	    $(document).on('click', '.nice-select .list .option', function() {
+	        var val = $(this).data('value');
+	        $('#real_bed_frame').val(val);
+	    });
+	});
+	</script>
 
 	<!--=====  End of JS files ======-->
 
