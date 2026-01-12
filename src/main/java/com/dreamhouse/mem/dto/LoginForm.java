@@ -3,6 +3,7 @@ package com.dreamhouse.mem.dto;
 public class LoginForm {
     private String account;
     private String password;
+    private String email;
 
     // getter / setter
     public String getAccount() { return account; }
@@ -10,4 +11,7 @@ public class LoginForm {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+    
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 }

@@ -88,8 +88,7 @@
 												<li><a class="dropdown-item" th:href="@{/mem/login}">一般會員登入/註冊</a></li>
 												<li><a class="dropdown-item" th:href="@{/emp/login}">員工登入</a></li>
 											</ul>
-										</div> 
-										<!-- 已登入 -->
+										</div> <!-- 已登入 -->
 										<div class="dropdown" th:if="${session.memberId != null}">
 											<a class="dropdown-toggle" href="#" id="memberMenu"
 												role="button" data-bs-toggle="dropdown"
@@ -198,249 +197,96 @@
 			<div class="container">
 				<div class="row justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-12">
-						<form id="register-form" th:action="@{/mem/register}"
-							method="post" th:object="${memberVO}">
-							<div class="login-form">
-								<h4 class="login-title">註冊</h4>
-								<a th:href="@{/mem/login}" class="toggle-link">← 返回登入畫面</a>
 
-								<!-- 全域錯誤訊息顯示 -->
-								<div th:if="${errorMsg}" class="error-msg">
-									<span th:text="${errorMsg}"></span>
+						<!-- 成功訊息區塊 -->
+						<div th:if="${success != null}"
+							class="success alert alert-success text-center">
+							<h4>註冊成功！</h4>
+							<p th:text="${success}"></p>
+							<p>請至您的電子信箱完成驗證，驗證後即可登入。</p>
+							<p>若未收到信件，請檢查垃圾信匣或點擊下方按鈕重寄。</p>
+							<form th:action="@{/mem/resend-verification}" method="post">
+								<input type="hidden" name="email" th:value="${memberVO.email}" />
+								<button type="submit" class="btn btn-primary">重寄驗證信</button>
+							</form>
+							<a th:href="@{/mem/login}" class="btn btn-link mt-3">→ 前往登入頁面</a>
+						</div>
+
+						<!-- 註冊表單區塊 -->
+						<div th:if="${success == null}">
+
+							<form id="register-form" th:action="@{/mem/register}"
+								method="post" th:object="${memberVO}">
+								<div class="login-form">
+									<h4 class="login-title">註冊</h4>
+									<a th:href="@{/mem/login}" class="toggle-link">← 返回登入畫面</a>
+
+									<div th:if="${errorMsg}" class="error-msg">
+										<span th:text="${errorMsg}"></span>
+									</div>
+
+									<!-- 帳號 -->
+									<div>
+										<label>帳號</label> <input type="text" th:field="*{account}" />
+										<span th:if="${#fields.hasErrors('account')}"
+											th:errors="*{account}" class="error-msg"></span>
+									</div>
+
+									<!-- 密碼 -->
+									<div>
+										<label>密碼</label> <input type="password"
+											th:field="*{password}" /> <span
+											th:if="${#fields.hasErrors('password')}"
+											th:errors="*{password}" class="error-msg"></span>
+									</div>
+
+									<!-- 姓名 -->
+									<div>
+										<label>姓名</label> <input type="text" th:field="*{name}" /> <span
+											th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+											class="error-msg"></span>
+									</div>
+
+									<!-- Email -->
+									<div>
+										<label>Email</label> <input type="email" th:field="*{email}" />
+										<span th:if="${#fields.hasErrors('email')}"
+											th:errors="*{email}" class="error-msg"></span>
+									</div>
+
+									<!-- 手機號碼 -->
+									<div>
+										<label>手機號碼</label> <input type="text" th:field="*{phone}" />
+										<span th:if="${#fields.hasErrors('phone')}"
+											th:errors="*{phone}" class="error-msg"></span>
+									</div>
+
+									<!-- 生日 -->
+									<div>
+										<label>生日</label> <input type="date" th:field="*{birthday}" />
+										<span th:if="${#fields.hasErrors('birthday')}"
+											th:errors="*{birthday}" class="error-msg"></span>
+									</div>
+
+									<!-- 住址 -->
+									<div>
+										<label>住址</label> <input type="text" th:field="*{address}" />
+										<span th:if="${#fields.hasErrors('address')}"
+											th:errors="*{address}" class="error-msg"></span>
+									</div>
+
+									<button type="submit" class="theme-button">註冊</button>
 								</div>
+							</form>
+						</div>
 
-								<!-- 成功訊息顯示 -->
-								<div th:if="${success}" class="success">
-									<span th:text="${success}"></span>
-								</div>
-
-								<!-- 帳號 -->
-								<div>
-									<label>帳號</label> <input type="text" th:field="*{account}" />
-									<span th:if="${#fields.hasErrors('account')}"
-										th:errors="*{account}" class="error-msg"></span>
-								</div>
-
-								<!-- 密碼 -->
-								<div>
-									<label>密碼</label> <input type="password" th:field="*{password}" />
-									<span th:if="${#fields.hasErrors('password')}"
-										th:errors="*{password}" class="error-msg"></span>
-								</div>
-
-								<!-- 姓名 -->
-								<div>
-									<label>姓名</label> <input type="text" th:field="*{name}" /> <span
-										th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-										class="error-msg"></span>
-								</div>
-
-								<!-- Email -->
-								<div>
-									<label>Email</label> <input type="email" th:field="*{email}" />
-									<span th:if="${#fields.hasErrors('email')}"
-										th:errors="*{email}" class="error-msg"></span>
-								</div>
-
-								<!-- 手機號碼 -->
-								<div>
-									<label>手機號碼</label> <input type="text" th:field="*{phone}" />
-									<span th:if="${#fields.hasErrors('phone')}"
-										th:errors="*{phone}" class="error-msg"></span>
-								</div>
-
-								<!-- 生日 -->
-								<div>
-									<label>生日</label> <input type="date" th:field="*{birthday}" />
-									<span th:if="${#fields.hasErrors('birthday')}"
-										th:errors="*{birthday}" class="error-msg"></span>
-								</div>
-
-								<!-- 住址 -->
-								<div>
-									<label>住址</label> <input type="text" th:field="*{address}" />
-									<span th:if="${#fields.hasErrors('address')}"
-										th:errors="*{address}" class="error-msg"></span>
-								</div>
-
-
-								<button type="submit" class="theme-button">註冊</button>
-							</div>
-						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<!--=======  offcanvas mobile menu  =======-->
-	<div class="offcanvas-mobile-menu" id="offcanvas-mobile-menu">
-		<a href="javascript:void(0)" class="offcanvas-menu-close"
-			id="offcanvas-menu-close-trigger"> <i class="pe-7s-close"></i>
-		</a>
-		<div class="offcanvas-wrapper">
-			<div class="offcanvas-inner-content">
-				<!-- 搜尋區 -->
-				<div class="offcanvas-mobile-search-area">
-					<form th:action="@{/search}" method="get">
-						<input type="search" name="q" placeholder="Search ...">
-						<button type="submit">
-							<i class="fa fa-search"></i>
-						</button>
-					</form>
-				</div>
 
-				<!-- 側邊選單 -->
-				<nav class="offcanvas-naviagtion">
-					<ul>
-						<li class="menu-item-has-children"><a href="#">Elements</a>
-							<ul class="sub-menu">
-								<li class="menu-item-has-children"><a href="#">Shop/Products</a>
-									<ul class="sub-menu">
-										<li><a th:href="@{/element/product-category}">Product
-												Categories</a></li>
-										<li><a th:href="@{/element/product-carousel}">Products
-												Carousel</a></li>
-										<li><a th:href="@{/element/product-widget}">Product
-												Widget</a></li>
-										<li><a th:href="@{/element/recent-product}">Recent
-												Products</a></li>
-										<li><a th:href="@{/element/sale-product}">Sale
-												Products</a></li>
-										<li><a th:href="@{/element/featured-product}">Featured
-												Product</a></li>
-										<li><a th:href="@{/element/top-rated-product}">Top
-												Rated Products</a></li>
-									</ul></li>
-								<li class="menu-item-has-children"><a href="#">Theming</a>
-									<ul class="sub-menu">
-										<li><a th:href="@{/element/blog-post}">Blog Posts</a></li>
-										<li><a th:href="@{/element/mailchimp-form}">MailChimp
-												Form</a></li>
-										<li><a th:href="@{/element/accordion}">Accordion/Toggles</a></li>
-										<li><a th:href="@{/element/progress-bar}">Progress
-												Bars</a></li>
-										<li><a th:href="@{/element/countdown}">Countdown
-												Timer</a></li>
-										<li><a th:href="@{/element/button}">Buttons</a></li>
-										<li><a th:href="@{/element/testimonial}">Testimonials</a></li>
-										<li><a th:href="@{/element/google-map}">Google Maps</a></li>
-									</ul></li>
-							</ul></li>
-
-						<li class="menu-item-has-children"><a href="#">Blog</a>
-							<ul class="sub-menu">
-								<li class="menu-item-has-children"><a href="#">Blog
-										post list</a>
-									<ul class="sub-menu">
-										<li><a th:href="@{/blog/one-column}">Blog one column</a></li>
-										<li><a th:href="@{/blog/two-column}">Blog two column</a></li>
-										<li><a th:href="@{/blog/left-sidebar}">Blog left
-												sidebar</a></li>
-										<li><a th:href="@{/blog/right-sidebar}">Blog right
-												sidebar</a></li>
-									</ul></li>
-								<li class="menu-item-has-children"><a href="#">Blog
-										post details</a>
-									<ul class="sub-menu">
-										<li><a th:href="@{/blog/post-image}">Blog post format
-												image</a></li>
-										<li><a th:href="@{/blog/post-gallery}">Blog post
-												format gallery</a></li>
-										<li><a th:href="@{/blog/post-audio}">Blog post format
-												audio</a></li>
-										<li><a th:href="@{/blog/post-video}">Blog post format
-												video</a></li>
-										<li><a th:href="@{/blog/post-left-sidebar}">Blog post
-												left sidebar</a></li>
-										<li><a th:href="@{/blog/post-right-sidebar}">Blog
-												post right sidebar</a></li>
-									</ul></li>
-							</ul></li>
-
-						<li class="menu-item-has-children"><a href="#">Shop</a>
-							<ul class="sub-menu">
-								<li class="menu-item-has-children"><a href="#">Shop
-										Pages</a>
-									<ul class="sub-menu">
-										<li><a th:href="@{/shop/fullwidth}">Shop Fullwidth</a></li>
-										<li><a th:href="@{/shop/list}">Shop List Layout</a></li>
-										<li><a th:href="@{/shop/no-sidebar}">Shop No Sidebar</a></li>
-										<li><a th:href="@{/shop/left-sidebar}">Shop With Left
-												Sidebar</a></li>
-										<li><a th:href="@{/shop/right-sidebar}">Shop With
-												Right Sidebar</a></li>
-										<li><a th:href="@{/shop/brand}">Shop By Brand</a></li>
-									</ul></li>
-								<li class="menu-item-has-children"><a href="#">Shop
-										Pages(Details)</a>
-									<ul class="sub-menu">
-										<li><a th:href="@{/product/basic}">Basic</a></li>
-										<li><a th:href="@{/product/fullwidth}">Fullwidth</a></li>
-										<li><a th:href="@{/product/sticky}">Sticky Details</a></li>
-										<li><a th:href="@{/product/bottom-thumbnail}">Bottom
-												thumbnails</a></li>
-										<li><a th:href="@{/product/extra-content}">Extra
-												content</a></li>
-										<li><a th:href="@{/product/variation-image}">Variations
-												Images</a></li>
-										<li><a th:href="@{/product/affiliate}">Product
-												details affiliate</a></li>
-										<li><a th:href="@{/product/group}">Product details
-												group</a></li>
-									</ul></li>
-							</ul></li>
-					</ul>
-				</nav>
-
-				<!-- 聯絡資訊 -->
-				<div class="offcanvas-widget-area">
-					<div class="off-canvas-contact-widget">
-						<ul class="header-contact-info__list">
-							<li><i class="pe-7s-phone"></i> <a href="tel://12452456012">(1245)
-									2456 012</a></li>
-							<li><i class="pe-7s-mail-open"></i> <a
-								href="mailto:info@yourdomain.com">info@yourdomain.com</a></li>
-						</ul>
-					</div>
-					<!-- 社群連結 -->
-					<div class="off-canvas-widget-social">
-						<a href="#" title="Facebook"><i class="fa fa-facebook"></i></a> <a
-							href="#" title="Twitter"><i class="fa fa-twitter"></i></a> <a
-							href="#" title="LinkedIn"><i class="fa fa-linkedin"></i></a> <a
-							href="#" title="Youtube"><i class="fa fa-youtube-play"></i></a> <a
-							href="#" title="Vimeo"><i class="fa fa-vimeo-square"></i></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--=======  End of offcanvas mobile menu  =======-->
-
-	<!--=======  search overlay  =======-->
-	<div class="search-overlay" id="search-overlay">
-		<span class="close-icon search-close-icon"> <a
-			href="javascript:void(0)" id="search-close-icon"> <i
-				class="pe-7s-close"></i>
-		</a>
-		</span>
-		<div class="search-overlay-content">
-			<div class="input-box">
-				<form th:action="@{/search}" method="get">
-					<input type="search" name="q" placeholder="Search Products...">
-				</form>
-			</div>
-			<div class="search-hint">
-				<span># Hit enter to search or ESC to close</span>
-			</div>
-		</div>
-	</div>
-	<!--=======  End of search overlay  =======-->
-
-	<!-- scroll to top -->
-	<button class="scroll-top">
-		<i class="fa fa-angle-up"></i>
-	</button>
 
 	<!-- JS files -->
 	<script th:src="@{/js/vendors.js}"></script>

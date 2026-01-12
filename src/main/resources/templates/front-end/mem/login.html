@@ -195,11 +195,25 @@
 			<div class="container">
 				<div class="row justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-12">
-						<!-- Spring Boot 表單綁定 -->
+
+						<!-- 登入表單 -->
 						<form id="login-form" th:action="@{/mem/login}" method="post"
 							th:object="${loginForm}">
 							<div class="login-form">
 								<h4 class="login-title">登入</h4>
+
+								<!-- 驗證成功提示 -->
+								<div th:if="${verified != null}" class="alert alert-success"
+									role="alert">驗證成功！請輸入帳號密碼登入。</div>
+
+								<!-- 尚未驗證提示 -->
+								<div
+									th:if="${errorMsg != null and errorMsg.equals('UNVERIFIED')}"
+									class="alert alert-warning" role="alert">
+									帳號尚未完成驗證，請至信箱點擊驗證連結。
+									<button type="button" class="btn btn-link"
+										onclick="document.getElementById('resendForm').submit()">重寄驗證信</button>
+								</div>
 
 								<!-- 帳號 -->
 								<label for="account">帳號</label> <input type="text" id="account"
@@ -222,14 +236,12 @@
 								</div>
 
 								<!-- 全域錯誤訊息 -->
-								<small th:if="${errorMsg}" class="error-hint"
-									th:text="${errorMsg}"></small>
+								<small
+									th:if="${errorMsg != null and !errorMsg.equals('UNVERIFIED')}"
+									class="error-hint" th:text="${errorMsg}"></small>
 
 								<!-- 忘記密碼 -->
 								<a th:href="@{/mem/forgot-password}" class="forget-pass-link">忘記密碼</a>
-
-
-
 
 								<!-- 按鈕區 -->
 								<div class="button-group">
@@ -238,184 +250,22 @@
 								</div>
 							</div>
 						</form>
+
+						<!-- 隱藏的重寄表單，移到 login-form 外面 -->
+						<form id="resendForm" th:action="@{/mem/resend-verification}"
+							method="post" style="display: none;">
+							<input type="hidden" name="email" th:value="${email}" />
+						</form>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
 	<!--====================  End of page content wrapper  ====================-->
 
 
-	<!--=======  offcanvas mobile menu  =======-->
-	<div class="offcanvas-mobile-menu" id="offcanvas-mobile-menu">
-		<a href="javascript:void(0)" class="offcanvas-menu-close"
-			id="offcanvas-menu-close-trigger"> <i class="pe-7s-close"></i>
-		</a>
-		<div class="offcanvas-wrapper">
-			<div class="offcanvas-inner-content">
-				<!-- 搜尋區 -->
-				<div class="offcanvas-mobile-search-area">
-					<form th:action="@{/search}" method="get">
-						<input type="search" name="q" placeholder="Search ...">
-						<button type="submit">
-							<i class="fa fa-search"></i>
-						</button>
-					</form>
-				</div>
 
-				<!-- 側邊選單 -->
-				<nav class="offcanvas-naviagtion">
-					<ul>
-						<li class="menu-item-has-children"><a href="#">Elements</a>
-							<ul class="sub-menu">
-								<li class="menu-item-has-children"><a href="#">Shop/Products</a>
-									<ul class="sub-menu">
-										<li><a th:href="@{/element/product-category}">Product
-												Categories</a></li>
-										<li><a th:href="@{/element/product-carousel}">Products
-												Carousel</a></li>
-										<li><a th:href="@{/element/product-widget}">Product
-												Widget</a></li>
-										<li><a th:href="@{/element/recent-product}">Recent
-												Products</a></li>
-										<li><a th:href="@{/element/sale-product}">Sale
-												Products</a></li>
-										<li><a th:href="@{/element/featured-product}">Featured
-												Product</a></li>
-										<li><a th:href="@{/element/top-rated-product}">Top
-												Rated Products</a></li>
-									</ul></li>
-								<li class="menu-item-has-children"><a href="#">Theming</a>
-									<ul class="sub-menu">
-										<li><a th:href="@{/element/blog-post}">Blog Posts</a></li>
-										<li><a th:href="@{/element/mailchimp-form}">MailChimp
-												Form</a></li>
-										<li><a th:href="@{/element/accordion}">Accordion/Toggles</a></li>
-										<li><a th:href="@{/element/progress-bar}">Progress
-												Bars</a></li>
-										<li><a th:href="@{/element/countdown}">Countdown
-												Timer</a></li>
-										<li><a th:href="@{/element/button}">Buttons</a></li>
-										<li><a th:href="@{/element/testimonial}">Testimonials</a></li>
-										<li><a th:href="@{/element/google-map}">Google Maps</a></li>
-									</ul></li>
-							</ul></li>
-
-						<li class="menu-item-has-children"><a href="#">Blog</a>
-							<ul class="sub-menu">
-								<li class="menu-item-has-children"><a href="#">Blog
-										post list</a>
-									<ul class="sub-menu">
-										<li><a th:href="@{/blog/one-column}">Blog one column</a></li>
-										<li><a th:href="@{/blog/two-column}">Blog two column</a></li>
-										<li><a th:href="@{/blog/left-sidebar}">Blog left
-												sidebar</a></li>
-										<li><a th:href="@{/blog/right-sidebar}">Blog right
-												sidebar</a></li>
-									</ul></li>
-								<li class="menu-item-has-children"><a href="#">Blog
-										post details</a>
-									<ul class="sub-menu">
-										<li><a th:href="@{/blog/post-image}">Blog post format
-												image</a></li>
-										<li><a th:href="@{/blog/post-gallery}">Blog post
-												format gallery</a></li>
-										<li><a th:href="@{/blog/post-audio}">Blog post format
-												audio</a></li>
-										<li><a th:href="@{/blog/post-video}">Blog post format
-												video</a></li>
-										<li><a th:href="@{/blog/post-left-sidebar}">Blog post
-												left sidebar</a></li>
-										<li><a th:href="@{/blog/post-right-sidebar}">Blog
-												post right sidebar</a></li>
-									</ul></li>
-							</ul></li>
-
-						<li class="menu-item-has-children"><a href="#">Shop</a>
-							<ul class="sub-menu">
-								<li class="menu-item-has-children"><a href="#">Shop
-										Pages</a>
-									<ul class="sub-menu">
-										<li><a th:href="@{/shop/fullwidth}">Shop Fullwidth</a></li>
-										<li><a th:href="@{/shop/list}">Shop List Layout</a></li>
-										<li><a th:href="@{/shop/no-sidebar}">Shop No Sidebar</a></li>
-										<li><a th:href="@{/shop/left-sidebar}">Shop With Left
-												Sidebar</a></li>
-										<li><a th:href="@{/shop/right-sidebar}">Shop With
-												Right Sidebar</a></li>
-										<li><a th:href="@{/shop/brand}">Shop By Brand</a></li>
-									</ul></li>
-								<li class="menu-item-has-children"><a href="#">Shop
-										Pages(Details)</a>
-									<ul class="sub-menu">
-										<li><a th:href="@{/product/basic}">Basic</a></li>
-										<li><a th:href="@{/product/fullwidth}">Fullwidth</a></li>
-										<li><a th:href="@{/product/sticky}">Sticky Details</a></li>
-										<li><a th:href="@{/product/bottom-thumbnail}">Bottom
-												thumbnails</a></li>
-										<li><a th:href="@{/product/extra-content}">Extra
-												content</a></li>
-										<li><a th:href="@{/product/variation-image}">Variations
-												Images</a></li>
-										<li><a th:href="@{/product/affiliate}">Product
-												details affiliate</a></li>
-										<li><a th:href="@{/product/group}">Product details
-												group</a></li>
-									</ul></li>
-							</ul></li>
-					</ul>
-				</nav>
-
-				<!-- 聯絡資訊 -->
-				<div class="offcanvas-widget-area">
-					<div class="off-canvas-contact-widget">
-						<ul class="header-contact-info__list">
-							<li><i class="pe-7s-phone"></i> <a href="tel://12452456012">(1245)
-									2456 012</a></li>
-							<li><i class="pe-7s-mail-open"></i> <a
-								href="mailto:info@yourdomain.com">info@yourdomain.com</a></li>
-						</ul>
-					</div>
-					<!-- 社群連結 -->
-					<div class="off-canvas-widget-social">
-						<a href="#" title="Facebook"><i class="fa fa-facebook"></i></a> <a
-							href="#" title="Twitter"><i class="fa fa-twitter"></i></a> <a
-							href="#" title="LinkedIn"><i class="fa fa-linkedin"></i></a> <a
-							href="#" title="Youtube"><i class="fa fa-youtube-play"></i></a> <a
-							href="#" title="Vimeo"><i class="fa fa-vimeo-square"></i></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--=======  End of offcanvas mobile menu  =======-->
-
-	<!--=======  search overlay  =======-->
-	<div class="search-overlay" id="search-overlay">
-		<span class="close-icon search-close-icon"> <a
-			href="javascript:void(0)" id="search-close-icon"> <i
-				class="pe-7s-close"></i>
-		</a>
-		</span>
-		<div class="search-overlay-content">
-			<div class="input-box">
-				<form th:action="@{/search}" method="get">
-					<input type="search" name="q" placeholder="Search Products...">
-				</form>
-			</div>
-			<div class="search-hint">
-				<span># Hit enter to search or ESC to close</span>
-			</div>
-		</div>
-	</div>
-	<!--=======  End of search overlay  =======-->
-
-	<!-- scroll to top -->
-	<button class="scroll-top">
-		<i class="fa fa-angle-up"></i>
-	</button>
 
 	<!-- JS files -->
 	<script th:src="@{/js/vendors.js}"></script>
