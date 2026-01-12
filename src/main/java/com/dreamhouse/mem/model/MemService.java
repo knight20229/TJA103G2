@@ -89,6 +89,12 @@ public class MemService {
         return repository.findById(memberId).orElse(null);
     }
 
+    // 依照 email 查會員
+    public MemVO findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
+
+    
     // 會員更新資料
     public MemVO updateMember(MemVO member) {
         return repository.save(member); // JPA save 會自動更新
@@ -127,9 +133,17 @@ public class MemService {
         return false;
     }
 
-    // 重寄驗證信（使用 HTML 模板）
+ // 重寄驗證信（使用 HTML 模板）
     public boolean resendVerification(String email) {
+        System.out.println("[DEBUG] 查詢會員 email: " + email);
         MemVO mem = repository.findByEmail(email);
+        System.out.println("[DEBUG] 查到會員: " + mem);
+
+        if (mem != null) {
+            System.out.println("[DEBUG] emailVerified: " + mem.getEmailVerified());
+            System.out.println("[DEBUG] verificationToken: " + mem.getVerificationToken());
+        }
+
         if (mem != null && !mem.getEmailVerified()) {
             String newToken = UUID.randomUUID().toString();
             mem.setVerificationToken(newToken);
@@ -137,6 +151,7 @@ public class MemService {
             repository.save(mem);
 
             String verifyLink = "http://localhost:8080/mem/verify?token=" + newToken;
+
             Context context = new Context();
             context.setVariable("verifyUrl", verifyLink);
             String htmlContent = templateEngine.process("front-end/mem/email_verify", context);
@@ -152,6 +167,7 @@ public class MemService {
         }
         return false;
     }
+
 
     // 忘記密碼寄送驗證碼（純文字）
     public boolean sendVerificationCode(String email, String code) {

@@ -199,7 +199,7 @@
 					<div class="col-lg-6 col-md-8 col-sm-12">
 
 						<!-- 成功訊息區塊 -->
-						<div th:if="${success != null}"
+						<div th:if="${success}"
 							class="success alert alert-success text-center">
 							<h4>註冊成功！</h4>
 							<p th:text="${success}"></p>
@@ -211,6 +211,7 @@
 							</form>
 							<a th:href="@{/mem/login}" class="btn btn-link mt-3">→ 前往登入頁面</a>
 						</div>
+
 
 						<!-- 註冊表單區塊 -->
 						<div th:if="${success == null}">
