@@ -124,6 +124,33 @@ public class CheckoutController {
 			if (memberId == null) {
 				return "redirect:/mem/login";
 			}
+			
+			// 收件人姓名驗證
+	        if (receivingName == null || receivingName.trim().isEmpty()) {
+	            redirectAttributes.addFlashAttribute("errorMessage", "收件人姓名不可為空");
+	            return "redirect:/checkout";
+	        }
+	        if (receivingName.length() < 2 || receivingName.length() > 50) {
+	            redirectAttributes.addFlashAttribute("errorMessage", "收件人姓名長度需介於 2~50 字");
+	            return "redirect:/checkout";
+	        }
+
+	        // 收件人電話驗證
+	        if (receivingPhone == null || receivingPhone.trim().isEmpty()) {
+	            redirectAttributes.addFlashAttribute("errorMessage", "收件人電話不可為空");
+	            return "redirect:/checkout";
+	        }
+	        // 手機號碼格式驗證 (09開頭 + 8碼)
+	        if (!receivingPhone.matches("^09\\d{8}$")) {
+	            redirectAttributes.addFlashAttribute("errorMessage", "收件人電話格式錯誤，應為09xxxxxxxx");
+	            return "redirect:/checkout";
+	        }
+
+	        // 收件人地址驗證
+	        if (receivingAddress == null || receivingAddress.trim().isEmpty()) {
+	            redirectAttributes.addFlashAttribute("errorMessage", "收件人地址不可為空");
+	            return "redirect:/checkout";
+	        }
 
 			// 從購物車獲取商品
 			List<CartItemDTO> cartItems = cartService.getAllCartItems(memberId);

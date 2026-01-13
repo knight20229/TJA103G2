@@ -46,55 +46,55 @@
 						aria-label="Close"></button>
 				</div>
 				<!-- ===== 查詢條件 ===== -->
-				<form method="get" th:action="@{/front/orders/myOrders}"
-					class="row g-3 mb-4">
-					<div
-						class="search-box d-flex flex-wrap align-items-end col-auto d-grid gap-2 mb-3">
-						<div>
-							<label class="form-label mb-1">關鍵字</label> <input
-								id="search_input" type="text" class="form-control me-3"
-								placeholder="搜尋訂單編號">
-						</div>
-						<!-- 訂單狀態 -->
-						<div class="form-label mb-1">
-							<label class="form-label">訂單狀態</label> <select
-								class="form-select" name="orderStatus">
-								<option value="">全部</option>
-								<option value="PENDING_PAYMENT"
-									th:selected="${orderStatus == 'PENDING_PAYMENT'}">待付款</option>
-								<option value="PENDING_SHIPMENT"
-									th:selected="${orderStatus == 'PENDING_SHIPMENT'}">待出貨
-								</option>
-								<option value="SHIPPED"
-									th:selected="${orderStatus == 'SHIPPED'}">已出貨</option>
-								<option value="COMPLETED"
-									th:selected="${orderStatus == 'COMPLETED'}">訂單完成</option>
-								<option value="CANCELLED"
-									th:selected="${orderStatus == 'CANCELLED'}">訂單取消</option>
-							</select>
+<!-- 				<form method="get" th:action="@{/front/orders/myOrders}" -->
+<!-- 					class="row g-3 mb-4"> -->
+<!-- 					<div -->
+<!-- 						class="search-box d-flex flex-wrap align-items-end col-auto d-grid gap-2 mb-3"> -->
+<!-- 						<div> -->
+<!-- 							<label class="form-label mb-1">關鍵字</label> <input -->
+<!-- 								id="search_input" type="text" class="form-control me-3" -->
+<!-- 								placeholder="搜尋訂單編號"> -->
+<!-- 						</div> -->
+<!-- 						訂單狀態 -->
+<!-- 						<div class="form-label mb-1"> -->
+<!-- 							<label class="form-label">訂單狀態</label> <select -->
+<!-- 								class="form-select" name="orderStatus"> -->
+<!-- 								<option value="">全部</option> -->
+<!-- 								<option value="PENDING_PAYMENT" -->
+<!-- 									th:selected="${orderStatus == 'PENDING_PAYMENT'}">待付款</option> -->
+<!-- 								<option value="PENDING_SHIPMENT" -->
+<!-- 									th:selected="${orderStatus == 'PENDING_SHIPMENT'}">待出貨 -->
+<!-- 								</option> -->
+<!-- 								<option value="SHIPPED" -->
+<!-- 									th:selected="${orderStatus == 'SHIPPED'}">已出貨</option> -->
+<!-- 								<option value="COMPLETED" -->
+<!-- 									th:selected="${orderStatus == 'COMPLETED'}">訂單完成</option> -->
+<!-- 								<option value="CANCELLED" -->
+<!-- 									th:selected="${orderStatus == 'CANCELLED'}">訂單取消</option> -->
+<!-- 							</select> -->
 
-						</div>
-						<!-- 起始日期 -->
-						<div class="form-label mb-1">
-							<label class="form-label">開始日期</label> <input type="date"
-								class="form-control" name="startDate" th:value="${startDate}">
-						</div>
+<!-- 						</div> -->
+<!-- 						起始日期 -->
+<!-- 						<div class="form-label mb-1"> -->
+<!-- 							<label class="form-label">開始日期</label> <input type="date" -->
+<!-- 								class="form-control" name="startDate" th:value="${startDate}"> -->
+<!-- 						</div> -->
 
-						<!-- 結束日期 -->
-						<div class="form-label mb-1">
-							<label class="form-label">結束日期</label> <input type="date"
-								class="form-control" name="endDate" th:value="${endDate}">
-						</div>
+<!-- 						結束日期 -->
+<!-- 						<div class="form-label mb-1"> -->
+<!-- 							<label class="form-label">結束日期</label> <input type="date" -->
+<!-- 								class="form-control" name="endDate" th:value="${endDate}"> -->
+<!-- 						</div> -->
 
 
-						<!-- 查詢按鈕 -->
-						<div class="form-label mb-1 d-flex align-items-end">
-							<button type="submit" class="btn btn-primary">
-								<i class="fa-solid fa-magnifying-glass"></i> 查詢
-							</button>
-						</div>
-					</div>
-				</form>
+<!-- 						查詢按鈕 -->
+<!-- 						<div class="form-label mb-1 d-flex align-items-end"> -->
+<!-- 							<button type="submit" class="btn btn-primary"> -->
+<!-- 								<i class="fa-solid fa-magnifying-glass"></i> 查詢 -->
+<!-- 							</button> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</form> -->
 
 
 				<!-- ================= 訂單表格 ================= -->

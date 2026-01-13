@@ -153,7 +153,7 @@ public class OrdersService {
 	public List<OrdersVO> findOrdersByConditions(Integer memberId, LocalDate startDate, LocalDate endDate,
 			String orderStatus) {
 
-		return ordersrepo.findOrdersByConditions(memberId, startDate, endDate, orderStatus);
+		return ordersrepo.findOrdersByConditions(null, startDate, endDate, orderStatus);
 	}
 
 	/**
