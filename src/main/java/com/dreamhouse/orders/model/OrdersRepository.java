@@ -23,13 +23,15 @@ public interface OrdersRepository extends JpaRepository<OrdersVO, Integer> {
 	Optional<OrdersVO> findByMerchantTradeNo(String merchantTradeNo);
 
 	@Query("""
-				SELECT ovo FROM OrdersVO ovo
-				WHERE ovo.memberId = :memberId
-				AND (:orderStatus IS NULL OR :orderStatus = '' OR ovo.orderStatus = :orderStatus)
-				AND (:startDate IS NULL OR ovo.orderCreateTime >= :startDate)
-				AND (:endDate IS NULL OR ovo.orderCreateTime <= :endDate)
-				ORDER BY ovo.orderCreateTime DESC
-			""")
-	List<OrdersVO> findOrdersByConditions(@Param("memberId") Integer memberId, @Param("startDate") LocalDate startDate,
-			@Param("endDate") LocalDate endDate, @Param("orderStatus") String orderStatus);
+		    SELECT ovo FROM OrdersVO ovo
+		    WHERE (:memberId IS NULL OR ovo.memberId = :memberId)
+		    AND (:orderStatus IS NULL OR :orderStatus = '' OR ovo.orderStatus = :orderStatus)
+		    AND (:startDate IS NULL OR ovo.orderCreateTime >= :startDate)
+		    AND (:endDate IS NULL OR ovo.orderCreateTime <= :endDate)
+		    ORDER BY ovo.orderCreateTime DESC
+		""")
+		List<OrdersVO> findOrdersByConditions(@Param("memberId") Integer memberId,
+		        @Param("startDate") LocalDate startDate,
+		        @Param("endDate") LocalDate endDate,
+		        @Param("orderStatus") String orderStatus);
 }
