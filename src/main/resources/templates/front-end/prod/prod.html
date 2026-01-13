@@ -223,10 +223,10 @@
 									<option th:each="size : ${product.sizes}"
 										th:value="${size.price}"
 										th:text="${size.sizeText}"
-										th:attr="data-stock=${size.stock},data-size-id=${size.sizeId}">
+										th:attr="data-stock=${size.stock},data-size-id=${size.productSizeId}">
 									</option>
 								</select>
-								<input type="hidden" name="sizeId" id="selected-size-id" th:value="${!product.sizes.isEmpty() ? product.sizes[0].sizeId : ''}">
+								<input type="hidden" name="sizeId" id="selected-size-id" th:value="${!product.sizes.isEmpty() ? product.sizes[0].productSizeId : ''}">
 							</div>
 
 							<p class="price">

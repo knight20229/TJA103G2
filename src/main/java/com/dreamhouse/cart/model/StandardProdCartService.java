@@ -28,7 +28,7 @@ public class StandardProdCartService implements CartStrategy{
 	@Override
 	public void addToCart(Integer productId, Integer sizeId, Integer quantity, Integer price, Integer memberId) {
 		// 查詢商品尺寸信息，獲取 productSizeId
-		ProdSizeConnectVO psc = prodSizeConnectRepo.findByProductIdAndSizeId(productId, sizeId);
+		ProdSizeConnectVO psc = prodSizeConnectRepo.findById(sizeId).orElse(null);
 		if (psc == null) {
 			throw new RuntimeException("商品尺寸不存在");
 		}
@@ -47,8 +47,7 @@ public class StandardProdCartService implements CartStrategy{
 		itemDTO.setItemKey(itemKey);
 		itemDTO.setProductId(productId);
 		itemDTO.setProductSizeId(productSizeId);  // 新增
-		itemDTO.setSizeId(sizeId);                // 新增
-		// 組合尺寸名稱（width x length）
+		itemDTO.setSizeId(psc.getSizeVO().getSizeId());		// 組合尺寸名稱（width x length）
 		String sizeName = psc.getSizeVO().getWidth() + " x " + psc.getSizeVO().getLength() + " cm";
 		itemDTO.setSizeName(sizeName);  // 新增
 		itemDTO.setProductName(psc.getProdVO().getProductName());
