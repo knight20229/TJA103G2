@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.dreamhouse.emp.model.EmpService;
+import com.dreamhouse.emp.model.EmpVO;
 import com.dreamhouse.promotions.model.PromotionsService;
 import com.dreamhouse.promotions.model.PromotionsVO;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -22,6 +25,9 @@ public class PromotionsController {
 	
 	@Autowired
 	PromotionsService proSer;
+	
+	@Autowired
+	EmpService empSer;
 	
 	
 	@GetMapping("addPromotions")
@@ -32,11 +38,14 @@ public class PromotionsController {
 	}
 	
 	@PostMapping("insert")
-	public String insert(@Valid PromotionsVO promotionsVO, BindingResult result, ModelMap model) {
+	public String insert(@Valid PromotionsVO promotionsVO, BindingResult result, HttpSession session, ModelMap model) {
 		if (result.hasErrors()) {
 			return "back-end/promotions/promotions_add";
 		}
 		
+		Integer employeeId = (Integer)session.getAttribute("employeeId");
+		EmpVO empVO = (EmpVO)empSer.findById(employeeId);
+		promotionsVO.setEmpVO(empVO);
 		proSer.addPromotions(promotionsVO);
 		List<PromotionsVO> list = proSer.getAll();
 		model.addAttribute("promotionsList", list);
@@ -52,11 +61,14 @@ public class PromotionsController {
 	}
 	
 	@PostMapping("updatePromotions")
-	public String updatePromotions(@Valid PromotionsVO promotionsVO, BindingResult result, ModelMap model) {
+	public String updatePromotions(@Valid PromotionsVO promotionsVO, BindingResult result, HttpSession session, ModelMap model) {
 		if (result.hasErrors()) {
 			return "back-end/promotions/promotions_edit";
 		}
 		
+		Integer employeeId = (Integer)session.getAttribute("employeeId");
+		EmpVO empVO = (EmpVO)empSer.findById(employeeId);
+		promotionsVO.setEmpVO(empVO);
 		proSer.updatePromotions(promotionsVO);
 		promotionsVO = proSer.getOneById(Integer.valueOf(promotionsVO.getPromotionsId()));
 		model.addAttribute("promotionsVO", promotionsVO);

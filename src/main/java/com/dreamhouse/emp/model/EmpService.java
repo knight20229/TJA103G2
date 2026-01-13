@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+
 @Service("empService")
 public class EmpService {
 
@@ -15,5 +16,9 @@ public class EmpService {
     public EmpVO findByAccountAndPassword(String account, String password) {
         return repository.findByAccountAndPassword(account, password);
     }    
+    
+    public EmpVO findById(Integer employeeId) {
+        return repository.findById(employeeId).orElse(null);
+    }
 
 }

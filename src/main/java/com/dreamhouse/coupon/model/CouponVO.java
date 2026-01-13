@@ -18,7 +18,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -58,7 +57,6 @@ public class CouponVO {
 	
 	@ManyToOne
 	@JoinColumn(name = "employee_id", referencedColumnName = "employee_id")
-	@NotNull(message = "請輸入員工編號")
 	public EmpVO getEmpVO() {
 		return empVO;
 	}
