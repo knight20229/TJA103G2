@@ -53,7 +53,6 @@ public class PromotionsVO {
 
 	@ManyToOne
 	@JoinColumn(name = "employee_id", referencedColumnName = "employee_id")
-	@NotNull(message = "請輸入員工編號")
 	public EmpVO getEmpVO() {
 		return empVO;
 	}
