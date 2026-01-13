@@ -64,8 +64,13 @@ public class CartController {
     
 	
 	@PostMapping("addSTD")
-	public String addSTD(@RequestParam("productId") Integer productId, @RequestParam("sizeId") Integer sizeId, @RequestParam("quantity") Integer quantity, @RequestParam("size") Integer sizePrice, @RequestParam("memberId") Integer memberId, RedirectAttributes ra, ModelMap model) {
-	
+	public String addSTD(@RequestParam("productId") Integer productId, @RequestParam("sizeId") Integer sizeId, @RequestParam("quantity") Integer quantity, @RequestParam("size") Integer sizePrice, RedirectAttributes ra, HttpSession session, ModelMap model) {
+		if (session.getAttribute("memberId") == null) {
+			return "redirect:/mem/login";
+			
+		} 
+			
+		Integer memberId = (Integer)session.getAttribute("memberId");
 		stdSer.addToCart(productId, sizeId, quantity, sizePrice, memberId);
 		
 		
@@ -117,7 +122,12 @@ public class CartController {
 	}
 	
 	@GetMapping("getCart")
-	public String getAllCartItem(@RequestParam("memberId") String memberId, ModelMap model) {
+	public String getAllCartItem(@RequestParam("memberId") String memberId, HttpSession session, ModelMap model) {
+		
+		if (session.getAttribute("memberId") == null) {
+			return "redirect:/mem/login";
+		} 
+		
 		List<CartItemDTO> cartItems = cartSer.getAllCartItems(Integer.valueOf(memberId));
 
 		// 計算購物車總計

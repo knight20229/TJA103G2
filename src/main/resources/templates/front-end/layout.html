@@ -25,11 +25,11 @@
 							<div class="header-navigation-wrapper">
 								<nav>
 									<ul>
-										<li class="has-children"><a th:href="@{/products}">商品瀏覽</a>
+										<li class="has-children"><a th:href="@{/}">商品瀏覽</a>
 										</li>
 										<li class="has-children"><a
 											th:href="@{/custom/customproduct}">客製化商品</a></li>
-										<li class="has-children"><a th:href="@{/about}">關於我們</a>
+										<li class="has-children"><a th:href="@{/aboutus}">關於我們</a>
 										</li>
 									</ul>
 								</nav>
@@ -37,24 +37,23 @@
 
 							<!-- 搜尋 -->
 							<nav class="navbar navbar-expand-lg navbar-light bg-light">
-								<div class="header-search-wrapper">
-									<form class="d-flex">
-										<input class="form-control me-2" type="search"
-											placeholder="搜尋商品">
-										<button class="btn btn-outline-success" type="submit">
-											Search</button>
-									</form>
+								<div class="container-fluid">
+									<div class="collapse navbar-collapse"
+										id="navbarSupportedContent">
+										<form id="searchForm" class="d-flex" th:action="@{/search}"
+											method="get">
+											<input id="searchInput" class="form-control me-2"
+												type="search" name="product" placeholder="搜尋商品">
+											<button id="searchBtn" type="submit"
+												class="btn btn-outline-success">Search</button>
+										</form>
+									</div>
 								</div>
 							</nav>
 
 							<!-- ICON -->
 							<div class="header-icon-area">
 								<ul class="header-icon__list">
-
-									<!-- 訊息 -->
-									<li><a th:href="@{/messages}"> <i
-											class="fa-solid fa-message"></i>
-									</a></li>
 
 									<!-- 會員 -->
 									<li>
@@ -87,39 +86,9 @@
 									</li>
 
 									<!-- 購物車 -->
-									<li><a th:href="@{/cart/getCart}"> <i
+									<li><a th:href="@{/cart/getCart(memberId=${session.memberId})}"> <i
 											class="fa-solid fa-cart-shopping"></i>
 									</a>
-										<div class="minicart-wrapper">
-											<p class="minicart-wrapper__title">購物車</p>
-											<div class="minicart-wrapper__items ps-scroll">
-												<div class="minicart-wrapper__items__single">
-													<a href="javascript:void(0)" class="close-icon"><i
-														class="pe-7s-close"></i></a>
-													<div class="image">
-														<a th:href="@{/products}"> <img
-															th:src="@{/img/products/product-2-90x100.jpg}"
-															class="img-fluid" alt="">
-														</a>
-													</div>
-													<div class="content">
-														<p class="product-title">
-															<a th:href="@{/products}">Jane Lauren Rebel Sofa</a>
-														</p>
-														<p class="product-calculation">
-															<span class="count">1</span> x <span class="price">$900</span>
-														</p>
-													</div>
-												</div>
-											</div>
-											<p class="minicart-wrapper__subtotal">
-												總計: <span>$1800</span>
-											</p>
-											<div class="minicart-wrapper__buttons">
-												<a th:href="@{/cart/getCart}"
-													class="theme-button theme-button--minicart-button">查看購物車</a>
-											</div>
-										</div></li>
 
 								</ul>
 							</div>
