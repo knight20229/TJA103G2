@@ -57,7 +57,7 @@ public class LoginoutController {
                 return "redirect:" + location;
             }
 
-            return "redirect:/mem/my-account";
+            return "redirect:/";
 
         } catch (IllegalStateException e) {
             if ("UNVERIFIED".equals(e.getMessage())) {
@@ -73,6 +73,6 @@ public class LoginoutController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/mem/login";
+        return "redirect:/";
     }
 }
