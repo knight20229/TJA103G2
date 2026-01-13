@@ -28,6 +28,8 @@ import com.dreamhouse.customsize.model.CustomSizeVO;
 import com.dreamhouse.mem.model.MemService;
 import com.dreamhouse.mem.model.MemVO;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/cart")
 public class CartController {
@@ -71,20 +73,26 @@ public class CartController {
 	}
 	
 	@PostMapping("addCustom")
-	public String addCustom(@RequestParam("customProductId") Integer customProductId, @RequestParam("quantity") Integer quantity, @RequestParam("price") Integer price, @RequestParam("memberId") Integer memberId, @RequestParam("cloth") Integer customClothId, @RequestParam("size") Integer customSizeId, @RequestParam("material") Integer customMaterialId, @RequestParam("feature") Integer customFeatureId, @RequestParam(value = "bed_frame", defaultValue = "true") Boolean bed_frame, ModelMap model) {
+	public String addCustom(@RequestParam("customProductId") Integer customProductId, @RequestParam("quantity") Integer quantity, @RequestParam("cloth") Integer customClothId, @RequestParam("size") Integer customSizeId, @RequestParam("material") Integer customMaterialId, @RequestParam("feature") Integer customFeatureId, @RequestParam(value = "bed_frame", defaultValue = "true") Boolean bed_frame, HttpSession session, ModelMap model) {
 		System.out.println("前端傳過來的值是：" + bed_frame);
 
+		if (session.getAttribute("memberId") == null) {
+			return "redirect:/mem/login";
+			
+		} 
 		
 		// 在mysql新增一筆客製化商品
 		CustomClothVO customClothVO = customClothSer.getOneById(customClothId);
 		CustomFeatureVO customFeatureVO = customFeatSer.getOneById(customFeatureId);
 		CustomSizeVO customSizeVO = customSizeSer.getOneById(customSizeId);
 		CustomMaterialVO customMaterialVO = customMaterSer.getOneById(customMaterialId);
+		
+		Integer memberId = (Integer)session.getAttribute("memberId");
 		MemVO memVO = memSer.findById(memberId);
 		
 		
 		Integer price = customClothVO.getCustomClothPrice() + customFeatureVO.getCustomFeaturePrice() + customSizeVO.getCustomSizePrice() + customMaterialVO.getCustomMaterialPrice();
-		if (hasBedFrame == true) {
+		if (bed_frame == true) {
 			price = price + 5000;
 		}
 		
