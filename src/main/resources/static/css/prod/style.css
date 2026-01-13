@@ -1,18 +1,3 @@
-.特色群組 {
-    margin: 20px 0 30px;
-    padding: 18px 22px;
-    background-color: #f3f4ff;      /* 淡紫底色，與整體風格一致 */
-    border: 1px solid #dcdcff;
-    border-radius: 12px;
-}
-
-.特色群組 .產品特色標題 {
-    margin: 0;
-    font-size: 15px;
-    line-height: 1.8;
-    color: #444;
-}
-
 .page-content-wrapper {
     max-width: 1200px;
     margin: 50px auto;
