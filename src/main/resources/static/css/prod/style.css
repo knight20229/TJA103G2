@@ -1,3 +1,11 @@
+.page-content-wrapper {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #f9f9fb;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    font-family: 'Noto Sans TC', sans-serif;
 style.css
 .page-content-wrapper {
     max-width: 1200px;
@@ -14,6 +22,22 @@ style.css
     flex: 1;
 }
 
+.product-details-big-image-slider-wrapper {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e0e0e5;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.product-details-big-image-slider-wrapper img {
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+
+.product-details-big-image-slider-wrapper img:hover {
+    transform: scale(1.05);
 .big-image-wrapper {
     padding: 20px;
     background-color: #fff;
@@ -35,6 +59,27 @@ style.css
 
 .single-product-slider-details-area .col-lg-6:last-child {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* 商品名稱 */
+.product-details-description-wrapper .item-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #4B2BE0;
+}
+
+.product-details-description-wrapper .特色群組 {
+    margin-bottom: 25px;
+}
+
+.product-details-description-wrapper .特色群組 p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
 }
 
 .product-details-description-wrapper {

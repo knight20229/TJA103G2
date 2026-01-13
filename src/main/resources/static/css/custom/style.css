@@ -1,3 +1,12 @@
+
+.page-content-wrapper {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 50px;
+    background-color: #f9f9fb;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    font-family: "Noto Sans TC", sans-serif;
 style (1).css
 .page-content-wrapper {
     max-width: 1200px;
@@ -14,6 +23,23 @@ style (1).css
     flex: 1;
 }
 
+.big-image-wrapper {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #e2e2e8;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.big-image-wrapper img {
+    width: 100%;
+    border-radius: 10px;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.big-image-wrapper img:hover {
+    transform: scale(1.04);
 .product-details-big-image-slider-wrapper {
     border-radius: 12px;
     overflow: hidden;
@@ -34,6 +60,73 @@ style (1).css
 
 .single-product-slider-details-area .col-lg-6:last-child {
     flex: 1;
+}
+
+.product-details-description-wrapper {
+    background-color: #ffffff;
+    padding: 35px 40px;
+    border-radius: 12px;
+    border: 1px solid #e2e2e8;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* 清除 ul 預設樣式 */
+.product-details-description-wrapper ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+.product-details-title {
+    display: inline-block;
+    min-width: 120px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #4b2be0;
+}
+
+.product-size {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.product-size select {
+    width: 260px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.product-size select:focus {
+    outline: none;
+    border-color: #4b2be0;
+}
+
+.length_weight,
+.material,
+.feature-cloth,
+.has_bed_frame {
+    margin-bottom: 15px;
+}
+
+.custom-total {
+    margin-top: 10px;
+    padding: 18px 20px;
+    background-color: #f3f4ff;
+    border-radius: 10px;
+    border: 1px solid #dcdcff;
+    display: flex;
+    align-items: center;
+}
+
+#total-price {
+    font-weight: 700;
+    color: #ff4c3b;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -108,6 +201,8 @@ style (1).css
 @import url("https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900,900i");
 
 
+.length_weight{
+  width: 100%;
 /* .nice-select .option.disabled:hover { */
 /*     background-color: #f0f0f0; */
 /* } */
@@ -197,6 +292,16 @@ style (1).css
     cursor: pointer;
     text-align: left;
     font: inherit;
+}
+.feature-cloth{
+  width: 80%;
+}
+
+.material{
+	width:80%;
+}
+.single-image{
+  display: flex;
 }
 
 .shop-product-wrap { display: flex; flex-wrap: wrap; gap: 10px; }
