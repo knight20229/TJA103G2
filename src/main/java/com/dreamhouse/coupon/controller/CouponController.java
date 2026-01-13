@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dreamhouse.coupon.model.CouponService;
 import com.dreamhouse.coupon.model.CouponVO;
+import com.dreamhouse.emp.model.EmpService;
+import com.dreamhouse.emp.model.EmpVO;
 import com.dreamhouse.memcoupon.model.MemCouponService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -27,6 +30,9 @@ public class CouponController {
 	@Autowired
 	MemCouponService memCoupSer;
 	
+	@Autowired
+	EmpService empSer;
+	
 	@GetMapping("addCoupon")
 	public String addCoupon(ModelMap model) {
 		CouponVO couponVO = new CouponVO();
@@ -35,11 +41,16 @@ public class CouponController {
 	}
 	
 	@PostMapping("insert")
-	public String insert(@Valid CouponVO couponVO, BindingResult result, ModelMap model) {
+	public String insert(@Valid CouponVO couponVO, BindingResult result, HttpSession session, ModelMap model) {
 		if (result.hasErrors()) {
+			System.out.println("驗證失敗的原因：");
+	        result.getAllErrors().forEach(error -> System.out.println(error.toString()));
 			return "back-end/coupon/coupon_add";
 		}
-		
+
+		Integer employeeId = (Integer)session.getAttribute("employeeId");
+		EmpVO empVO = (EmpVO)empSer.findById(employeeId);
+		couponVO.setEmpVO(empVO);
 		coupSer.addCoupon(couponVO);
 		List<CouponVO> list = coupSer.getAll();
 		model.addAttribute("couponList", list);
@@ -55,11 +66,14 @@ public class CouponController {
 	}
 	
 	@PostMapping("updateCoupon")
-	public String updateCoupon(@Valid CouponVO couponVO, BindingResult result, ModelMap model) {
+	public String updateCoupon(@Valid CouponVO couponVO, BindingResult result, HttpSession session, ModelMap model) {
 		if (result.hasErrors()) {
 			return "back-end/coupon/coupon_edit";
 		}
 		
+		Integer employeeId = (Integer)session.getAttribute("employeeId");
+		EmpVO empVO = (EmpVO)empSer.findById(employeeId);
+		couponVO.setEmpVO(empVO);
 		coupSer.updateCoupon(couponVO);
 		
 		couponVO = coupSer.getOneById(Integer.valueOf(couponVO.getCouponId()));
