@@ -50,7 +50,8 @@ public class FrontProdService {
                                    && connect.getSizeVO().getLength() != null)
                 .map(connect -> {
                 	FrontProdSize size = new FrontProdSize();
-                	size.setSizeId(connect.getProductSizeId());  // 設置 ProdSizeConnect 的 ID
+                	size.setProductSizeId(connect.getProductSizeId());
+                	size.setSizeId(connect.getSizeVO().getSizeId());
                 	size.setSizeText("長:" + connect.getSizeVO().getWidth() + "公分" + " \t " + "寬:" + connect.getSizeVO().getLength() + " 公分 ");
                 	size.setPrice(connect.getPrice());
                 	size.setStock(connect.getStock());

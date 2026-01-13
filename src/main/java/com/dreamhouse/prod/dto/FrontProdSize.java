@@ -2,12 +2,21 @@ package com.dreamhouse.prod.dto;
 
 public class FrontProdSize {
 
+	private Integer productSizeId;
     private Integer sizeId;
     private String sizeText;   // 例：90x188
     private Integer price;     
     private Integer stock;     // 庫存
 
 
+    public Integer getProductSizeId() {
+        return productSizeId;
+    }
+
+    public void setProductSizeId(Integer productSizeId) {
+        this.productSizeId = productSizeId;
+    }
+    
     public Integer getSizeId() {
         return sizeId;
     }
