@@ -290,9 +290,9 @@ public class CheckoutController {
 	 * 計算優惠券折扣金額
 	 */
 	private double calculateDiscount(CouponVO coupon, double orderAmount) {
-		if ("金額".equals(coupon.getType())) {
+		if ("AMOUNT".equals(coupon.getType())) {
 			return coupon.getCouponValue();
-		} else if ("百分比".equals(coupon.getType())) {
+		} else if ("PERCENT".equals(coupon.getType())) {
 			return orderAmount * coupon.getCouponValue() / 100.0;
 		}
 		return 0;
