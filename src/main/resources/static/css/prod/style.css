@@ -1,3 +1,108 @@
+style.css
+.page-content-wrapper {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 50px;
+    background-color: #f9f9fb;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    font-family: "Noto Sans TC", sans-serif;
+    color: #333;
+}
+
+.single-product-slider-details-area .col-lg-6:first-child {
+    flex: 1;
+}
+
+.big-image-wrapper {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #e2e2e8;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.big-image-wrapper img {
+    width: 100%;
+    border-radius: 10px;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.big-image-wrapper img:hover {
+    transform: scale(1.04);
+}
+
+.single-product-slider-details-area .col-lg-6:last-child {
+    flex: 1;
+}
+
+.product-details-description-wrapper {
+    background-color: #ffffff;
+    padding: 35px 40px;
+    border-radius: 12px;
+    border: 1px solid #e2e2e8;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* 清除 ul 預設樣式 */
+.product-details-description-wrapper ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+.product-details-title {
+    display: inline-block;
+    min-width: 120px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #4b2be0;
+}
+
+.product-size {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.product-size select {
+    width: 260px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.product-size select:focus {
+    outline: none;
+    border-color: #4b2be0;
+}
+
+.length_weight,
+.material,
+.feature-cloth,
+.has_bed_frame {
+    margin-bottom: 15px;
+}
+
+.custom-total {
+    margin-top: 10px;
+    padding: 18px 20px;
+    background-color: #f3f4ff;
+    border-radius: 10px;
+    border: 1px solid #dcdcff;
+    display: flex;
+    align-items: center;
+}
+
+#total-price {
+    font-weight: 700;
+    color: #ff4c3b;
+}
 /*=============================================
 =            CSS Index            =
 =============================================
@@ -50,88 +155,17 @@
 @import url("https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900,900i");
 
 
-/* .nice-select .option.disabled:hover { */
-/*     background-color: #f0f0f0; */
-/* } */
-
-/* =========================
-   整體容器
-   ========================= */
-.product-quantity-cart {
-    display: flex;
-    align-items: center;
+.length_weight{
+  width: 100%;
 }
 
-/* =========================
-   數量選擇器
-   ========================= */
-.quantity-selector {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    overflow: hidden;
-    width: 100px;
-}
-
-.quantity-selector .qty-btn {
-    background-color: #f5f5f5;
-    border: none;
-    width: 32px;
-    height: 32px;
-    font-size: 18px;
-    cursor: pointer;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.2s;
-}
-
-.quantity-selector .qty-btn:hover {
-    background-color: #e0e0e0;
-}
-
-.quantity-selector .qty-input {
-    width: 50px;
-    text-align: center;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    color: #333;
-}
-
-/* =========================
-   加入購物車按鈕
-   ========================= */
-.add-to-cart-btn {
-    display: flex;
-    align-items: center;
-}
-
-/* =========================
-   篩選按鈕
-   ========================= */
-/* .filter-btn.active { */
-/*     color: red; */
-/*     font-weight: bold; */
-/* } */
-
-/* =========================
-   其他版型樣式
-   ========================= */
-.length_weight {
-    width: 50%;
-}
-
-.has_bed_frame {
-    font-size: 16px;
+.has_bed_frame{
+  font-size: 16px;
     float: none;
     width: 40%;
     display: inline-block;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
-
 .shop-sidebar-wrapper button {
     background: none;
     border: none;
@@ -140,9 +174,25 @@
     text-align: left;
     font: inherit;
 }
+.feature-cloth{
+  width: 80%;
+}
 
-.shop-product-wrap { display: flex; flex-wrap: wrap; gap: 10px; }
-.shop-product-wrap .col-lg-4 { width: 30%; border: 1px solid #ccc; padding: 10px; }
+.material{
+	width:80%;
+}
+.single-image{
+  display: flex;
+}
+
+.custom-total{
+  margin-bottom: 5px;
+  margin-right: 5px;
+  width: 25%;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 6px;
+}
 
 .focaus-group{
   border:1px solid black;
@@ -158,21 +208,6 @@
 
 .navbar {
   border-radius: 5px;
-}
-
-.Featured-groups{
-  background-color: #edebebf0;
-  letter-spacing: 1px;
-  /* border-radius: 5px;
-  border:1px solid rgba(164, 116, 116, 0.414); */
-  /* margin: 10px ; */
-  border-radius: 10px;
-  margin-bottom: 15px;
-  padding :10px;
-}
-.Product-Featured-Title{
-  font-size: 18px;
-  font-weight: 700;
 }
 
 *, *::after, *::before {
@@ -1840,8 +1875,13 @@ select {
 /*=====  End of blue page style  ======*/
 /*=============================================
 =            Sidebar            =
-/* =============================================*/ */
-
+=============================================*/
+.single-sidebar-widget {
+  margin-bottom: 50px;
+}
+.single-sidebar-widget:last-child {
+  margin-bottom: 0;
+}
 .single-sidebar-widget__title {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 22px;
@@ -6739,9 +6779,9 @@ Main components
     max-width: 100%;
   }
 }
-/* .shop-product-wrap .single-grid-product { */
-/*   margin-bottom: 10px; */
-/* } */
+.shop-product-wrap .single-grid-product {
+  margin-bottom: 30px;
+}
 .shop-product-wrap.grid .single-list-product {
   display: none;
 }
@@ -7312,7 +7352,7 @@ Main components
 .product-details-description-wrapper .product-size .nice-select {
   font-size:16px;
   float: none;
-  width: 85%;
+  width: 100%;
   display: inline-block;
 }
 .product-details-description-wrapper .description {
