@@ -19,6 +19,9 @@ public interface OrdersRepository extends JpaRepository<OrdersVO, Integer> {
 
 	Optional<OrdersVO> findByOrderIdAndMemberId(Integer orderId, Integer memberId);
 
+	// 根據綠界交易編號查詢訂單
+	Optional<OrdersVO> findByMerchantTradeNo(String merchantTradeNo);
+
 	@Query("""
 				SELECT ovo FROM OrdersVO ovo
 				WHERE ovo.memberId = :memberId

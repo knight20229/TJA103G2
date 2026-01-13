@@ -49,4 +49,13 @@ public class OrderProductSizeService {
 	public OrderProductSizeVO getById(Integer id) {
 		return repository.findById(id).orElse(null);
 	}
+
+	/**
+	 * 新增訂單明細
+	 * @param orderProductSizeVO 訂單明細物件
+	 */
+	@Transactional
+	public void add(OrderProductSizeVO orderProductSizeVO) {
+		repository.save(orderProductSizeVO);
+	}
 }

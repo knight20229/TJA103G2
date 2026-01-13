@@ -57,27 +57,31 @@ public class OrdersService {
 		LocalDateTime now = LocalDateTime.now();
 		Timestamp ts = Timestamp.valueOf(now);
 
-		OrdersVO ordersVO = new OrdersVO();
+		// 查詢現有訂單
+		Optional<OrdersVO> optional = ordersrepo.findById(orderId);
+		if (!optional.isPresent()) {
+			throw new RuntimeException("訂單不存在：" + orderId);
+		}
 
-		ordersVO.setOrderId(orderId);
+		OrdersVO order = optional.get();
 
-		// 存 VO 時用 label
-		ordersVO.setReturnStatus(returnStatus.getLabel());
+		// 更新退貨狀態
+		order.setReturnStatus(returnStatus.getLabel());
 
+		// 更新拒絕原因（僅在 REJECTED 狀態時）
 		if (returnStatus == ReturnStatus.REJECTED && refusalReason != null) {
-			ordersVO.setRefusalReason(refusalReason.getLabel());
+			order.setRefusalReason(refusalReason.getLabel());
 		}
 
-		if (returnStatus == ReturnStatus.RETURNING) {
-			// RETURNING 狀態，更新退貨創建時間與審核時間
-			ordersVO.setReturnCreateTime(ts);
-			ordersVO.setReturnApproveTime(ts);
-		} else if (returnStatus == ReturnStatus.REJECTED) {
-			// REJECTED 狀態，只更新審核時間
-			ordersVO.setReturnApproveTime(ts);
+		// 更新審核時間
+		order.setReturnApproveTime(ts);
+
+		// 如果是第一次設定為 RETURNING，更新建立時間
+		if (returnStatus == ReturnStatus.RETURNING && order.getReturnCreateTime() == null) {
+			order.setReturnCreateTime(ts);
 		}
 
-		ordersrepo.save(ordersVO);
+		ordersrepo.save(order);
 	}
 
 	public void delete(Integer orderId) {
@@ -142,10 +146,34 @@ public class OrdersService {
 		return ordersrepo.findByOrderIdAndMemberId(orderId, memberId).orElse(null);
 	}
 
+	public OrdersVO getByMerchantTradeNo(String merchantTradeNo) {
+		return ordersrepo.findByMerchantTradeNo(merchantTradeNo).orElse(null);
+	}
+
 	public List<OrdersVO> findOrdersByConditions(Integer memberId, LocalDate startDate, LocalDate endDate,
 			String orderStatus) {
 
 		return ordersrepo.findOrdersByConditions(memberId, startDate, endDate, orderStatus);
+	}
+
+	/**
+	 * 更新付款狀態（綠界回調時使用）
+	 * @param orderId 訂單ID
+	 * @param paymentStatus 付款狀態
+	 * @param orderStatus 訂單狀態
+	 */
+	@Transactional
+	public void updatePaymentStatus(Integer orderId, String paymentStatus, String orderStatus) {
+		OrdersVO order = getByOrderID(orderId);
+		if (order != null) {
+			order.setPaymentStatus(paymentStatus);
+			order.setOrderStatus(orderStatus);
+			if (PaymentStatus.PAID.getLabel().equals(paymentStatus)) {
+				order.setPaymentCreateTime(Timestamp.valueOf(LocalDateTime.now()));
+			}
+			order.setOrderUpdateTime(Timestamp.valueOf(LocalDateTime.now()));
+			ordersrepo.save(order);
+		}
 	}
 
 }

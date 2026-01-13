@@ -45,7 +45,7 @@ public class CustomProdCartService implements CartStrategy {
 	RedisTemplate<String, Object> redisTemp;
 
 	@Override
-	public void addToCart(Integer customProductId, Integer quantity, Integer price, Integer memberId) {
+	public void addToCart(Integer customProductId, Integer customSizeId, Integer quantity, Integer price, Integer memberId) {
 		
 
 		// 將剛新增的客製化商品存到redis
@@ -56,7 +56,8 @@ public class CustomProdCartService implements CartStrategy {
 		CartItemDTO itemDTO = new CartItemDTO();
 		itemDTO.setItemKey(itemKey);
 		itemDTO.setProductId(customProductId);
-		itemDTO.setProductName(memVO.getName() + "的客製化商品"); 
+		itemDTO.setCustomProductId(customProductId);  // 設定客製化商品ID
+		itemDTO.setProductName(memVO.getName() + "的客製化商品");
 		itemDTO.setPrice(price);
 		itemDTO.setQuantity(quantity);
 

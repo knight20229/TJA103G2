@@ -37,6 +37,7 @@ public class OrdersVO implements Serializable{
 	private Integer couponId;
 	private String paymentMethod;
 	private String paymentStatus;
+	private String merchantTradeNo;
 	private String returnReason;
 	private String returnText;
 	private String returnStatus;
@@ -175,7 +176,16 @@ public class OrdersVO implements Serializable{
 	public void setPaymentStatus(String paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
-	
+
+	@Column(name = "merchant_trade_no", length = 20)
+	public String getMerchantTradeNo() {
+		return merchantTradeNo;
+	}
+
+	public void setMerchantTradeNo(String merchantTradeNo) {
+		this.merchantTradeNo = merchantTradeNo;
+	}
+
 	@Column(name = "return_reason")
 	public String getReturnReason() {
 //		if (returnReason == null) {
