@@ -111,7 +111,7 @@
 						<option value="">不使用優惠券</option>
 						<option th:each="coupon : ${coupons}"
 							th:value="${coupon.memCouponKey.couponId}"
-							th:text="${coupon.couponId.name + ' (折扣: $' + coupon.couponId.couponValue + ')'}">
+							th:text="${coupon.couponVO.name + ' (折扣: $' + coupon.couponVO.couponValue + ')'}">
 						</option>
 					</select>
 				</div>
