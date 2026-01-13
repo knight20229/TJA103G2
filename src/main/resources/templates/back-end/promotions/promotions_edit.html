@@ -74,9 +74,19 @@
 		</ul>
 
 		<div class="mt-4 d-flex justify-content-center logout-wrapper">
-			<button class="btn btn-outline-primary w-50 fw-bold btn-logout">
+
+			<button th:if="${session.employeeId != null}" type="button"
+				class="btn btn-primary w-50 fw-bold btn-logout"
+				data-bs-toggle="modal" data-bs-target="#logoutModal">
 				<i class="bi bi-box-arrow-right"></i> 登出
 			</button>
+
+			<a th:if="${session.employeeId == null}" href="javascript:void(0)"
+				th:data-login-url="@{/emp/login}" onclick="loginWithLocation(this)"
+				class="btn btn-primary w-50 fw-bold"> <i
+				class="bi bi-box-arrow-in-right"></i> 登入
+			</a>
+
 		</div>
 	</nav>
 
