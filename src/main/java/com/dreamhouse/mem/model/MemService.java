@@ -192,8 +192,8 @@ public class MemService {
         List<MemVO> unverifiedMembers = repository.findByEmailVerifiedFalse();
         for (MemVO mem : unverifiedMembers) {
             if (mem.getCreateTime() != null &&
-                now.getTime() - mem.getCreateTime().getTime() > 10 * 60 * 1000) {
-                // 超過 10 分鐘未驗證 → 刪除
+                now.getTime() - mem.getCreateTime().getTime() > 60 * 1000) {
+                // 超過 1 分鐘未驗證 → 刪除
                 repository.delete(mem);
             }
         }
