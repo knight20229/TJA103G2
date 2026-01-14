@@ -37,7 +37,7 @@ public class CouponScheduler {
 	}
 	
 	// 結束日期=當下日期，將狀態更新為停用
-	@Scheduled(cron = "0 5 0 * * ?")
+	@Scheduled(cron = "0 45 08 * * ?")
 	void updateState() {
 		coupSer.updateState();
 		System.out.println("更新成功");

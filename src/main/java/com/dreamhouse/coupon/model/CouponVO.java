@@ -119,7 +119,6 @@ public class CouponVO {
 	}
 	
 	@Column(name = "start_dt")
-	@NotNull(message = "請輸入開始日期")
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	public LocalDate getStartDt() {
 		return startDt;
@@ -130,7 +129,6 @@ public class CouponVO {
 	}
 	
 	@Column(name = "end_dt")
-	@NotNull(message = "請輸入結束日期")
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	public LocalDate getEndDt() {
 		return endDt;
