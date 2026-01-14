@@ -136,7 +136,7 @@ input[readonly] {
 	<div th:replace="~{front-end/layout :: header}"></div>
 
 	<!--==================== End of header area ====================-->
-	
+
 	<!--==================== 會員基本資料 ====================-->
 	<div class="page-content-wrapper">
 		<form class="member-form" th:action="@{/mem/update}" method="post"
@@ -170,12 +170,17 @@ input[readonly] {
 					type="email" th:field="*{email}" readonly>
 			</div>
 
-			<div class="form-group">
-				<label for="memberAddress">住址</label> <input id="memberAddress"
-					type="text" th:field="*{address}" readonly> <small
-					class="text-danger" th:if="${#fields.hasErrors('address')}"
-					th:errors="*{address}"></small>
+			<div class="form-row">
+				<div class="form-group">
+					<label for="memberAddress">住址</label> <input id="memberAddress"
+						type="text" th:field="*{address}" required readonly
+						class="form-control"
+						th:classappend="${#fields.hasErrors('address')} ? 'is-invalid'">
+					<small class="text-danger" th:if="${#fields.hasErrors('address')}"
+						th:errors="*{address}"></small>
+				</div>
 			</div>
+
 
 			<div class="button-group">
 				<button type="button" class="theme-button edit"

@@ -43,7 +43,8 @@ public class MemService {
         MemVO saved = repository.save(member);
 
         // 寄送驗證信（使用 Thymeleaf 模板）
-        String verifyLink = "http://localhost:8080/mem/verify?token=" + token;
+//        String verifyLink = "http://localhost:8080/mem/verify?token=" + token;
+        String verifyLink = "http://dream-house.ddns.net/mem/verify?token=" + token;
         Context context = new Context();
         context.setVariable("verifyUrl", verifyLink);
         String htmlContent = templateEngine.process("front-end/mem/email_verify", context);
@@ -150,8 +151,8 @@ public class MemService {
             mem.setTokenExpireTime(Timestamp.valueOf(LocalDateTime.now().plusHours(24)));
             repository.save(mem);
 
-            String verifyLink = "http://localhost:8080/mem/verify?token=" + newToken;
-
+//          String verifyLink = "http://localhost:8080/mem/verify?token=" + newToken;
+            String verifyLink = "http://dream-house.ddns.net/mem/verify?token=" + newToken;
             Context context = new Context();
             context.setVariable("verifyUrl", verifyLink);
             String htmlContent = templateEngine.process("front-end/mem/email_verify", context);

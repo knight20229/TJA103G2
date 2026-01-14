@@ -47,7 +47,7 @@ public class RegisterController {
 
         // 新增會員並產生驗證 token
         MemVO saved = memService.addMember(memberVO);
-        // 假設 memService.addMember() 會回傳 token
+        // memService.addMember() 會回傳包含 token 的 MemVO
         String toEmail = saved.getEmail();
 
 
