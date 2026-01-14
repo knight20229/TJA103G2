@@ -144,7 +144,7 @@
 								<a class="btn btn-primary btn-sm"
 									th:href="@{/promotions/viewPromotions(promotionsId=${promotionsVO.promotionsId})}">
 										<i class="fas fa-folder"> </i> View</a>
-								<a class="btn btn-info btn-sm"
+								<a class="btn btn-info btn-sm" th:if="${promotionsVO.sendTime == null}"
 									th:href="@{/promotions/getOneForUpdate(promotionsId=${promotionsVO.promotionsId})}"> <i
 										class="fas fa-pencil-alt"> </i> Edit</a>
 							</td>
