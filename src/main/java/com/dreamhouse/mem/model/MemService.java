@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -185,6 +186,19 @@ public class MemService {
         }
         return false;
     }
+    @Scheduled(fixedRate = 60000) // 每分鐘檢查一次
+    public void cleanUnverifiedMembers() {
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        List<MemVO> unverifiedMembers = repository.findByEmailVerifiedFalse();
+        for (MemVO mem : unverifiedMembers) {
+            if (mem.getCreateTime() != null &&
+                now.getTime() - mem.getCreateTime().getTime() > 10 * 60 * 1000) {
+                // 超過 10 分鐘未驗證 → 刪除
+                repository.delete(mem);
+            }
+        }
+    }
+
 
     // 重設密碼
     public boolean resetPassword(String email, String newPassword) {

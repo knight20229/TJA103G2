@@ -29,5 +29,6 @@ public interface MemRepository extends JpaRepository<MemVO, Integer> {
 
 	MemVO findByEmail(String email);
 	
+	List<MemVO> findByEmailVerifiedFalse();
 }
 
