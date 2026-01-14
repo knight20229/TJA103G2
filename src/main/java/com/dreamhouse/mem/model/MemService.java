@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -43,7 +44,8 @@ public class MemService {
         MemVO saved = repository.save(member);
 
         // 寄送驗證信（使用 Thymeleaf 模板）
-        String verifyLink = "http://localhost:8080/mem/verify?token=" + token;
+//        String verifyLink = "http://localhost:8080/mem/verify?token=" + token;
+        String verifyLink = "http://dream-house.ddns.net/mem/verify?token=" + token;
         Context context = new Context();
         context.setVariable("verifyUrl", verifyLink);
         String htmlContent = templateEngine.process("front-end/mem/email_verify", context);
@@ -150,8 +152,8 @@ public class MemService {
             mem.setTokenExpireTime(Timestamp.valueOf(LocalDateTime.now().plusHours(24)));
             repository.save(mem);
 
-            String verifyLink = "http://localhost:8080/mem/verify?token=" + newToken;
-
+//          String verifyLink = "http://localhost:8080/mem/verify?token=" + newToken;
+            String verifyLink = "http://dream-house.ddns.net/mem/verify?token=" + newToken;
             Context context = new Context();
             context.setVariable("verifyUrl", verifyLink);
             String htmlContent = templateEngine.process("front-end/mem/email_verify", context);
@@ -184,6 +186,19 @@ public class MemService {
         }
         return false;
     }
+    @Scheduled(fixedRate = 60000) // 每分鐘檢查一次
+    public void cleanUnverifiedMembers() {
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        List<MemVO> unverifiedMembers = repository.findByEmailVerifiedFalse();
+        for (MemVO mem : unverifiedMembers) {
+            if (mem.getCreateTime() != null &&
+                now.getTime() - mem.getCreateTime().getTime() > 60 * 1000) {
+                // 超過 1 分鐘未驗證 → 刪除
+                repository.delete(mem);
+            }
+        }
+    }
+
 
     // 重設密碼
     public boolean resetPassword(String email, String newPassword) {
