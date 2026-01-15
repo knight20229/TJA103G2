@@ -44,6 +44,12 @@ public class PromotionsController {
 	@PostMapping("insert")
 	public String insert(@Valid PromotionsVO promotionsVO, BindingResult result, HttpSession session, ModelMap model) {
 		if (result.hasErrors()) {
+			System.out.println("驗證失敗的原因：");
+	        result.getAllErrors().forEach(error -> System.out.println(error.toString()));
+			
+	        Integer employeeId = (Integer)session.getAttribute("employeeId");
+			EmpVO empVO = empSer.findById(employeeId);
+			model.addAttribute("employeeName", empVO.getName());
 			return "back-end/promotions/promotions_add";
 		}
 		
