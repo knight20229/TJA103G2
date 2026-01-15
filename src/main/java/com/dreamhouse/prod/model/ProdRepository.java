@@ -9,17 +9,17 @@ public interface ProdRepository extends JpaRepository<ProdVO, Integer> {
     // 取得所有材質
     @Query("SELECT DISTINCT p.material FROM ProdVO p WHERE p.material IS NOT NULL")
     List<String> findDistinctMaterials();
-    // 上架日期
+    // 自動上架
     @Modifying
     @Query("UPDATE ProdVO p SET p.status = true WHERE p.status = false " +
-           "AND p.onDate <= CURRENT_TIMESTAMP " +  // 改用資料庫時間
+           "AND p.onDate <= CURRENT_TIMESTAMP " +  // 用資料庫時間
            "AND (p.offDate IS NULL OR p.offDate > CURRENT_TIMESTAMP)")
     int updateStatusToActive();
-    // 下架日期
+    // 自動下架
     @Modifying
     @Query("UPDATE ProdVO p SET p.status = false WHERE p.status = true " +
            "AND p.offDate IS NOT NULL " + 
-           "AND p.offDate <= CURRENT_TIMESTAMP") // 改用資料庫時間
+           "AND p.offDate <= CURRENT_TIMESTAMP") // 用資料庫時間
     int updateStatusToInactive();
     
     // 新增商品：檢查名稱是否存在
