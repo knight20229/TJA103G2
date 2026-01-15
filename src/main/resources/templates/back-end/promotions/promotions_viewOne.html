@@ -21,11 +21,11 @@
 </head>
 
 <body>
-    <!-- ========== 左側側邊欄 ========== -->
+	<!-- ========== 左側側邊欄 ========== -->
 	<nav class="sidebar">
 		<a class="mb-4 fs-4 text-decoration-none fw-bold"
 			th:href="@{/back-end}">後台管理</a>
-			
+
 		<div
 			class="mb-4 px-3 py-2 bg-light rounded shadow-sm border-start border-4 border-primary">
 			<div th:if="${session.employeeId != null}">
@@ -68,7 +68,7 @@
 					class="bi bi-chevron-down"></i>
 			</a>
 
-				<div class="collapse fs-6" id="menu_orders">
+				<div class="collapse fs-6 show" id="menu_orders">
 					<ul class="nav flex-column ms-3">
 						<li><a class="nav-link" th:href="@{/orders/list}">訂單紀錄</a></li>
 						<li><a class="nav-link" th:href="@{/returns/list}">退貨處理</a></li>
@@ -81,7 +81,7 @@
 					class="bi bi-chevron-down"></i>
 			</a>
 
-				<div class="collapse fs-6 show" id="menu_activity">
+				<div class="collapse fs-6" id="menu_activity">
 					<ul class="nav flex-column ms-3">
 						<li><a class="nav-link" th:href="@{/coupon/getAllCoupon}">優惠券管理</a></li>
 						<li><a class="nav-link"
