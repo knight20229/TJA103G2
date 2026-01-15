@@ -33,6 +33,8 @@ import com.dreamhouse.orders.model.OrdersVO;
 import com.dreamhouse.orders.model.PaymentStatus;
 import com.dreamhouse.prod.model.ProdSizeConnectRepository;
 import com.dreamhouse.prod.model.ProdSizeConnectVO;
+import com.dreamhouse.promotions.model.PromotionsService;
+import com.dreamhouse.promotions.model.PromotionsVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -64,6 +66,9 @@ public class CheckoutController {
 	@Autowired
 	private CartService cartService;
 
+	@Autowired
+	private PromotionsService promotionsService;
+
 	// =========================
 	// 結帳頁面（從購物車）
 	// =========================
@@ -87,18 +92,39 @@ public class CheckoutController {
 		MemVO member = memService.findById(memberId);
 
 		// 計算總金額
-		double subtotal = cartItems.stream()
-			.mapToDouble(item -> item.getPrice() * item.getQuantity())
-			.sum();
+		double subtotal = cartItems.stream().mapToDouble(item -> item.getPrice() * item.getQuantity()).sum();
 
 		// 查詢可用優惠券
 		List<MemCouponVO> coupons = findAvailableCoupons(memberId);
 
+		// 查詢當前有效促銷
+		List<PromotionsVO> activePromotions = promotionsService.getActivePromotions();
+
+		// 計算最佳促銷折扣
+		PromotionsVO bestPromotion = null;
+		double promotionDiscount = 0;
+		if (!activePromotions.isEmpty()) {
+			for (PromotionsVO promo : activePromotions) {
+				double discount = calculatePromotionDiscount(promo, subtotal);
+				if (discount > promotionDiscount) {
+					promotionDiscount = discount;
+					bestPromotion = promo;
+				}
+			}
+		}
+
+		// 計算促銷後金額
+		double afterPromotion = subtotal - promotionDiscount;
+
 		model.addAttribute("member", member);
-		model.addAttribute("cartItems", cartItems);  // 傳遞購物車項目列表
+		model.addAttribute("cartItems", cartItems);
 		model.addAttribute("subtotal", subtotal);
+		model.addAttribute("activePromotions", activePromotions);
+		model.addAttribute("bestPromotion", bestPromotion);
+		model.addAttribute("promotionDiscount", promotionDiscount);
+		model.addAttribute("afterPromotion", afterPromotion);
 		model.addAttribute("discount", 0);
-		model.addAttribute("finalTotal", subtotal);
+		model.addAttribute("finalTotal", afterPromotion);
 		model.addAttribute("coupons", coupons);
 
 		return "front-end/checkout";
@@ -108,14 +134,9 @@ public class CheckoutController {
 	// 確認下單（從購物車）
 	// =========================
 	@PostMapping("")
-	public String checkoutSubmit(
-			@RequestParam String receivingName,
-			@RequestParam String receivingPhone,
-			@RequestParam String receivingAddress,
-			@RequestParam String paymentMethod,
-			@RequestParam(required = false) Integer couponId,
-			HttpSession session,
-			Model model,
+	public String checkoutSubmit(@RequestParam String receivingName, @RequestParam String receivingPhone,
+			@RequestParam String receivingAddress, @RequestParam String paymentMethod,
+			@RequestParam(required = false) Integer couponId, HttpSession session, Model model,
 			RedirectAttributes redirectAttributes) {
 
 		try {
@@ -124,33 +145,33 @@ public class CheckoutController {
 			if (memberId == null) {
 				return "redirect:/mem/login";
 			}
-			
+
 			// 收件人姓名驗證
-	        if (receivingName == null || receivingName.trim().isEmpty()) {
-	            redirectAttributes.addFlashAttribute("errorMessage", "收件人姓名不可為空");
-	            return "redirect:/checkout";
-	        }
-	        if (receivingName.length() < 2 || receivingName.length() > 50) {
-	            redirectAttributes.addFlashAttribute("errorMessage", "收件人姓名長度需介於 2~50 字");
-	            return "redirect:/checkout";
-	        }
+			if (receivingName == null || receivingName.trim().isEmpty()) {
+				redirectAttributes.addFlashAttribute("errorMessage", "收件人姓名不可為空");
+				return "redirect:/checkout";
+			}
+			if (receivingName.length() < 2 || receivingName.length() > 50) {
+				redirectAttributes.addFlashAttribute("errorMessage", "收件人姓名長度需介於 2~50 字");
+				return "redirect:/checkout";
+			}
 
-	        // 收件人電話驗證
-	        if (receivingPhone == null || receivingPhone.trim().isEmpty()) {
-	            redirectAttributes.addFlashAttribute("errorMessage", "收件人電話不可為空");
-	            return "redirect:/checkout";
-	        }
-	        // 手機號碼格式驗證 (09開頭 + 8碼)
-	        if (!receivingPhone.matches("^09\\d{8}$")) {
-	            redirectAttributes.addFlashAttribute("errorMessage", "收件人電話格式錯誤，應為09xxxxxxxx");
-	            return "redirect:/checkout";
-	        }
+			// 收件人電話驗證
+			if (receivingPhone == null || receivingPhone.trim().isEmpty()) {
+				redirectAttributes.addFlashAttribute("errorMessage", "收件人電話不可為空");
+				return "redirect:/checkout";
+			}
+			// 手機號碼格式驗證 (09開頭 + 8碼)
+			if (!receivingPhone.matches("^09\\d{8}$")) {
+				redirectAttributes.addFlashAttribute("errorMessage", "收件人電話格式錯誤，應為09xxxxxxxx");
+				return "redirect:/checkout";
+			}
 
-	        // 收件人地址驗證
-	        if (receivingAddress == null || receivingAddress.trim().isEmpty()) {
-	            redirectAttributes.addFlashAttribute("errorMessage", "收件人地址不可為空");
-	            return "redirect:/checkout";
-	        }
+			// 收件人地址驗證
+			if (receivingAddress == null || receivingAddress.trim().isEmpty()) {
+				redirectAttributes.addFlashAttribute("errorMessage", "收件人地址不可為空");
+				return "redirect:/checkout";
+			}
 
 			// 從購物車獲取商品
 			List<CartItemDTO> cartItems = cartService.getAllCartItems(memberId);
@@ -158,26 +179,42 @@ public class CheckoutController {
 				throw new RuntimeException("購物車是空的");
 			}
 
-			// 計算總金額
-			double amount = cartItems.stream()
-				.mapToDouble(item -> item.getPrice() * item.getQuantity())
-				.sum();
+			// 計算商品總金額
+			double amount = cartItems.stream().mapToDouble(item -> item.getPrice() * item.getQuantity()).sum();
 
-			double discount = 0;
-
-			// 處理優惠券
-			if (couponId != null) {
-				CouponVO coupon = validateCoupon(couponId, memberId, amount);
-				discount = calculateDiscount(coupon, amount);
+			// 1. 先計算促銷折扣
+			List<PromotionsVO> activePromotions = promotionsService.getActivePromotions();
+			PromotionsVO bestPromotion = null;
+			double promotionDiscount = 0;
+			if (!activePromotions.isEmpty()) {
+				for (PromotionsVO promo : activePromotions) {
+					double discount = calculatePromotionDiscount(promo, amount);
+					if (discount > promotionDiscount) {
+						promotionDiscount = discount;
+						bestPromotion = promo;
+					}
+				}
 			}
 
-			double payment = amount - discount;
+			// 促銷後金額
+			double afterPromotion = amount - promotionDiscount;
+
+			// 2. 再計算優惠券折扣（基於促銷後金額）
+			double couponDiscount = 0;
+			if (couponId != null) {
+				CouponVO coupon = validateCoupon(couponId, memberId, afterPromotion);
+				couponDiscount = calculateDiscount(coupon, afterPromotion);
+			}
+
+			// 3. 總折扣和最終付款金額
+			double totalDiscount = promotionDiscount + couponDiscount;
+			double payment = amount - totalDiscount;
 
 			// 建立訂單
 			OrdersVO order = new OrdersVO();
 			order.setMemberId(memberId);
 			order.setAmount(amount);
-			order.setDiscount(discount);
+			order.setDiscount(totalDiscount);
 			order.setPayment(payment);
 			order.setOrderStatus(OrderStatus.PENDING_PAYMENT.getLabel());
 			order.setPaymentStatus(PaymentStatus.UNPAID.getLabel());
@@ -185,6 +222,7 @@ public class CheckoutController {
 			order.setReceivingPhone(receivingPhone);
 			order.setReceivingAddress(receivingAddress);
 			order.setPaymentMethod(paymentMethod);
+			order.setPromotionId(bestPromotion != null ? bestPromotion.getPromotionsId() : null);
 			order.setCouponId(couponId);
 
 			ordersService.addOrder(order);
@@ -220,12 +258,9 @@ public class CheckoutController {
 			}
 
 			// 生成綠界付款參數
-			String itemName = generateItemNames(cartItems);  // 組合商品名稱
-			Map<String, String> ecpayParams = ecPayService.generatePaymentParams(
-				order.getOrderId(),
-				(int) Math.round(payment),
-				itemName
-			);
+			String itemName = generateItemNames(cartItems); // 組合商品名稱
+			Map<String, String> ecpayParams = ecPayService.generatePaymentParams(order.getOrderId(),
+					(int) Math.round(payment), itemName);
 
 			// 儲存 MerchantTradeNo
 			String merchantTradeNo = ecpayParams.get("MerchantTradeNo");
@@ -253,8 +288,7 @@ public class CheckoutController {
 	 */
 	private List<MemCouponVO> findAvailableCoupons(Integer memberId) {
 		LocalDate today = LocalDate.now();
-		return memCouponRepo.findAll().stream()
-				.filter(mc -> mc.getMemCouponKey().getMemberId().equals(memberId))
+		return memCouponRepo.findAll().stream().filter(mc -> mc.getMemCouponKey().getMemberId().equals(memberId))
 				.filter(mc -> mc.getUseStatus() == 0).filter(mc -> {
 					CouponVO coupon = mc.getCouponVO();
 					return coupon != null && coupon.getState() == 1 && !today.isBefore(coupon.getStartDt())
@@ -299,6 +333,18 @@ public class CheckoutController {
 	}
 
 	/**
+	 * 計算促銷活動折扣金額
+	 */
+	private double calculatePromotionDiscount(PromotionsVO promotion, double orderAmount) {
+		if ("AMOUNT".equals(promotion.getType())) {
+			return promotion.getPromotionsValue();
+		} else if ("PERCENT".equals(promotion.getType())) {
+			return orderAmount * promotion.getPromotionsValue() / 100.0;
+		}
+		return 0;
+	}
+
+	/**
 	 * 標記優惠券為已使用
 	 */
 	private void markCouponAsUsed(Integer memberId, Integer couponId) {
@@ -330,10 +376,7 @@ public class CheckoutController {
 	// =========================
 
 	/**
-	 * 綠界付款結果通知（Server 端背景執行）
-	 * 對應綠界參數：ReturnURL
-	 * 用途：接收綠界背景通知，更新訂單狀態
-	 * 回應：必須返回 "1|OK"
+	 * 綠界付款結果通知（Server 端背景執行） 對應綠界參數：ReturnURL 用途：接收綠界背景通知，更新訂單狀態 回應：必須返回 "1|OK"
 	 */
 	@PostMapping("/ecpay/callback")
 	@ResponseBody
@@ -384,15 +427,12 @@ public class CheckoutController {
 	}
 
 	/**
-	 * 綠界付款結果回傳（Client 端前端接收）
-	 * 對應綠界參數：OrderResultURL
-	 * 用途：用戶付款完成後，綠界以 POST 方式回傳付款結果到前端
+	 * 綠界付款結果回傳（Client 端前端接收） 對應綠界參數：OrderResultURL 用途：用戶付款完成後，綠界以 POST 方式回傳付款結果到前端
 	 * 回應：導向訂單詳情頁（自動跳轉，提升用戶體驗）
 	 */
 	@PostMapping("/ecpay/return")
-	public String ecpayReturn(@RequestParam Map<String, String> params,
-	                         HttpSession session,
-	                         RedirectAttributes redirectAttributes) {
+	public String ecpayReturn(@RequestParam Map<String, String> params, HttpSession session,
+			RedirectAttributes redirectAttributes) {
 		try {
 			System.out.println("=== 收到綠界前端回傳（OrderResultURL）===");
 			System.out.println("Session ID: " + session.getId());
@@ -435,8 +475,7 @@ public class CheckoutController {
 	}
 
 	/**
-	 * 從 MerchantTradeNo 查詢訂單 ID
-	 * 格式：DH{timestamp 14位}{orderId%1000 補3位}getCouponId
+	 * 從 MerchantTradeNo 查詢訂單 ID 格式：DH{timestamp 14位}{orderId%1000 補3位}getCouponId
 	 * 由於使用取餘數，無法直接反推，需透過資料庫查詢
 	 */
 	private Integer parseOrderId(String merchantTradeNo) {
