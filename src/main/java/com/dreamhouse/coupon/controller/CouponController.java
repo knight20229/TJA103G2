@@ -57,6 +57,7 @@ public class CouponController {
 			model.addAttribute("employeeName", empVO.getName());
 	        return "back-end/coupon/coupon_add";
 		}
+		
 
 		Integer employeeId = (Integer)session.getAttribute("employeeId");
 		EmpVO empVO = (EmpVO)empSer.findById(employeeId);

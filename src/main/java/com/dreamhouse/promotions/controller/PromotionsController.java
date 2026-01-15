@@ -63,6 +63,7 @@ public class PromotionsController {
 	}
 	
 	
+	
 	@GetMapping("getOneForUpdate")
 	public String getOneForUpdate(@RequestParam("promotionsId") String promotionsId, HttpSession session, ModelMap model) {
 		PromotionsVO promotionsVO = proSer.getOneById(Integer.valueOf(promotionsId));
