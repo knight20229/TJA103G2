@@ -7,14 +7,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.dreamhouse.customcloth.model.CustomClothService;
-import com.dreamhouse.customcloth.model.CustomClothVO;
 import com.dreamhouse.customfeature.model.CustomFeatureService;
-import com.dreamhouse.customfeature.model.CustomFeatureVO;
 import com.dreamhouse.custommaterial.model.CustomMaterialService;
-import com.dreamhouse.custommaterial.model.CustomMaterialVO;
-import com.dreamhouse.customprod.model.CustomProductDTO;
 import com.dreamhouse.customprod.model.CustomProductService;
-import com.dreamhouse.customprod.model.CustomProductVO;
+import com.dreamhouse.customsize.model.CustomSizeRepository;
 import com.dreamhouse.customsize.model.CustomSizeService;
 import com.dreamhouse.customsize.model.CustomSizeVO;
 import com.dreamhouse.mem.model.MemService;
@@ -25,6 +21,9 @@ public class CustomProdCartService implements CartStrategy {
 
 	@Autowired
 	private CustomProductService customProdSer;
+	
+	@Autowired
+	private CustomSizeRepository customSizeRepo;
 
 	@Autowired
 	private CustomClothService customClothSer;
@@ -48,6 +47,9 @@ public class CustomProdCartService implements CartStrategy {
 	public void addToCart(Integer customProductId, Integer customSizeId, Integer quantity, Integer price, Integer memberId) {
 		
 
+		CustomSizeVO cs = customSizeRepo.getById(customSizeId);
+		
+		
 		// 將剛新增的客製化商品存到redis
 		String cartKey = new StringBuilder("cart").append(":").append(memberId).toString();
 		String itemKey = new StringBuilder("CUST").append(":").append(customProductId).toString();
@@ -57,6 +59,8 @@ public class CustomProdCartService implements CartStrategy {
 		itemDTO.setItemKey(itemKey);
 		itemDTO.setProductId(customProductId);
 		itemDTO.setCustomProductId(customProductId);  // 設定客製化商品ID
+		String sizeName = cs.getCustomWidth() + " x " + cs.getCustomLength() + " cm";
+		itemDTO.setSizeName(sizeName);;
 		itemDTO.setProductName(memVO.getName() + "的客製化商品");
 		itemDTO.setPrice(price);
 		itemDTO.setQuantity(quantity);
