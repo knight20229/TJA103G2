@@ -125,7 +125,7 @@ $(document).ready(function() {
 		});
 	}
 
-	// 吐司顯示函式 (放在內部或外部皆可，建議放在這裡)
+	// 吐司顯示函式 
 	function showStatusToast(msg) {
 		if ($('#toast-wrapper').length === 0) {
 			$('body').append('<div id="toast-wrapper" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080;"></div>');
