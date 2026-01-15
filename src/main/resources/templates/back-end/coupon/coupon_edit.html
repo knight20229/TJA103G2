@@ -164,10 +164,11 @@
                 </div>
             </div>
             <div>
-	            <span>員工編號</span>
-	            <input type="text" name="employeeId" th:value="${session.employeeId}"
-					class="form-control" id="inputEmployeeId" readonly>
-            </div>
+				<span>員工姓名</span> <input type="text" th:value="${employeeName}"
+					class="form-control" id="inputEmployeeName" readonly> 
+				<input type="hidden" name="employeeId" th:value="${session.employeeId}"
+					class="form-control" id="inputEmployeeId"> 
+			</div>
             <div class="col-md-4">
 	            <span>建立時間</span>
 	            <input type="text" th:field="*{createTime}" th:value="${#temporals.format(couponVO.createTime,'yyyy-MM-dd HH:mm:ss')}" class="form-control" id="inputCreateTime" readonly>

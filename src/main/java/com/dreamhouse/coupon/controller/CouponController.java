@@ -15,6 +15,7 @@ import com.dreamhouse.coupon.model.CouponService;
 import com.dreamhouse.coupon.model.CouponVO;
 import com.dreamhouse.emp.model.EmpService;
 import com.dreamhouse.emp.model.EmpVO;
+import com.dreamhouse.mem.model.MemVO;
 import com.dreamhouse.memcoupon.model.MemCouponService;
 
 import jakarta.servlet.http.HttpSession;
@@ -34,9 +35,14 @@ public class CouponController {
 	EmpService empSer;
 	
 	@GetMapping("addCoupon")
-	public String addCoupon(ModelMap model) {
+	public String addCoupon(HttpSession session, ModelMap model) {
 		CouponVO couponVO = new CouponVO();
 		model.addAttribute("couponVO", couponVO);
+				
+		
+		Integer employeeId = (Integer)session.getAttribute("employeeId");
+		EmpVO empVO = empSer.findById(employeeId);
+		model.addAttribute("employeeName", empVO.getName());
 		return "back-end/coupon/coupon_add";
 	}
 	
@@ -59,9 +65,13 @@ public class CouponController {
 	
 	
 	@GetMapping("getOneForUpdate")
-	public String getOneForUpdate(@RequestParam("couponId") String couponId, ModelMap model) {
+	public String getOneForUpdate(@RequestParam("couponId") String couponId, HttpSession session, ModelMap model) {
 		CouponVO couponVO = coupSer.getOneById(Integer.valueOf(couponId));
 		model.addAttribute("couponVO", couponVO);
+		
+		Integer employeeId = (Integer)session.getAttribute("employeeId");
+		EmpVO empVO = empSer.findById(employeeId);
+		model.addAttribute("employeeName", empVO.getName());
 		return "back-end/coupon/coupon_edit";
 	}
 	
