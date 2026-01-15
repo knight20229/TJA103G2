@@ -112,7 +112,7 @@
 				</thead>
 
 				<tbody>
-					<tr th:each="item : ${items}">
+					<tr th:each="item : ${order.orderproductsize}">
 						<td><span th:if="${item.isCustom}">客製化商品</span> <span
 							th:if="${!item.isCustom}"
 							th:text="${item.prodSizeConnect.prodVO.productName}"> </span></td>
