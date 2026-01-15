@@ -164,7 +164,7 @@ public class ProdController {
 	                             .trim();
 
 	        if (plainText.isEmpty() || "<p><br></p>".equals(desc.trim())) {
-	            result.rejectValue("description", "error.prodVO", "商品描述：請勿空白！");
+	            result.rejectValue("description", "error.prodVO", "商品介紹：請勿空白！");
 	        }
 	    }
 		
@@ -345,7 +345,7 @@ public class ProdController {
 	                             .trim();
 
 	        if (plainText.isEmpty() || "<p><br></p>".equals(desc.trim())) {
-	            result.rejectValue("description", "error.prodVO", "商品描述：請勿空白！");
+	            result.rejectValue("description", "error.prodVO", "商品介紹：請勿空白！");
 	        }
 	    }
 
