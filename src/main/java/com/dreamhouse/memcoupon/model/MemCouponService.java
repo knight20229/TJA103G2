@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,6 +70,36 @@ public class MemCouponService {
 	public List<MemCouponVO> getAll(){
 		return memCoupRepo.findAll();
 	}
+	
+	// 定期檢查所有會員的優惠券，若已過期則更新狀態
+	@Scheduled(fixedRate = 60000) // 每分鐘檢查一次
+	@Transactional
+	public void updateExpiredCoupons() {
+	    List<MemCouponVO> allCoupons = memCoupRepo.findAll();
+	    LocalDate now = LocalDate.now();
+
+	    for (MemCouponVO mc : allCoupons) {
+	        // 1. 未使用且已過期 → 更新為已過期
+	        if (mc.getUseStatus() == MemCouponVO.STATUS_UNUSED &&
+	            mc.getCouponVO().getEndDt().isBefore(now)) {
+	            mc.setUseStatus(MemCouponVO.STATUS_EXPIRED);
+	            memCoupRepo.save(mc);
+	            System.out.println("已更新過期券: memberId=" 
+	                + mc.getMemVO().getMemberId() 
+	                + ", couponId=" + mc.getCouponVO().getCouponId());
+	        }
+
+	        // 2. 已使用但過期 → 保持已使用，不改成過期
+	        if (mc.getUseStatus() == MemCouponVO.STATUS_USED &&
+	            mc.getCouponVO().getEndDt().isBefore(now)) {
+	            System.out.println("已使用券過期: memberId=" 
+	                + mc.getMemVO().getMemberId() 
+	                + ", couponId=" + mc.getCouponVO().getCouponId());
+	        }
+	    }
+	}
+
+
 	
     // 查詢會員所有優惠券
     public List<MemCouponVO> findByMember(MemVO member) {
