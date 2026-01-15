@@ -125,7 +125,7 @@
 						<th style="width: 10%" class="text-center">有效日期</th>
 						<th style="width: 10%">啟用狀態<br>(啟用/停用)
 						</th>
-						<th style="width: 9%">員工編號</th>
+						<th style="width: 9%">員工姓名</th>
 						<th style="width: 13%"></th>
 					</tr>
 				</thead>
@@ -139,7 +139,7 @@
 							<td><span th:text="${promotionsVO.startDt}"> </span> <span>~</span>
 								<span th:text="${promotionsVO.endDt}"></span></td>
 							<td th:text="${promotionsVO.state == 0 ? '停用' : '啟用'}"></td>
-							<td th:text="${promotionsVO.empVO.employeeId}"></td>
+							<td th:text="${promotionsVO.empVO.name}"></td>
 							<td class="project-actions text-right">
 								<a class="btn btn-primary btn-sm"
 									th:href="@{/promotions/viewPromotions(promotionsId=${promotionsVO.promotionsId})}">

@@ -31,9 +31,13 @@ public class PromotionsController {
 	
 	
 	@GetMapping("addPromotions")
-	public String addPromotions(ModelMap model) {
+	public String addPromotions(HttpSession session, ModelMap model) {
 		PromotionsVO promotionsVO = new PromotionsVO();
 		model.addAttribute("promotionsVO", promotionsVO);
+		
+		Integer employeeId = (Integer)session.getAttribute("employeeId");
+		EmpVO empVO = empSer.findById(employeeId);
+		model.addAttribute("employeeName", empVO.getName());
 		return "back-end/promotions/promotions_add";
 	}
 	
@@ -54,9 +58,13 @@ public class PromotionsController {
 	
 	
 	@GetMapping("getOneForUpdate")
-	public String getOneForUpdate(@RequestParam("promotionsId") String promotionsId, ModelMap model) {
+	public String getOneForUpdate(@RequestParam("promotionsId") String promotionsId, HttpSession session, ModelMap model) {
 		PromotionsVO promotionsVO = proSer.getOneById(Integer.valueOf(promotionsId));
 		model.addAttribute("promotionsVO", promotionsVO);
+		
+		Integer employeeId = (Integer)session.getAttribute("employeeId");
+		EmpVO empVO = empSer.findById(employeeId);
+		model.addAttribute("employeeName", empVO.getName());
 		return "back-end/promotions/promotions_edit";
 	}
 	
