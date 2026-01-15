@@ -42,6 +42,7 @@ public class OrdersController {
 	// 訂單列表頁面（含訂單明細）
 	@GetMapping("/list")
 	public String listAllOrders(@RequestParam(required = false) String orderId,
+			@RequestParam(required = false) String memberId,
 	        @RequestParam(required = false) String orderStatus,
 	        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
 	        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
@@ -49,13 +50,24 @@ public class OrdersController {
 
 		List<String> errors = new ArrayList<>();
 		Integer orderIdInt = null;
+		Integer memberIdInt = null;
 
 		// 驗證訂單編號
 		if (orderId != null && !orderId.isBlank()) {
 			if (!orderId.matches("\\d+")) {
 				errors.add("訂單編號只能輸入數字");
-			} else {
+			}else {
 				orderIdInt = Integer.valueOf(orderId);
+			}
+			model.addAttribute("errorMessages", errors);
+		}
+		
+		// 驗證會員編號
+		if (memberId != null && !memberId.isBlank()) {
+			if (!memberId.matches("\\d+")) {
+				errors.add("會員編號只能輸入數字");
+			}else {
+				memberIdInt = Integer.valueOf(memberId);
 			}
 			model.addAttribute("errorMessages", errors);
 		}
@@ -78,7 +90,7 @@ public class OrdersController {
 
 		// 搜尋條件查詢
 		List<OrdersVO> orders;
-		if (orderIdInt != null || (orderStatus != null && !orderStatus.isBlank()) || startDate != null
+		if (orderIdInt != null || memberIdInt != null || (orderStatus != null && !orderStatus.isBlank()) || startDate != null
 				|| endDate != null) {
 			orders = ordersSvc.findOrdersByConditions(null, startDate, endDate, orderStatus);
 
@@ -86,6 +98,10 @@ public class OrdersController {
 			if (orderIdInt != null) {
 				final Integer finalOrderId = orderIdInt;
 				orders = orders.stream().filter(o -> o.getOrderId().equals(finalOrderId)).toList();
+			}
+			if (memberIdInt != null) {
+				final Integer finalMemberId = memberIdInt;
+				orders = orders.stream().filter(o -> o.getMemberId().equals(finalMemberId)).toList();
 			}
 		} else
 

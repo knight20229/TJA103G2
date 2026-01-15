@@ -164,9 +164,14 @@
 				class="search-box d-flex flex-wrap align-items-end col-auto d-grid gap-2 mb-3">
 
 				<div>
-					<label class="form-label mb-1">關鍵字</label> <input type="text"
+					<label class="form-label mb-1">訂單編號</label> <input type="text"
 						name="orderId" class="form-control me-3" placeholder="搜尋訂單編號"
 						th:value="${param.orderId}">
+				</div>
+				<div>
+					<label class="form-label mb-1">會員編號</label> <input type="text"
+						name="memberId" class="form-control me-3" placeholder="搜尋會員編號"
+						th:value="${param.memberId}">
 				</div>
 				<div>
 					<label class="form-label mb-1">訂單狀態</label> <select
@@ -191,6 +196,9 @@
 <!-- 				</div> -->
 				<div>
 					<button type="submit" class="btn btn-primary">搜尋</button>
+				</div>
+				<div>
+					<button type="reset" id="btnClear" class="btn btn-danger">清除</button>
 				</div>
 			</form>
 
@@ -427,6 +435,14 @@
 			window.location.href = loginUrl + '?location='
 					+ encodeURIComponent(redirectPath);
 		}
+		
+		document.getElementById('btnClear').addEventListener('click', function (e) {
+			e.preventDefault(); // 阻止原本 reset 行為
+
+			// 清空文字輸入欄位
+			document.querySelector('input[name="orderId"]').value = '';
+			document.querySelector('input[name="memberId"]').value = '';
+		});
 	</script>
 
 </body>
