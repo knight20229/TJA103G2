@@ -73,37 +73,37 @@ public class EmpController {
 		return "redirect:/emp/login";
 	}
 	
-////-------------下面的要測試員工登入後的功能再打開，不然會每次執行都要登入----------
-////	檢查是否登入
-//	@Component
-//	public class LoginInterceptor implements HandlerInterceptor {
-//	    @Override
-//	    public boolean preHandle(HttpServletRequest request,
-//	                             HttpServletResponse response,
-//	                             Object handler) throws Exception {
-//	        HttpSession session = request.getSession(false);
-//
-//	        if (session == null || session.getAttribute("employeeId") == null) {
-//	            response.sendRedirect("/emp/login");
-//	            return false;
-//	        }
-//	        return true;
-//	    }
-//	}
-////	
-////	註冊Interceptor並確認需要登入的路徑
-//	@Configuration
-//	public class WebConfig implements WebMvcConfigurer {
-//	    @Autowired
-//	    private LoginInterceptor loginInterceptor;
-//
-//	    @Override
-//	    public void addInterceptors(InterceptorRegistry registry) {
-//	        registry.addInterceptor(loginInterceptor)
-//	                .addPathPatterns("/admin/**", "/back-end/**", "/prod/**", "/orders/**", "/returns/**", "/coupon/**", "/promotions/**") // 後台路徑都要檢查
-//	                .excludePathPatterns("/emp/login", "/emp/logout", "/css/**", "/js/**", "/images/**");
-//	    }
-//	}
+//-------------下面的要測試員工登入後的功能再打開，不然會每次執行都要登入----------
+//	檢查是否登入
+	@Component
+	public class LoginInterceptor implements HandlerInterceptor {
+	    @Override
+	    public boolean preHandle(HttpServletRequest request,
+	                             HttpServletResponse response,
+	                             Object handler) throws Exception {
+	        HttpSession session = request.getSession(false);
+
+	        if (session == null || session.getAttribute("employeeId") == null) {
+	            response.sendRedirect("/emp/login");
+	            return false;
+	        }
+	        return true;
+	    }
+	}
+//	
+//	註冊Interceptor並確認需要登入的路徑
+	@Configuration
+	public class WebConfig implements WebMvcConfigurer {
+	    @Autowired
+	    private LoginInterceptor loginInterceptor;
+
+	    @Override
+	    public void addInterceptors(InterceptorRegistry registry) {
+	        registry.addInterceptor(loginInterceptor)
+	                .addPathPatterns("/admin/**", "/back-end/**", "/prod/**", "/orders/**", "/returns/**", "/coupon/**", "/promotions/**") // 後台路徑都要檢查
+	                .excludePathPatterns("/emp/login", "/emp/logout", "/css/**", "/js/**", "/images/**");
+	    }
+	}
 
 
 }
